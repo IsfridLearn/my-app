@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --background: #10110f;
+  --foreground: #f1f0e9;
 }
 
 @theme inline {
@@ -10,17 +11,128 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1
+    var(--delay, 0ms);
+
+  @keyframes cell-ripple {
+    0% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.4;
+    }
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+.portfolio-page {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  place-items: center;
+  padding: 48px 24px;
+  background:
+    radial-gradient(ellipse at 50% 47%, rgb(36 40 31 / 35%), transparent 52%),
+    #10110f;
+}
+
+.ripple-grid {
+  --cell-border-color: #404040;
+  --cell-fill-color: #171717;
+  --cell-shadow-color: #262626;
+  z-index: 0;
+}
+
+.ripple-grid .cell.is-rippling {
+  animation: cell-ripple var(--duration, 200ms) ease-out none 1;
+  animation-delay: var(--delay, 0ms);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1000px);
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: clamp(3.5rem, 8vw, 8.5rem);
+  font-weight: 700;
+  letter-spacing: -0.105em;
+  line-height: 0.78;
+}
+
+.name > span:first-child {
+  color: #f1f0e9;
+}
+
+.name > span:last-child {
+  color: #0099ff;
+}
+
+.tagline {
+  max-width: 900px;
+  margin: 2rem 0 0;
+  color: #f1f0e9;
+  font-size: clamp(1.35rem, 3.3vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.canvas-highlight {
+  color: #00b4ff;
+}
+
+.tagline .canvas-highlight {
+  vertical-align: -0.08em;
+}
+
+@media (max-width: 600px) {
+  .name {
+    font-size: clamp(2.75rem, 10.5vw, 4.5rem);
+  }
+
+  .tagline {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .hero-content {
+    transform: translateX(-3vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
