@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-/* ------------------------------------------------------------------
-   Palette: six colors, shared by every sprite and the page itself.
-   ------------------------------------------------------------------ */
 :root {
   --c-ink: #14161a;
   --c-paper: #eeece4;
@@ -34,13 +31,11 @@ body:has(.theme-day) {
   outline-offset: 3px;
 }
 
-/* ------------------------------------------------------------------
-   Sprites
-   ------------------------------------------------------------------ */
 .sprite {
   display: block;
   flex: none;
 }
+
 .px-k { fill: var(--c-ink); }
 .px-p { fill: var(--c-paper); }
 .px-b { fill: var(--c-blue); }
@@ -48,20 +43,15 @@ body:has(.theme-day) {
 .px-y { fill: var(--c-gold); }
 .px-r { fill: var(--c-red); }
 
-/* ------------------------------------------------------------------
-   Shared keyframes
-   ------------------------------------------------------------------ */
 @keyframes appear {
   from { visibility: hidden; }
   to { visibility: visible; }
 }
+
 @keyframes flash {
   from, to { opacity: 1; }
 }
 
-/* ------------------------------------------------------------------
-   Intro: guns, laptop, boom. Timings in ms; see components/intro.tsx.
-   ------------------------------------------------------------------ */
 .intro {
   --u: clamp(3px, min(calc((100vw - 24px) / 84), calc(100svh / 36)), 10px);
   position: fixed;
@@ -71,13 +61,13 @@ body:has(.theme-day) {
   place-items: center;
   background: var(--c-paper);
   color: var(--c-ink);
-  animation:
-    intro-ink 1ms steps(1) 2000ms forwards,
-    intro-out 1ms steps(1) 2900ms forwards;
+  animation: intro-ink 1ms steps(1) 2000ms forwards, intro-out 1ms steps(1) 2900ms forwards;
 }
+
 @keyframes intro-ink {
   to { background: var(--c-ink); color: var(--c-paper); }
 }
+
 @keyframes intro-out {
   to { visibility: hidden; }
 }
@@ -88,6 +78,7 @@ body:has(.theme-day) {
   height: calc(var(--u) * 34);
   animation: shake 360ms steps(1) 2000ms;
 }
+
 @keyframes shake {
   0% { transform: translate(calc(var(--u) * -1), var(--u)); }
   17% { transform: translate(var(--u), calc(var(--u) * -1)); }
@@ -98,16 +89,13 @@ body:has(.theme-day) {
   100% { transform: none; }
 }
 
-/* Laptop */
 .laptop {
   position: absolute;
   left: calc(var(--u) * 30);
   top: calc(var(--u) * 9);
-  animation:
-    hit 240ms steps(1) 780ms,
-    hit 240ms steps(1) 1380ms,
-    gone 1ms steps(1) 2000ms forwards;
+  animation: hit 240ms steps(1) 780ms, hit 240ms steps(1) 1380ms, gone 1ms steps(1) 2000ms forwards;
 }
+
 @keyframes hit {
   0% { transform: translateX(calc(var(--u) * -1)); }
   25% { transform: translateX(var(--u)); }
@@ -115,127 +103,108 @@ body:has(.theme-day) {
   75% { transform: translateX(var(--u)); }
   100% { transform: none; }
 }
+
 @keyframes gone {
   to { visibility: hidden; }
 }
+
 .cracks {
   position: absolute;
   top: 0;
   left: 0;
   visibility: hidden;
 }
+
 .crack-1 { animation: appear 1ms steps(1) 780ms forwards; }
 .crack-2 { animation: appear 1ms steps(1) 1380ms forwards; }
 
-/* Guns: the right one is the left one mirrored. */
 .gun {
   position: absolute;
   top: calc(var(--u) * 13);
   width: calc(var(--u) * 17);
   height: calc(var(--u) * 10);
 }
+
 .gun-l { left: 0; }
 .gun-r { left: calc(var(--u) * 67); transform: scaleX(-1); }
+
 .gun-slide {
   position: relative;
   animation: gun-in 400ms steps(6) both;
 }
+
 @keyframes gun-in {
   from { transform: translateX(calc(var(--u) * -20)); }
   to { transform: none; }
 }
+
 .gun-body {
-  animation:
-    recoil 120ms steps(2) 500ms,
-    recoil 120ms steps(2) 1100ms,
-    recoil 120ms steps(2) 1700ms;
+  animation: recoil 120ms steps(2) 500ms, recoil 120ms steps(2) 1100ms, recoil 120ms steps(2) 1700ms;
 }
+
 @keyframes recoil {
   from { transform: translateX(calc(var(--u) * -1)); }
   to { transform: none; }
 }
+
 .flash {
   position: absolute;
   top: 0;
   left: calc(var(--u) * 16);
   opacity: 0;
-  animation:
-    flash 100ms steps(1) 500ms,
-    flash 100ms steps(1) 1100ms,
-    flash 100ms steps(1) 1700ms;
+  animation: flash 100ms steps(1) 500ms, flash 100ms steps(1) 1100ms, flash 100ms steps(1) 1700ms;
 }
 
-/* Bullets */
 .bullet {
   position: absolute;
   top: calc(var(--u) * 15);
   opacity: 0;
 }
+
 .bullet-l {
   left: calc(var(--u) * 22);
-  animation:
-    fly-l 240ms steps(7) 540ms,
-    fly-l 240ms steps(7) 1140ms,
-    fly-l 240ms steps(7) 1740ms;
+  animation: fly-l 240ms steps(7) 540ms, fly-l 240ms steps(7) 1140ms, fly-l 240ms steps(7) 1740ms;
 }
+
 .bullet-r {
   left: calc(var(--u) * 58);
-  animation:
-    fly-r 240ms steps(7) 540ms,
-    fly-r 240ms steps(7) 1140ms,
-    fly-r 240ms steps(7) 1740ms;
+  animation: fly-r 240ms steps(7) 540ms, fly-r 240ms steps(7) 1140ms, fly-r 240ms steps(7) 1740ms;
 }
+
 @keyframes fly-l {
   0% { opacity: 1; transform: none; }
   99% { opacity: 1; transform: translateX(calc(var(--u) * 7)); }
   100% { opacity: 0; transform: translateX(calc(var(--u) * 7)); }
 }
+
 @keyframes fly-r {
   0% { opacity: 1; transform: none; }
   99% { opacity: 1; transform: translateX(calc(var(--u) * -7)); }
   100% { opacity: 0; transform: translateX(calc(var(--u) * -7)); }
 }
 
-/* Explosion: three frames, then debris */
-.blast {
+.blast,
+.debris {
   position: absolute;
   opacity: 0;
 }
-.blast-1 {
-  left: calc(var(--u) * 37.5);
-  top: calc(var(--u) * 12.5);
-  animation: flash 90ms steps(1) 2000ms;
-}
-.blast-2 {
-  left: calc(var(--u) * 33.5);
-  top: calc(var(--u) * 8.5);
-  animation: flash 110ms steps(1) 2090ms;
-}
-.blast-3 {
-  left: calc(var(--u) * 29.5);
-  top: calc(var(--u) * 4.5);
-  animation: flash 170ms steps(1) 2200ms;
-}
+
+.blast-1 { left: calc(var(--u) * 37.5); top: calc(var(--u) * 12.5); animation: flash 90ms steps(1) 2000ms; }
+.blast-2 { left: calc(var(--u) * 33.5); top: calc(var(--u) * 8.5); animation: flash 110ms steps(1) 2090ms; }
+.blast-3 { left: calc(var(--u) * 29.5); top: calc(var(--u) * 4.5); animation: flash 170ms steps(1) 2200ms; }
 
 .debris {
-  position: absolute;
   left: calc(var(--u) * 42);
   top: calc(var(--u) * 17);
   width: calc(var(--u) * var(--s));
   height: calc(var(--u) * var(--s));
-  opacity: 0;
   animation: debris 700ms steps(7) 2060ms;
 }
+
 @keyframes debris {
   0% { opacity: 1; transform: none; }
-  99% {
-    opacity: 1;
-    transform: translate(calc(var(--u) * var(--dx)), calc(var(--u) * var(--dy)));
-  }
-  100% {
-    opacity: 0;
-    transform: translate(calc(var(--u) * var(--dx)), calc(var(--u) * var(--dy)));
-  }
+  99% { opacity: 1; transform: translate(calc(var(--u) * var(--dx)), calc(var(--u) * var(--dy))); }
+  100% { opacity: 0; transform: translate(calc(var(--u) * var(--dx)), calc(var(--u) * var(--dy))); }
 }
 
 .boom {
@@ -267,11 +236,8 @@ body:has(.theme-day) {
   font-size: 1rem;
 }
 
-/* ------------------------------------------------------------------
-   Page
-   ------------------------------------------------------------------ */
 .site {
-  --t0: 2900ms; /* when the intro hands over to the page */
+  --t0: 2900ms;
   --bg: var(--c-ink);
   --fg: var(--c-paper);
   --line: color-mix(in srgb, var(--fg) 32%, transparent);
@@ -281,13 +247,9 @@ body:has(.theme-day) {
   background: var(--bg);
   color: var(--fg);
 }
-.site.theme-day {
-  --bg: var(--c-paper);
-  --fg: var(--c-ink);
-}
-.site.is-skipped {
-  --t0: 0ms;
-}
+
+.site.theme-day { --bg: var(--c-paper); --fg: var(--c-ink); }
+.site.is-skipped { --t0: 0ms; }
 
 .page {
   position: relative;
@@ -296,17 +258,14 @@ body:has(.theme-day) {
   padding-inline: var(--pad);
 }
 
-/* The only entrance on the page: the name wipes in, everything else appears. */
-.wipe {
-  animation: wipe 480ms steps(12) var(--t0) both;
-}
+.wipe { animation: wipe 480ms steps(12) var(--t0) both; }
+
 @keyframes wipe {
   from { clip-path: inset(0 100% 0 0); }
   to { clip-path: inset(0 0 0 0); }
 }
-.reveal {
-  animation: appear 1ms steps(1) calc(var(--t0) + 480ms) both;
-}
+
+.reveal { animation: appear 1ms steps(1) calc(var(--t0) + 480ms) both; }
 
 .mode {
   position: absolute;
@@ -321,7 +280,6 @@ body:has(.theme-day) {
   font-size: 1rem;
 }
 
-/* Hero */
 .hero {
   display: flex;
   min-height: 100svh;
@@ -330,12 +288,9 @@ body:has(.theme-day) {
   gap: 2rem;
   padding-block: 96px 56px;
 }
-.title {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
+
+.title { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+
 .name {
   display: flex;
   flex-direction: column;
@@ -345,17 +300,10 @@ body:has(.theme-day) {
   font-weight: 700;
   line-height: 0.92;
 }
-.lede {
-  max-width: 30ch;
-  margin: 0;
-  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
-  line-height: 1.4;
-}
-.menu {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
+
+.lede { max-width: 30ch; margin: 0; font-size: clamp(1.15rem, 2.2vw, 1.5rem); line-height: 1.4; }
+.menu { display: flex; flex-wrap: wrap; gap: 12px; }
+
 .menu a {
   padding: 0.55rem 1.1rem;
   border: 2px solid currentColor;
@@ -363,41 +311,21 @@ body:has(.theme-day) {
   font-size: 1.15rem;
   text-decoration: none;
 }
-.menu a:hover {
-  border-color: var(--c-blue);
-  background: var(--c-blue);
-  color: var(--c-paper);
-}
 
-/* Sections: heading in a left rail, content on the right. */
+.menu a:hover { border-color: var(--c-blue); background: var(--c-blue); color: var(--c-paper); }
+
 .section {
   display: grid;
   grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
   gap: 1.5rem 3rem;
   padding-top: clamp(4rem, 9vw, 7rem);
 }
-.section-title {
-  margin: 0;
-  font-family: var(--font-pixel), monospace;
-  font-size: 1.9rem;
-  font-weight: 700;
-  line-height: 1;
-}
 
-.bio {
-  max-width: 52ch;
-  margin: 0 0 2.5rem;
-  font-size: 1.2rem;
-  line-height: 1.7;
-}
+.section-title { margin: 0; font-family: var(--font-pixel), monospace; font-size: 1.9rem; font-weight: 700; line-height: 1; }
+.bio { max-width: 52ch; margin: 0 0 2.5rem; font-size: 1.2rem; line-height: 1.7; }
 
-/* Ruled rows */
-.rows {
-  margin: 0;
-  padding: 0;
-  border-top: 2px solid var(--line);
-  list-style: none;
-}
+.rows { margin: 0; padding: 0; border-top: 2px solid var(--line); list-style: none; }
+
 .row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
@@ -406,33 +334,17 @@ body:has(.theme-day) {
   padding-block: 1.25rem;
   border-bottom: 2px solid var(--line);
 }
-.row-two {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-}
-.row-title {
-  margin: 0;
-  font-family: var(--font-pixel), monospace;
-  font-size: 1.4rem;
-  font-weight: 600;
-  line-height: 1.25;
-}
-.row-text,
-.row-meta {
-  margin: 0;
-  color: var(--muted);
-}
-.row-text {
-  max-width: 52ch;
-}
-.row-meta {
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
+
+.row-two { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+.row-title { margin: 0; font-family: var(--font-pixel), monospace; font-size: 1.4rem; font-weight: 600; line-height: 1.25; }
+.row-text, .row-meta { margin: 0; color: var(--muted); }
+.row-text { max-width: 52ch; }
+.row-meta { font-size: 0.9rem; white-space: nowrap; }
 
 .link {
-  background: none;
-  border: 0;
   padding: 0;
+  border: 0;
+  background: none;
   color: inherit;
   cursor: pointer;
   font: inherit;
@@ -440,11 +352,8 @@ body:has(.theme-day) {
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
 }
-.link:hover {
-  background: var(--c-blue);
-  color: var(--c-paper);
-  text-decoration: none;
-}
+
+.link:hover { background: var(--c-blue); color: var(--c-paper); text-decoration: none; }
 
 .foot {
   display: flex;
@@ -455,29 +364,15 @@ body:has(.theme-day) {
   color: var(--muted);
   font-size: 0.9rem;
 }
-.foot p {
-  margin: 0;
-}
+
+.foot p { margin: 0; }
 
 @media (max-width: 760px) {
-  .section {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .row,
-  .row-two {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .row-meta {
-    white-space: normal;
-  }
+  .section, .row, .row-two { grid-template-columns: minmax(0, 1fr); }
+  .row-meta { white-space: normal; }
 }
 
-/* Reduced motion: no intro at all, page is simply there. */
 @media (prefers-reduced-motion: reduce) {
-  .site {
-    --t0: 0ms;
-  }
-  .intro {
-    display: none;
-  }
+  .site { --t0: 0ms; }
+  .intro { display: none; }
 }
