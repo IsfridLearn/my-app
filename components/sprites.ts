@@ -55,6 +55,8 @@ export const FONT: Record<string, string[]> = {
 const BLANK_GLYPH = Array.from({ length: GLYPH_H }, () => ".....");
 
 type TextOptions = {
+  /** Draw each font pixel as a scale x scale block, for thicker strokes. */
+  scale?: number;
   /** Extrusion depth in cells (a chunky 3D edge toward the lower right). */
   depth?: number;
   /** Color letter for the upper four rows of each glyph. */
@@ -72,6 +74,7 @@ export function buildText(lines: string[], options: TextOptions = {}): string[] 
   const bottom = options.bottom ?? top;
   const ext = options.ext ?? [];
   const lineGap = 2;
+  const scale = options.scale ?? 1;
 
   const built = lines.map((line) => {
     const rows = Array.from({ length: GLYPH_H }, () => "");
@@ -84,8 +87,8 @@ export function buildText(lines: string[], options: TextOptions = {}): string[] 
 
   const w = Math.max(...built.map((rows) => rows[0].length));
   const h = built.length * GLYPH_H + (built.length - 1) * lineGap;
-  const grid = Array.from({ length: h + depth }, () =>
-    Array<string>(w + depth).fill("."),
+  const grid = Array.from({ length: h * scale + depth }, () =>
+    Array<string>(w * scale + depth).fill("."),
   );
 
   const main: Array<[number, number, string]> = [];
@@ -94,7 +97,15 @@ export function buildText(lines: string[], options: TextOptions = {}): string[] 
     rows.forEach((row, r) => {
       [...row].forEach((c, x) => {
         if (c === "#") {
-          main.push([x + pad, li * (GLYPH_H + lineGap) + r, r < 4 ? top : bottom]);
+          for (let dy = 0; dy < scale; dy++) {
+            for (let dx = 0; dx < scale; dx++) {
+              main.push([
+                (x + pad) * scale + dx,
+                (li * (GLYPH_H + lineGap) + r) * scale + dy,
+                r < 4 ? top : bottom,
+              ]);
+            }
+          }
         }
       });
     });

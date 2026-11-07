@@ -228,7 +228,7 @@ body {
 }
 
 .opening-title {
-  --u: clamp(5px, min(calc((100vw - 40px) / 46), calc(34svh / 20)), 20px);
+  --u: clamp(3px, min(calc((100vw - 40px) / 88), calc(36svh / 36)), 10px);
   animation: wipe-down 700ms steps(19) 200ms both;
 }
 @keyframes wipe-down {
@@ -243,7 +243,6 @@ body {
   font-family: var(--font-pixel), monospace;
   font-size: clamp(1rem, 2.4vw, 1.35rem);
   line-height: 1.35;
-  animation: appear 1ms steps(1) 900ms both;
 }
 
 .enter {
@@ -265,7 +264,6 @@ body {
     100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px),
     calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
   );
-  animation: appear 1ms steps(1) 1000ms both;
 }
 .enter:hover { background: var(--pink); }
 .enter:active {
