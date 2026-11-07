@@ -27,6 +27,14 @@ export function Portfolio() {
     setPhase("opening");
   };
 
+  // Backup: if the browser never reports the lift-up animation as finished,
+  // still clear the opening screen so the portfolio underneath is reachable.
+  useEffect(() => {
+    if (phase !== "leaving") return;
+    const id = window.setTimeout(() => setPhase("done"), 1200);
+    return () => window.clearTimeout(id);
+  }, [phase]);
+
   // Lock page scroll while the opening screen is up.
   useEffect(() => {
     if (phase === "done") return;
