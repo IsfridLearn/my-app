@@ -6,10 +6,11 @@ import { Scene } from "./scene";
 import { arrow, buildText } from "./sprites";
 
 const TITLE = buildText(["ANDREI", "SANCHEZ"], {
-  depth: 3,
+  scale: 2,
+  depth: 2,
   top: "p",
   bottom: "i",
-  ext: ["m", "u", "n"],
+  ext: ["u", "n"],
 });
 const ARROW = arrow("k");
 
