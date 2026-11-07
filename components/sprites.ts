@@ -1,16 +1,9 @@
-// All pixel art lives here so every sprite shares one grid and one 6-color palette.
-// Characters map to colors: k ink, p paper, b blue, g grey, y gold, r red. "." is empty.
+// All pixel art for the site lives here so everything shares one grid and one palette.
+// Letters map to colors in globals.css (.px-*):
+//   k ink   p paper   b blue    y gold    m magenta  u violet  n navy
+//   i pink  o orange  h hair    s skin    w suit     v shade   d silhouette  g grey
 
-export const COLOR_VAR: Record<string, string> = {
-  k: "--c-ink",
-  p: "--c-paper",
-  b: "--c-blue",
-  g: "--c-grey",
-  y: "--c-gold",
-  r: "--c-red",
-};
-
-/** Adds a 1px ink outline around every opaque pixel, so sprites share one style. */
+/** Adds a 1-cell ink outline around every opaque cell, so sprites share one style. */
 export function outline(rows: string[]): string[] {
   const h = rows.length;
   const w = Math.max(...rows.map((r) => r.length));
@@ -36,32 +29,116 @@ export function outline(rows: string[]): string[] {
   return out;
 }
 
-function fromPoints(
-  w: number,
-  h: number,
-  pts: Array<[number, number]>,
-  ch: string,
-): string[] {
-  const grid = Array.from({ length: h }, () => Array<string>(w).fill("."));
-  for (const [x, y] of pts) grid[y][x] = ch;
+/* ------------------------------------------------------------ Pixel font */
+// A 5 x 7 bitmap font. Only the letters this site uses are drawn.
+
+const GLYPH_H = 7;
+
+export const FONT: Record<string, string[]> = {
+  A: [".###.", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
+  B: ["####.", "#...#", "#...#", "####.", "#...#", "#...#", "####."],
+  C: [".####", "#....", "#....", "#....", "#....", "#....", ".####"],
+  D: ["####.", "#...#", "#...#", "#...#", "#...#", "#...#", "####."],
+  E: ["#####", "#....", "#....", "####.", "#....", "#....", "#####"],
+  H: ["#...#", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
+  I: ["#####", "..#..", "..#..", "..#..", "..#..", "..#..", "#####"],
+  M: ["#...#", "##.##", "#.#.#", "#.#.#", "#...#", "#...#", "#...#"],
+  N: ["#...#", "##..#", "#.#.#", "#.#.#", "#..##", "#...#", "#...#"],
+  R: ["####.", "#...#", "#...#", "####.", "#.#..", "#..#.", "#...#"],
+  S: [".####", "#....", "#....", ".###.", "....#", "....#", "####."],
+  T: ["#####", "..#..", "..#..", "..#..", "..#..", "..#..", "..#.."],
+  W: ["#...#", "#...#", "#...#", "#.#.#", "#.#.#", "##.##", "#...#"],
+  X: ["#...#", "#...#", ".#.#.", "..#..", ".#.#.", "#...#", "#...#"],
+  Z: ["#####", "....#", "...#.", "..#..", ".#...", "#....", "#####"],
+};
+
+const BLANK_GLYPH = Array.from({ length: GLYPH_H }, () => ".....");
+
+type TextOptions = {
+  /** Extrusion depth in cells (a chunky 3D edge toward the lower right). */
+  depth?: number;
+  /** Color letter for the upper four rows of each glyph. */
+  top?: string;
+  /** Color letter for the lower three rows. Defaults to `top`. */
+  bottom?: string;
+  /** Extrusion colors, nearest layer first. */
+  ext?: string[];
+};
+
+/** Draws text with the bitmap font and returns sprite rows. */
+export function buildText(lines: string[], options: TextOptions = {}): string[] {
+  const depth = options.depth ?? 0;
+  const top = options.top ?? "p";
+  const bottom = options.bottom ?? top;
+  const ext = options.ext ?? [];
+  const lineGap = 2;
+
+  const built = lines.map((line) => {
+    const rows = Array.from({ length: GLYPH_H }, () => "");
+    [...line].forEach((ch, i) => {
+      const glyph = FONT[ch] ?? BLANK_GLYPH;
+      for (let r = 0; r < GLYPH_H; r++) rows[r] += (i ? "." : "") + glyph[r];
+    });
+    return rows;
+  });
+
+  const w = Math.max(...built.map((rows) => rows[0].length));
+  const h = built.length * GLYPH_H + (built.length - 1) * lineGap;
+  const grid = Array.from({ length: h + depth }, () =>
+    Array<string>(w + depth).fill("."),
+  );
+
+  const main: Array<[number, number, string]> = [];
+  built.forEach((rows, li) => {
+    const pad = Math.floor((w - rows[0].length) / 2);
+    rows.forEach((row, r) => {
+      [...row].forEach((c, x) => {
+        if (c === "#") {
+          main.push([x + pad, li * (GLYPH_H + lineGap) + r, r < 4 ? top : bottom]);
+        }
+      });
+    });
+  });
+
+  // Farthest extrusion layer first, so nearer layers draw over it.
+  for (let k = depth; k >= 1; k--) {
+    for (const [x, y] of main) grid[y + k][x + k] = ext[k - 1] ?? "n";
+  }
+  for (const [x, y, c] of main) grid[y][x] = c;
+
   return grid.map((r) => r.join(""));
 }
 
-/** A chunky pixel explosion: paper core, gold body, red rim, ragged edge. */
-function blast(n: number): string[] {
-  const c = (n - 1) / 2;
-  const rows: string[] = [];
-  for (let y = 0; y < n; y++) {
-    let row = "";
-    for (let x = 0; x < n; x++) {
-      const d = Math.hypot(x - c, y - c) / c;
-      const e = d + (((x * 37 + y * 91 + n * 13) % 7) / 7) * 0.3 - 0.15;
-      row += e > 1 ? "." : e < 0.35 ? "p" : e < 0.7 ? "y" : "r";
-    }
-    rows.push(row);
-  }
-  return rows;
-}
+/* --------------------------------------------------------------- Sprites */
+
+// Pageant crown, 13 x 5 plus outline.
+export const CROWN: string[] = outline([
+  "y.....y.....y",
+  "yy...yyy...yy",
+  "yyy.yyyyy.yyy",
+  "yyyyyyyyyyyyy",
+  "yymyyymyyymyy",
+]);
+
+// Andrei, bust portrait in a white suit and crown. 12 x 16 plus outline.
+export const BUST: string[] = outline([
+  "..y..yy..y..",
+  "..yyyyyyyy..",
+  "..yymyymyy..",
+  "..hhhhhhhh..",
+  ".hhhhhhhhhh.",
+  ".hhsssssshh.",
+  ".hssksskssh.",
+  ".hssssssssh.",
+  "..sssmmsss..",
+  "...ssssss...",
+  "....ssss....",
+  "wwwwwsswwwww",
+  "wwwwvmmvwwww",
+  "wwwwvmmvwwww",
+  "wwwwvvvvwwww",
+  "wwwwwwwwwwww",
+]);
 
 // Laptop, 24 x 16. The screen shows a "</>" glyph.
 const GLYPH = [
@@ -83,69 +160,53 @@ export const LAPTOP: string[] = [
   ".kkkkkkkkkkkkkkkkkkkkkk.",
 ];
 
-// Cracks overlay the laptop screen (same 24 x 16 canvas).
-const CRACK_A: Array<[number, number]> = [
-  [3, 6], [4, 6], [5, 7], [6, 7], [6, 8], [7, 9],
-  [20, 6], [19, 6], [18, 7], [17, 7], [17, 8], [16, 9],
-];
-const CRACK_B: Array<[number, number]> = [
-  [7, 6], [8, 6], [9, 5], [5, 5], [5, 4], [6, 3], [8, 10], [9, 10],
-  [16, 6], [15, 6], [14, 5], [18, 5], [18, 4], [17, 3], [15, 10], [14, 10],
-];
-export const CRACKS_1 = fromPoints(24, 16, CRACK_A, "p");
-export const CRACKS_2 = fromPoints(24, 16, CRACK_B, "p");
-
-// Pistol facing right, 17 x 10. The right-hand gun is this same sprite mirrored.
-export const GUN: string[] = [
-  ".kkkkkkkkkkkkkkk.",
-  "kgggggggggggggggk",
-  "kgpppppppppppgggk",
-  "kgggggggggggggggk",
-  ".kkkkkkkkkkkkkkk.",
-  ".kgggkkkkkk......",
-  ".kgggk....k......",
-  ".kgggkkkkkk......",
-  ".kgggk...........",
-  "..kkk............",
+// Camera, 14 x 10.
+export const CAMERA: string[] = [
+  "....kkkk......",
+  "kkkkkkkkkkkkkk",
+  "k" + "u".repeat(12) + "k",
+  "kuuukkkkkuuyyk",
+  "kuukbbbbbkuuuk",
+  "kukbbppbbbkuuk",
+  "kukbbpbbbbkuuk",
+  "kuukbbbbbkuuuk",
+  "kuuukkkkkuuuuk",
+  "kkkkkkkkkkkkkk",
 ];
 
-export const FLASH: string[] = [
-  "..y..",
-  ".yry.",
-  "yrpry",
-  ".yry.",
-  "..y..",
-];
-
-export const BULLET_L: string[] = ["kkky", "kkky"];
-export const BULLET_R: string[] = ["ykkk", "ykkk"];
-
-export const BLASTS: string[][] = [blast(9), blast(17), blast(25)];
-
-// [dx, dy, size, color] in sprite units, flying out from the laptop's center.
-export const DEBRIS: Array<[number, number, number, string]> = [
-  [-26, -12, 2, "b"],
-  [-20, -16, 1, "p"],
-  [-14, -18, 2, "g"],
-  [-8, -17, 1, "y"],
-  [0, -19, 2, "b"],
-  [9, -17, 1, "p"],
-  [17, -16, 2, "g"],
-  [25, -12, 1, "y"],
-  [-28, 2, 1, "p"],
-  [27, 4, 2, "b"],
-  [-22, 13, 2, "g"],
-  [-10, 15, 1, "y"],
-  [12, 16, 2, "p"],
-  [23, 12, 1, "b"],
-  [-3, 16, 1, "r"],
-];
-
-// The one gold thing on the site: a pageant king's crown, 13 x 5 plus outline.
-export const CROWN: string[] = outline([
-  "y.....y.....y",
-  "yy...yyy...yy",
-  "yyy.yyyyy.yyy",
-  "yyyyyyyyyyyyy",
-  "yybyyyryyybyy",
+// Medal, 12 x 13 plus outline: magenta ribbon, gold disc.
+export const MEDAL: string[] = outline([
+  "mm........mm",
+  ".mmm....mmm.",
+  "..mmm..mmm..",
+  "...mmmmmm...",
+  "....mmmm....",
+  "...yyyyyy...",
+  "..yyyyyyyy..",
+  ".yyyyppyyyy.",
+  ".yyyyyyyyyy.",
+  ".yyyyyyyyyy.",
+  ".yyyyyyyyyy.",
+  "..yyyyyyyy..",
+  "...yyyyyy...",
 ]);
+
+/** Right-pointing arrow used for menus and buttons. */
+export const arrow = (ch: string): string[] =>
+  ["x...", "xx..", "xxx.", "xxxx", "xxx.", "xx..", "x..."].map((r) =>
+    r.replace(/x/g, ch),
+  );
+
+/** Quest marker: a diamond in the given color. */
+export const diamond = (ch: string): string[] =>
+  [
+    "....x....",
+    "...xxx...",
+    "..xxxxx..",
+    ".xxxxxxx.",
+    "xxxxxxxxx",
+    ".xxxxxxx.",
+    "..xxxxx..",
+    "...xxx...",
+    "....x....",
+  ].map((r) => r.replace(/x/g, ch));
