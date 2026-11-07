@@ -1,138 +1,483 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   Palette: six colors, shared by every sprite and the page itself.
+   ------------------------------------------------------------------ */
 :root {
-  color-scheme: dark;
-  --background: #10110f;
-  --foreground: #f1f0e9;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1
-    var(--delay, 0ms);
-
-  @keyframes cell-ripple {
-    0% {
-      opacity: 0.4;
-    }
-    50% {
-      opacity: 0.8;
-    }
-    100% {
-      opacity: 0.4;
-    }
-  }
-}
-
-* {
-  box-sizing: border-box;
+  --c-ink: #14161a;
+  --c-paper: #eeece4;
+  --c-blue: #0056a3;
+  --c-grey: #7a7f87;
+  --c-gold: #d9a528;
+  --c-red: #d4452f;
 }
 
 html,
 body {
-  min-height: 100%;
   margin: 0;
+  background: var(--c-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  color: var(--c-paper);
+  font-family: var(--font-text), system-ui, sans-serif;
+  line-height: 1.65;
 }
 
-.portfolio-page {
-  position: relative;
-  isolation: isolate;
+html:has(.theme-day),
+body:has(.theme-day) {
+  background: var(--c-paper);
+}
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------
+   Sprites
+   ------------------------------------------------------------------ */
+.sprite {
+  display: block;
+  flex: none;
+}
+.px-k { fill: var(--c-ink); }
+.px-p { fill: var(--c-paper); }
+.px-b { fill: var(--c-blue); }
+.px-g { fill: var(--c-grey); }
+.px-y { fill: var(--c-gold); }
+.px-r { fill: var(--c-red); }
+
+/* ------------------------------------------------------------------
+   Shared keyframes
+   ------------------------------------------------------------------ */
+@keyframes appear {
+  from { visibility: hidden; }
+  to { visibility: visible; }
+}
+@keyframes flash {
+  from, to { opacity: 1; }
+}
+
+/* ------------------------------------------------------------------
+   Intro: guns, laptop, boom. Timings in ms; see components/intro.tsx.
+   ------------------------------------------------------------------ */
+.intro {
+  --u: clamp(3px, min(calc((100vw - 24px) / 84), calc(100svh / 36)), 10px);
+  position: fixed;
+  inset: 0;
+  z-index: 50;
   display: grid;
-  min-height: 100svh;
-  overflow: hidden;
   place-items: center;
-  padding: 48px 24px;
-  background:
-    radial-gradient(ellipse at 50% 47%, rgb(36 40 31 / 35%), transparent 52%),
-    #10110f;
+  background: var(--c-paper);
+  color: var(--c-ink);
+  animation:
+    intro-ink 1ms steps(1) 2000ms forwards,
+    intro-out 1ms steps(1) 2900ms forwards;
+}
+@keyframes intro-ink {
+  to { background: var(--c-ink); color: var(--c-paper); }
+}
+@keyframes intro-out {
+  to { visibility: hidden; }
 }
 
-.ripple-grid {
-  --cell-border-color: #404040;
-  --cell-fill-color: #171717;
-  --cell-shadow-color: #262626;
-  z-index: 0;
-}
-
-.ripple-grid .cell.is-rippling {
-  animation: cell-ripple var(--duration, 200ms) ease-out none 1;
-  animation-delay: var(--delay, 0ms);
-}
-
-.hero-content {
+.stage {
   position: relative;
-  z-index: 1;
-  width: min(100%, 1000px);
+  width: calc(var(--u) * 84);
+  height: calc(var(--u) * 34);
+  animation: shake 360ms steps(1) 2000ms;
+}
+@keyframes shake {
+  0% { transform: translate(calc(var(--u) * -1), var(--u)); }
+  17% { transform: translate(var(--u), calc(var(--u) * -1)); }
+  34% { transform: translate(calc(var(--u) * -1), calc(var(--u) * -1)); }
+  51% { transform: translate(var(--u), var(--u)); }
+  68% { transform: translate(calc(var(--u) * -1), 0); }
+  85% { transform: translate(var(--u), 0); }
+  100% { transform: none; }
 }
 
+/* Laptop */
+.laptop {
+  position: absolute;
+  left: calc(var(--u) * 30);
+  top: calc(var(--u) * 9);
+  animation:
+    hit 240ms steps(1) 780ms,
+    hit 240ms steps(1) 1380ms,
+    gone 1ms steps(1) 2000ms forwards;
+}
+@keyframes hit {
+  0% { transform: translateX(calc(var(--u) * -1)); }
+  25% { transform: translateX(var(--u)); }
+  50% { transform: translateX(calc(var(--u) * -1)); }
+  75% { transform: translateX(var(--u)); }
+  100% { transform: none; }
+}
+@keyframes gone {
+  to { visibility: hidden; }
+}
+.cracks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+}
+.crack-1 { animation: appear 1ms steps(1) 780ms forwards; }
+.crack-2 { animation: appear 1ms steps(1) 1380ms forwards; }
+
+/* Guns: the right one is the left one mirrored. */
+.gun {
+  position: absolute;
+  top: calc(var(--u) * 13);
+  width: calc(var(--u) * 17);
+  height: calc(var(--u) * 10);
+}
+.gun-l { left: 0; }
+.gun-r { left: calc(var(--u) * 67); transform: scaleX(-1); }
+.gun-slide {
+  position: relative;
+  animation: gun-in 400ms steps(6) both;
+}
+@keyframes gun-in {
+  from { transform: translateX(calc(var(--u) * -20)); }
+  to { transform: none; }
+}
+.gun-body {
+  animation:
+    recoil 120ms steps(2) 500ms,
+    recoil 120ms steps(2) 1100ms,
+    recoil 120ms steps(2) 1700ms;
+}
+@keyframes recoil {
+  from { transform: translateX(calc(var(--u) * -1)); }
+  to { transform: none; }
+}
+.flash {
+  position: absolute;
+  top: 0;
+  left: calc(var(--u) * 16);
+  opacity: 0;
+  animation:
+    flash 100ms steps(1) 500ms,
+    flash 100ms steps(1) 1100ms,
+    flash 100ms steps(1) 1700ms;
+}
+
+/* Bullets */
+.bullet {
+  position: absolute;
+  top: calc(var(--u) * 15);
+  opacity: 0;
+}
+.bullet-l {
+  left: calc(var(--u) * 22);
+  animation:
+    fly-l 240ms steps(7) 540ms,
+    fly-l 240ms steps(7) 1140ms,
+    fly-l 240ms steps(7) 1740ms;
+}
+.bullet-r {
+  left: calc(var(--u) * 58);
+  animation:
+    fly-r 240ms steps(7) 540ms,
+    fly-r 240ms steps(7) 1140ms,
+    fly-r 240ms steps(7) 1740ms;
+}
+@keyframes fly-l {
+  0% { opacity: 1; transform: none; }
+  99% { opacity: 1; transform: translateX(calc(var(--u) * 7)); }
+  100% { opacity: 0; transform: translateX(calc(var(--u) * 7)); }
+}
+@keyframes fly-r {
+  0% { opacity: 1; transform: none; }
+  99% { opacity: 1; transform: translateX(calc(var(--u) * -7)); }
+  100% { opacity: 0; transform: translateX(calc(var(--u) * -7)); }
+}
+
+/* Explosion: three frames, then debris */
+.blast {
+  position: absolute;
+  opacity: 0;
+}
+.blast-1 {
+  left: calc(var(--u) * 37.5);
+  top: calc(var(--u) * 12.5);
+  animation: flash 90ms steps(1) 2000ms;
+}
+.blast-2 {
+  left: calc(var(--u) * 33.5);
+  top: calc(var(--u) * 8.5);
+  animation: flash 110ms steps(1) 2090ms;
+}
+.blast-3 {
+  left: calc(var(--u) * 29.5);
+  top: calc(var(--u) * 4.5);
+  animation: flash 170ms steps(1) 2200ms;
+}
+
+.debris {
+  position: absolute;
+  left: calc(var(--u) * 42);
+  top: calc(var(--u) * 17);
+  width: calc(var(--u) * var(--s));
+  height: calc(var(--u) * var(--s));
+  opacity: 0;
+  animation: debris 700ms steps(7) 2060ms;
+}
+@keyframes debris {
+  0% { opacity: 1; transform: none; }
+  99% {
+    opacity: 1;
+    transform: translate(calc(var(--u) * var(--dx)), calc(var(--u) * var(--dy)));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--u) * var(--dx)), calc(var(--u) * var(--dy)));
+  }
+}
+
+.boom {
+  position: absolute;
+  top: calc(var(--u) * 12.5);
+  right: 0;
+  left: 0;
+  margin: 0;
+  color: var(--c-gold);
+  font-family: var(--font-pixel), monospace;
+  font-size: calc(var(--u) * 9);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-shadow: calc(var(--u) * 0.8) calc(var(--u) * 0.8) 0 var(--c-red);
+  animation: appear 1ms steps(1) 2150ms both;
+}
+
+.intro-skip {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  padding: 0.5rem 0.9rem;
+  border: 2px solid currentColor;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font-family: var(--font-pixel), monospace;
+  font-size: 1rem;
+}
+
+/* ------------------------------------------------------------------
+   Page
+   ------------------------------------------------------------------ */
+.site {
+  --t0: 2900ms; /* when the intro hands over to the page */
+  --bg: var(--c-ink);
+  --fg: var(--c-paper);
+  --line: color-mix(in srgb, var(--fg) 32%, transparent);
+  --muted: color-mix(in srgb, var(--fg) 72%, var(--bg));
+  --pad: clamp(20px, 5vw, 64px);
+  min-height: 100svh;
+  background: var(--bg);
+  color: var(--fg);
+}
+.site.theme-day {
+  --bg: var(--c-paper);
+  --fg: var(--c-ink);
+}
+.site.is-skipped {
+  --t0: 0ms;
+}
+
+.page {
+  position: relative;
+  width: min(100%, 74rem);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+/* The only entrance on the page: the name wipes in, everything else appears. */
+.wipe {
+  animation: wipe 480ms steps(12) var(--t0) both;
+}
+@keyframes wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+.reveal {
+  animation: appear 1ms steps(1) calc(var(--t0) + 480ms) both;
+}
+
+.mode {
+  position: absolute;
+  top: 24px;
+  right: var(--pad);
+  padding: 0.45rem 0.8rem;
+  border: 2px solid currentColor;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font-family: var(--font-pixel), monospace;
+  font-size: 1rem;
+}
+
+/* Hero */
+.hero {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2rem;
+  padding-block: 96px 56px;
+}
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
 .name {
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-size: clamp(3.5rem, 8vw, 8.5rem);
+  font-family: var(--font-pixel), monospace;
+  font-size: clamp(3.5rem, 16vw, 13rem);
   font-weight: 700;
-  letter-spacing: -0.105em;
-  line-height: 0.78;
+  line-height: 0.92;
+}
+.lede {
+  max-width: 30ch;
+  margin: 0;
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  line-height: 1.4;
+}
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.menu a {
+  padding: 0.55rem 1.1rem;
+  border: 2px solid currentColor;
+  font-family: var(--font-pixel), monospace;
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+.menu a:hover {
+  border-color: var(--c-blue);
+  background: var(--c-blue);
+  color: var(--c-paper);
 }
 
-.name > span:first-child {
-  color: #f1f0e9;
+/* Sections: heading in a left rail, content on the right. */
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  gap: 1.5rem 3rem;
+  padding-top: clamp(4rem, 9vw, 7rem);
 }
-
-.name > span:last-child {
-  color: #0099ff;
-}
-
-.tagline {
-  max-width: 900px;
-  margin: 2rem 0 0;
-  color: #f1f0e9;
-  font-size: clamp(1.35rem, 3.3vw, 3rem);
+.section-title {
+  margin: 0;
+  font-family: var(--font-pixel), monospace;
+  font-size: 1.9rem;
   font-weight: 700;
-  letter-spacing: -0.045em;
-  line-height: 1.2;
-  text-wrap: balance;
+  line-height: 1;
 }
 
-.canvas-highlight {
-  color: #00b4ff;
+.bio {
+  max-width: 52ch;
+  margin: 0 0 2.5rem;
+  font-size: 1.2rem;
+  line-height: 1.7;
 }
 
-.tagline .canvas-highlight {
-  vertical-align: -0.08em;
+/* Ruled rows */
+.rows {
+  margin: 0;
+  padding: 0;
+  border-top: 2px solid var(--line);
+  list-style: none;
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+  gap: 0.35rem 2rem;
+  align-items: baseline;
+  padding-block: 1.25rem;
+  border-bottom: 2px solid var(--line);
+}
+.row-two {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+.row-title {
+  margin: 0;
+  font-family: var(--font-pixel), monospace;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.row-text,
+.row-meta {
+  margin: 0;
+  color: var(--muted);
+}
+.row-text {
+  max-width: 52ch;
+}
+.row-meta {
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
-@media (max-width: 600px) {
-  .name {
-    font-size: clamp(2.75rem, 10.5vw, 4.5rem);
+.link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.link:hover {
+  background: var(--c-blue);
+  color: var(--c-paper);
+  text-decoration: none;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 6rem 3rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.foot p {
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .section {
+    grid-template-columns: minmax(0, 1fr);
   }
-
-  .tagline {
-    margin-top: 1.5rem;
+  .row,
+  .row-two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .row-meta {
+    white-space: normal;
   }
 }
 
-@media (min-width: 1100px) {
-  .hero-content {
-    transform: translateX(-3vw);
-  }
-}
-
+/* Reduced motion: no intro at all, page is simply there. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .site {
+    --t0: 0ms;
+  }
+  .intro {
+    display: none;
   }
 }
