@@ -1,7 +1,6 @@
 // All pixel art for the site lives here so everything shares one grid and one palette.
 // Letters map to colors in globals.css (.px-*):
-//   k ink   p paper   b blue    y gold    m magenta  u violet  n navy
-//   i pink  o orange  h hair    s skin    w suit     v shade   d silhouette  g grey
+//   k ink   p paper   b blue   u violet   n navy   l lavender   g grey
 
 /** Adds a 1-cell ink outline around every opaque cell, so sprites share one style. */
 export function outline(rows: string[]): string[] {
@@ -122,35 +121,6 @@ export function buildText(lines: string[], options: TextOptions = {}): string[] 
 
 /* --------------------------------------------------------------- Sprites */
 
-// Pageant crown, 13 x 5 plus outline.
-export const CROWN: string[] = outline([
-  "y.....y.....y",
-  "yy...yyy...yy",
-  "yyy.yyyyy.yyy",
-  "yyyyyyyyyyyyy",
-  "yymyyymyyymyy",
-]);
-
-// Andrei, bust portrait in a white suit and crown. 12 x 16 plus outline.
-export const BUST: string[] = outline([
-  "..y..yy..y..",
-  "..yyyyyyyy..",
-  "..yymyymyy..",
-  "..hhhhhhhh..",
-  ".hhhhhhhhhh.",
-  ".hhsssssshh.",
-  ".hssksskssh.",
-  ".hssssssssh.",
-  "..sssmmsss..",
-  "...ssssss...",
-  "....ssss....",
-  "wwwwwsswwwww",
-  "wwwwvmmvwwww",
-  "wwwwvmmvwwww",
-  "wwwwvvvvwwww",
-  "wwwwwwwwwwww",
-]);
-
 // Laptop, 24 x 16. The screen shows a "</>" glyph.
 const GLYPH = [
   "bbbbbpbbbbpbpbbbbb",
@@ -176,7 +146,7 @@ export const CAMERA: string[] = [
   "....kkkk......",
   "kkkkkkkkkkkkkk",
   "k" + "u".repeat(12) + "k",
-  "kuuukkkkkuuyyk",
+  "kuuukkkkkuuppk",
   "kuukbbbbbkuuuk",
   "kukbbppbbbkuuk",
   "kukbbpbbbbkuuk",
@@ -185,39 +155,25 @@ export const CAMERA: string[] = [
   "kkkkkkkkkkkkkk",
 ];
 
-// Medal, 12 x 13 plus outline: magenta ribbon, gold disc.
+// Medal, 12 x 13 plus outline: violet ribbon, lavender disc.
 export const MEDAL: string[] = outline([
-  "mm........mm",
-  ".mmm....mmm.",
-  "..mmm..mmm..",
-  "...mmmmmm...",
-  "....mmmm....",
-  "...yyyyyy...",
-  "..yyyyyyyy..",
-  ".yyyyppyyyy.",
-  ".yyyyyyyyyy.",
-  ".yyyyyyyyyy.",
-  ".yyyyyyyyyy.",
-  "..yyyyyyyy..",
-  "...yyyyyy...",
+  "uu........uu",
+  ".uuu....uuu.",
+  "..uuu..uuu..",
+  "...uuuuuu...",
+  "....uuuu....",
+  "...llllll...",
+  "..llllllll..",
+  ".llllppllll.",
+  ".llllllllll.",
+  ".llllllllll.",
+  ".llllllllll.",
+  "..llllllll..",
+  "...llllll...",
 ]);
 
-/** Right-pointing arrow used for menus and buttons. */
+/** Right-pointing arrow used for buttons. */
 export const arrow = (ch: string): string[] =>
   ["x...", "xx..", "xxx.", "xxxx", "xxx.", "xx..", "x..."].map((r) =>
     r.replace(/x/g, ch),
   );
-
-/** Quest marker: a diamond in the given color. */
-export const diamond = (ch: string): string[] =>
-  [
-    "....x....",
-    "...xxx...",
-    "..xxxxx..",
-    ".xxxxxxx.",
-    "xxxxxxxxx",
-    ".xxxxxxx.",
-    "..xxxxx..",
-    "...xxx...",
-    "....x....",
-  ].map((r) => r.replace(/x/g, ch));

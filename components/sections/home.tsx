@@ -1,37 +1,47 @@
-"use client";
-
-import { Sprite } from "../pixel";
-import { BUST } from "../sprites";
-import { Typewriter } from "../typewriter";
+import { Scene } from "../scene";
 import { profile } from "@/lib/content";
 
-export function Home({ active }: { active: boolean }) {
+export function Home() {
   return (
-    <section id="home" className="home wrap" aria-labelledby="home-title">
-      <h1 id="home-title" className="visually-hidden">
-        {profile.first} {profile.last}
-      </h1>
+    <section id="home" className="home" aria-labelledby="home-title">
+      <div className="wrap home-grid">
+        <div className="hero">
+          <p className="eyebrow">
+            {profile.roles[0]} <span aria-hidden="true">/</span> {profile.location}
+          </p>
+          <h1 id="home-title" className="hero-name">
+            <span>{profile.first}</span> <span>{profile.last}</span>
+          </h1>
+          <p className="hero-lede">{profile.greeting}</p>
 
-      <div className="home-stage">
-        <div className="portrait" aria-hidden="true">
-          <Sprite rows={BUST} />
-        </div>
+          <ul className="role-tags" aria-label="Roles">
+            {profile.roles.map((r) => (
+              <li key={r}>{r}</li>
+            ))}
+          </ul>
 
-        <div className="dialogue notched">
-          <div className="dialogue-head">{profile.first}</div>
-          <div className="dialogue-body">
-            <Typewriter
-              text={profile.greeting}
-              active={active}
-              className="dialogue-text"
-            />
-            <nav className="menu-rpg" aria-label="Jump to a section">
-              <a href="#work">Work</a>
-              <a href="#about">About</a>
-              <a href="#contact">Contact</a>
-            </nav>
+          <div className="actions">
+            <a className="btn" href="#work">
+              View work
+            </a>
+            <a className="btn btn-ghost" href="#contact">
+              Get in touch
+            </a>
           </div>
         </div>
+
+        <figure className="window notched" aria-hidden="true">
+          <div className="window-bar">
+            <span>andrei-sanchez</span>
+            <span>portfolio</span>
+          </div>
+          <div className="window-screen">
+            <Scene idPrefix="home" animated={false} className="window-scene" />
+          </div>
+          <div className="window-status">
+            <span>{profile.location}</span>
+          </div>
+        </figure>
       </div>
     </section>
   );

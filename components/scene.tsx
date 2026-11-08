@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactElement } from "react";
 
 // The pixel-art sunset. One 192 x 108 grid: banded sky, stars, a low sun,
-// drifting clouds, three hill layers and a small silhouette of Andrei in his crown.
+// drifting clouds, three hill layers and a small silhouette at the horizon.
 
 const W = 192;
 const H = 108;
@@ -124,10 +124,8 @@ function hillPath(y: (x: number) => number): string {
 
 /* ----------------------------------------------------------------- Walker */
 
-// Andrei at the horizon: a backlit silhouette with a gold crown and pink rim light.
+// A lone figure at the horizon: a backlit silhouette with a soft pink rim light.
 const WALKER = [
-  "..y.y.y..",
-  "..yyyyy..",
   "...ddd...",
   "..idddd..",
   "..idddd..",
@@ -143,7 +141,7 @@ const WALKER = [
   "...d.d...",
   "..dd.dd..",
 ];
-const WALKER_PALETTE = { y: "#ffc94d", d: "#0e0922", i: "#ff9ccf" };
+const WALKER_PALETTE = { d: "#0e0922", i: "#ff9ccf" };
 const WALKER_X = 112;
 const WALKER_FEET = Math.max(
   ...Array.from({ length: 9 }, (_, i) => midY(WALKER_X + i)),
