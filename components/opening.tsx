@@ -4,12 +4,13 @@ import { useEffect, useRef } from "react";
 import { Sprite } from "./pixel";
 import { Scene } from "./scene";
 import { arrow, buildText } from "./sprites";
+import { profile } from "@/lib/content";
 
 const TITLE = buildText(["ANDREI", "SANCHEZ"], {
   scale: 2,
   depth: 2,
   top: "p",
-  bottom: "i",
+  bottom: "l",
   ext: ["u", "n"],
 });
 const ARROW = arrow("k");
@@ -41,10 +42,10 @@ export function Opening({ leaving, onEnter, onLeft }: OpeningProps) {
       <Scene idPrefix="open" className="opening-scene" />
 
       <div className="opening-copy">
-        <div role="img" aria-label="Andrei Sanchez">
+        <div role="img" aria-label={`${profile.first} ${profile.last}`}>
           <Sprite rows={TITLE} className="opening-title" />
         </div>
-        <p className="opening-sub">BSIT student, developer, brand ambassador and model.</p>
+        <p className="opening-sub">{profile.tagline}</p>
         <button
           ref={button}
           type="button"
@@ -53,9 +54,11 @@ export function Opening({ leaving, onEnter, onLeft }: OpeningProps) {
           disabled={leaving}
         >
           <Sprite rows={ARROW} unit="3px" />
-          Enter
+          Enter Portfolio
         </button>
       </div>
+
+      <p className="opening-meta">{profile.location}</p>
     </div>
   );
 }

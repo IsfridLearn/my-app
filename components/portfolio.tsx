@@ -76,7 +76,7 @@ export function Portfolio() {
       <div inert={phase === "opening"}>
         <Nav active={active} />
         <main>
-          <Home active={phase !== "opening"} />
+          <Home />
           <Work />
           <About />
           <Skills />
@@ -88,7 +88,7 @@ export function Portfolio() {
             © 2026 {profile.first} {profile.last}
           </p>
           <button type="button" className="foot-btn" onClick={restart}>
-            Back to the opening
+            Replay intro
           </button>
         </footer>
       </div>

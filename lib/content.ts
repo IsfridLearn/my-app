@@ -1,11 +1,13 @@
 // Everything the portfolio says lives here. Edit this file, not the components.
-// Real details are marked as such; anything marked TODO still needs your own.
+// Only facts from the original site are used. Anything not filled in yet is left
+// empty and is simply hidden on the page.
 
 export const profile = {
   first: "Andrei",
   last: "Sanchez",
   location: "Davao City",
   tagline: "BSIT student, developer, brand ambassador and model.",
+  roles: ["BSIT student", "Developer", "Brand ambassador", "Model"],
   greeting:
     "Hi, I'm Andrei. I'm a 2nd-year BSIT student, the brand ambassador of Holy Cross of Davao College, and a model who works with other brands too. I'm building my future, one line of code at a time.",
 };
@@ -17,42 +19,23 @@ export type Project = {
   title: string;
   blurb: string;
   stack: string[];
-  hue: "violet" | "magenta" | "blue";
-  /** "scene" shows the live pixel scene; "empty" shows a no-signal test card. */
-  preview: "scene" | "empty";
+  /** "scene" shows the pixel sunset as the preview. */
+  preview?: "scene";
+  /** Live link. */
   href?: string;
+  /** Code link. */
   source?: string;
 };
 
-// TODO: replace the two empty slots with your real projects.
-// Give each a title, blurb, stack, href (live link) and optionally source (code link),
-// and set preview to "scene" (or leave "empty" until you have a screenshot).
+// Add a project here and it appears on the page. Give it a title, blurb, stack,
+// and optionally href (live link) and source (code link).
 export const projects: Project[] = [
   {
     id: "portfolio",
     title: "This portfolio",
-    blurb:
-      "My personal site, designed as a retro pixel-art world with an RPG-style interface.",
+    blurb: "My personal site, built around a retro pixel-art identity.",
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-    hue: "violet",
     preview: "scene",
-    href: "https://andrei-sanchez.vercel.app/",
-  },
-  {
-    id: "slot-2",
-    title: "Slot 2",
-    blurb: "This slot is open for my next project.",
-    stack: [],
-    hue: "magenta",
-    preview: "empty",
-  },
-  {
-    id: "slot-3",
-    title: "Slot 3",
-    blurb: "This slot is open for my next project.",
-    stack: [],
-    hue: "blue",
-    preview: "empty",
   },
 ];
 
@@ -67,8 +50,6 @@ export type Skill = {
   note: string;
 };
 
-// The four code skills come from the stack this site is built with.
-// TODO: add the rest of your skills (up to 8 slots are shown).
 export const skills: Skill[] = [
   {
     id: "next",
@@ -116,68 +97,54 @@ export const skills: Skill[] = [
 
 /* ------------------------------------------------------------ Experience */
 
-export type Quest = {
+export type Role = {
   title: string;
   where: string;
-  status: "active" | "cleared";
   text: string;
+  current: boolean;
 };
 
-// TODO: add dates, events and details for each entry as you like.
-export const quests: Quest[] = [
+export const experience: Role[] = [
   {
     title: "BSIT, 2nd year",
     where: "Information Technology student",
-    status: "active",
     text: "Learning to build software, one line of code at a time.",
+    current: true,
   },
   {
     title: "Brand Ambassador",
     where: "Holy Cross of Davao College",
-    status: "active",
     text: "Represents the college as its brand ambassador.",
+    current: true,
   },
   {
     title: "Model",
     where: "Works with other brands",
-    status: "active",
     text: "Models for brands beyond the college.",
-  },
-  {
-    title: "Pageant King",
-    where: "Add the pageant and year",
-    status: "cleared",
-    text: "Add the title you won and the events you joined.",
+    current: true,
   },
 ];
 
 /* ----------------------------------------------------------------- About */
 
-export const stats: Array<[string, string]> = [
+export const facts: Array<[string, string]> = [
   ["Name", "Andrei Sanchez"],
-  ["Class", "BSIT student"],
-  ["Year", "2nd year"],
-  ["Home", "Davao City"],
-  ["Represents", "Holy Cross of Davao College"],
-  ["Title", "Pageant King"],
-  ["Side quest", "Modeling for brands"],
+  ["Program", "BSIT"],
+  ["Year level", "2nd year"],
+  ["Based in", "Davao City"],
+  ["Brand ambassador for", "Holy Cross of Davao College"],
+  ["Also", "Modeling for brands"],
 ];
 
 /* --------------------------------------------------------------- Contact */
 
-// TODO: replace these with your real email and profiles.
-export const contact = {
-  email: "you@example.com",
-  links: [
-    {
-      label: "Instagram",
-      handle: "@yourhandle",
-      href: "https://instagram.com/yourhandle",
-    },
-    {
-      label: "GitHub",
-      handle: "github.com/yourhandle",
-      href: "https://github.com/yourhandle",
-    },
-  ],
+// TODO: add your real email and profiles. Empty values are hidden on the page.
+// email: "you@yourdomain.com"
+// links: [{ label: "Instagram", handle: "@yourname", href: "https://instagram.com/yourname" }]
+export const contact: {
+  email: string;
+  links: Array<{ label: string; handle: string; href: string }>;
+} = {
+  email: "",
+  links: [],
 };

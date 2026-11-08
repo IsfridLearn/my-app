@@ -1,51 +1,55 @@
 import { Sprite } from "../pixel";
-import { CAMERA, CROWN, LAPTOP, MEDAL } from "../sprites";
-import { stats } from "@/lib/content";
+import { SectionHead } from "../section-head";
+import { CAMERA, LAPTOP, MEDAL } from "../sprites";
+import { facts } from "@/lib/content";
 
-const EQUIPMENT = [
-  { slot: "Head", item: "Crown", note: "Pageant King", rows: CROWN, unit: "8px" },
-  { slot: "Main hand", item: "Laptop", note: "BSIT student", rows: LAPTOP, unit: "4px" },
-  { slot: "Off hand", item: "Camera", note: "Model for brands", rows: CAMERA, unit: "6px" },
+const ROLES = [
   {
-    slot: "Badge",
-    item: "Medal",
-    note: "Brand ambassador, Holy Cross of Davao College",
+    title: "Developer",
+    note: "BSIT student, 2nd year",
+    rows: LAPTOP,
+    unit: "3px",
+  },
+  {
+    title: "Model",
+    note: "Works with brands beyond the college",
+    rows: CAMERA,
+    unit: "4px",
+  },
+  {
+    title: "Brand ambassador",
+    note: "Holy Cross of Davao College",
     rows: MEDAL,
-    unit: "6px",
+    unit: "3px",
   },
 ];
 
 export function About() {
   return (
-    <section id="about" className="section wrap" aria-labelledby="about-title">
-      <div className="section-head">
-        <h2 id="about-title">About</h2>
-      </div>
+    <section id="about" className="section" aria-labelledby="about-title">
+      <div className="wrap">
+        <SectionHead index="02" id="about-title" title="About" />
 
-      <div className="sheet">
-        <dl className="stats">
-          {stats.map(([label, value]) => (
-            <div key={label} className="stat">
-              <dt>{label}</dt>
-              <span className="leader" aria-hidden="true" />
-              <dd>{value}</dd>
-            </div>
-          ))}
-        </dl>
+        <div className="about-grid">
+          <dl className="facts">
+            {facts.map(([label, value]) => (
+              <div key={label} className="fact">
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
 
-        <div className="gear notched">
-          <h3 className="gear-title">Equipped</h3>
-          <ul className="gear-grid">
-            {EQUIPMENT.map((e) => (
-              <li key={e.item} className="gear-slot">
-                <div className="gear-art" aria-hidden="true">
-                  <Sprite rows={e.rows} unit={e.unit} />
+          <ul className="roles" aria-label="Roles">
+            {ROLES.map((r) => (
+              <li key={r.title} className="role">
+                <div className="role-art" aria-hidden="true">
+                  <Sprite rows={r.rows} unit={r.unit} />
                 </div>
-                <p className="gear-item">{e.item}</p>
-                <p className="gear-note">
-                  <span className="visually-hidden">{e.slot}: </span>
-                  {e.note}
-                </p>
+                <div>
+                  <p className="role-title">{r.title}</p>
+                  <p className="role-note">{r.note}</p>
+                </div>
               </li>
             ))}
           </ul>

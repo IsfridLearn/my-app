@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sprite } from "./pixel";
-import { CROWN } from "./sprites";
+import { buildText } from "./sprites";
 
 export const SECTIONS = [
   { id: "home", label: "Home" },
@@ -13,15 +13,27 @@ export const SECTIONS = [
   { id: "contact", label: "Contact" },
 ] as const;
 
+const MONOGRAM = buildText(["AS"], { top: "p", bottom: "l" });
+
 export function Nav({ active }: { active: string }) {
   const [open, setOpen] = useState(false);
+
+  // Escape closes the mobile menu.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
     <header className={open ? "nav nav-open" : "nav"}>
       <div className="nav-inner">
         <a href="#home" className="nav-brand" onClick={() => setOpen(false)}>
-          <Sprite rows={CROWN} unit="3px" />
-          Andrei Sanchez
+          <Sprite rows={MONOGRAM} unit="3px" />
+          <span>Andrei Sanchez</span>
         </a>
 
         <button
