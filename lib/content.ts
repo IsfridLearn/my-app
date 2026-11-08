@@ -17,7 +17,12 @@ export const profile = {
 export type Project = {
   id: string;
   title: string;
+  /** Used by the filter when there is more than one category. */
+  category: string;
   blurb: string;
+  problem: string;
+  contribution: string;
+  decisions: string[];
   stack: string[];
   /** "scene" shows the pixel sunset as the preview. */
   preview?: "scene";
@@ -27,15 +32,43 @@ export type Project = {
   source?: string;
 };
 
-// Add a project here and it appears on the page. Give it a title, blurb, stack,
-// and optionally href (live link) and source (code link).
+// Add a project here and it appears on the page. The filter shows up by itself
+// once projects use two or more categories. Only write what is true.
 export const projects: Project[] = [
   {
     id: "portfolio",
     title: "This portfolio",
+    category: "Web",
     blurb: "My personal site, built around a retro pixel-art identity.",
+    problem:
+      "The first version leaned on template content and did not say who I actually am. It needed to introduce me, my roles and my work clearly.",
+    contribution:
+      "Direction, content and development of the whole site: layout, pixel art, interactions and the copy.",
+    decisions: [
+      "All pixel art is drawn in code from text grids and rendered as SVG, so there are no image files and it stays sharp at any size.",
+      "Pixel type is kept to headings. Paragraphs use a clean sans-serif so the text stays easy to read.",
+      "Motion is slow and stepped, and it switches off for visitors who prefer reduced motion.",
+      "Every piece of text lives in one content file, so updating the site never means touching components.",
+    ],
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     preview: "scene",
+  },
+];
+
+/* ---------------------------------------------------------- Capabilities */
+
+export const capabilities: Array<{ title: string; text: string }> = [
+  {
+    title: "Web interfaces",
+    text: "Built with Next.js, React, TypeScript and Tailwind CSS.",
+  },
+  {
+    title: "Brand ambassadorship",
+    text: "The face of Holy Cross of Davao College.",
+  },
+  {
+    title: "Modeling",
+    text: "Works with brands beyond the college.",
   },
 ];
 
@@ -126,6 +159,14 @@ export const experience: Role[] = [
 ];
 
 /* ----------------------------------------------------------------- About */
+
+// Optional. Leave empty and they are hidden. Write only what is true.
+// interests: ["..."], goals: "..."
+export const about: { interests: string[]; goals: string; photo: string } = {
+  interests: [],
+  goals: "",
+  photo: "", // e.g. "/andrei.jpg" after adding the file to /public
+};
 
 export const facts: Array<[string, string]> = [
   ["Name", "Andrei Sanchez"],

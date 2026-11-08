@@ -37,6 +37,11 @@ export function Contact() {
       <div className="wrap">
         <SectionHead index="05" id="contact-title" title="Contact" />
 
+        <p className="contact-lead">
+          Have a web project, a brand collaboration or a modeling inquiry in mind?
+          Say hello.
+        </p>
+
         <div className="window contact-window notched">
           <div className="window-bar">
             <span>contact</span>
