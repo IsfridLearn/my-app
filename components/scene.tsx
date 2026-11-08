@@ -7,16 +7,16 @@ const W = 192;
 const H = 108;
 
 const BANDS: Array<[string, number]> = [
-  ["#0b0820", 20],
-  ["#140d33", 14],
-  ["#1f1248", 12],
-  ["#31175c", 10],
-  ["#4d1a6b", 8],
-  ["#7a2178", 7],
-  ["#b02f86", 6],
-  ["#e0508f", 5],
-  ["#ff7f8e", 4],
-  ["#ff9a5c", 6],
+  ["#0a0820", 20],
+  ["#10123a", 14],
+  ["#141a5c", 12],
+  ["#1d2c86", 10],
+  ["#2f3f9e", 8],
+  ["#4a45b0", 7],
+  ["#7a4cc0", 6],
+  ["#b05ad0", 5],
+  ["#e07ae0", 4],
+  ["#ffa8e8", 6],
 ];
 
 const BAND_RECTS = (() => {
@@ -49,12 +49,12 @@ type Star = {
 
 const STARS: Star[] = (() => {
   const r = rng(7);
-  const colors = ["#ece8ff", "#ffd6ec", "#9fd0ff"];
+  const colors = ["#ece8ff", "#d6e4ff", "#9fd0ff"];
   return Array.from({ length: 48 }, (_, i) => ({
     x: 2 + Math.floor(r() * (W - 4)),
     y: 2 + Math.floor(r() * 58),
     color: colors[Math.floor(r() * 3)],
-    plus: i % 9 === 0,
+    plus: i % 7 === 0,
     twinkle: i % 4 === 0,
     delay: Math.round(r() * 40) / 10,
   }));
@@ -62,8 +62,8 @@ const STARS: Star[] = (() => {
 
 /* ---------------------------------------------------------------- Clouds */
 
-const CLOUD_HIGH = { a: "#2a1656", b: "#43237a", c: "#7a2f86" };
-const CLOUD_LOW = { a: "#6a2a86", b: "#a8368c", c: "#ff7f8e" };
+const CLOUD_HIGH = { a: "#161a5a", b: "#262b86", c: "#5b45b8" };
+const CLOUD_LOW = { a: "#4a2f94", b: "#7d4bc0", c: "#e07ae0" };
 
 const CLOUD_BIG = [
   "..........aaaaaa.............",
@@ -141,7 +141,7 @@ const WALKER = [
   "...d.d...",
   "..dd.dd..",
 ];
-const WALKER_PALETTE = { d: "#0e0922", i: "#ff9ccf" };
+const WALKER_PALETTE = { d: "#0b0824", i: "#ffa8e8" };
 const WALKER_X = 112;
 const WALKER_FEET = Math.max(
   ...Array.from({ length: 9 }, (_, i) => midY(WALKER_X + i)),
@@ -275,8 +275,8 @@ export function Scene({ idPrefix, className, animated = true }: SceneProps) {
       })}
 
       {/* Sun, mostly hidden behind the far hills */}
-      {disc(100, 90, 13, "#ffb45c", `${idPrefix}-sun`)}
-      {disc(100, 90, 10, "#ffe08a", `${idPrefix}-core`)}
+      {disc(100, 90, 13, "#ff9ee6", `${idPrefix}-sun`)}
+      {disc(100, 90, 10, "#ffe6f8", `${idPrefix}-core`)}
 
       {/* Clouds */}
       {CLOUDS.map((c, i) => (
@@ -298,12 +298,12 @@ export function Scene({ idPrefix, className, animated = true }: SceneProps) {
       ))}
 
       {/* Land */}
-      <path d={hillPath(farY)} fill="#2d1659" />
-      <path d={hillPath(midY)} fill="#1a0d3a" />
+      <path d={hillPath(farY)} fill="#2a1b78" />
+      <path d={hillPath(midY)} fill="#170f52" />
       <g transform={`translate(${WALKER_X} ${WALKER_FEET - WALKER.length + 1})`}>
         {spriteRects(WALKER, WALKER_PALETTE, `${idPrefix}-w`)}
       </g>
-      <path d={hillPath(nearY)} fill="#0e0922" />
+      <path d={hillPath(nearY)} fill="#0b0824" />
     </svg>
   );
 }

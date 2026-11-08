@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Nav, SECTIONS } from "./nav";
 import { Opening } from "./opening";
+import { SideRail } from "./side-rail";
 import { About } from "./sections/about";
 import { Contact } from "./sections/contact";
 import { Experience } from "./sections/experience";
@@ -13,10 +14,13 @@ import { profile } from "@/lib/content";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 type Phase = "opening" | "leaving" | "done";
+type Accent = "violet" | "blue" | "rose";
+const ACCENTS: Accent[] = ["violet", "blue", "rose"];
 
 export function Portfolio() {
   const [phase, setPhase] = useState<Phase>("opening");
   const [active, setActive] = useState<string>("home");
+  const [accent, setAccent] = useState<Accent>("violet");
   const reduced = useReducedMotion();
 
   const enter = () => setPhase(reduced ? "done" : "leaving");
@@ -45,6 +49,39 @@ export function Portfolio() {
       html.style.overflow = previous;
     };
   }, [phase]);
+
+  // Sections fade in once as they scroll into view. The hidden state is only
+  // applied after mount, so the page is fully visible without JavaScript.
+  useEffect(() => {
+    if (reduced) return;
+    const html = document.documentElement;
+    const targets = document.querySelectorAll(
+      ".section-head, .project, .about-grid, .skills-grid, .entry, .contact-window, .capabilities",
+    );
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    html.classList.add("js-reveal");
+    targets.forEach((t) => io.observe(t));
+    return () => {
+      io.disconnect();
+      html.classList.remove("js-reveal");
+      targets.forEach((t) => t.classList.remove("is-in"));
+    };
+  }, [reduced]);
+
+  // Accent colour: a small detail in the footer, applied through a data attribute.
+  useEffect(() => {
+    document.documentElement.dataset.accent = accent;
+  }, [accent]);
 
   // Highlight the nav link for the section crossing the middle of the screen.
   useEffect(() => {
@@ -75,6 +112,7 @@ export function Portfolio() {
 
       <div inert={phase === "opening"}>
         <Nav active={active} />
+        <SideRail active={active} />
         <main>
           <Home />
           <Work />
@@ -87,9 +125,23 @@ export function Portfolio() {
           <p>
             © 2026 {profile.first} {profile.last}
           </p>
-          <button type="button" className="foot-btn" onClick={restart}>
-            Replay intro
-          </button>
+          <div className="foot-tools">
+            <div className="accents" role="group" aria-label="Accent color">
+              {ACCENTS.map((a) => (
+                <button
+                  key={a}
+                  type="button"
+                  className={`accent accent-${a}`}
+                  aria-label={a}
+                  aria-pressed={accent === a}
+                  onClick={() => setAccent(a)}
+                />
+              ))}
+            </div>
+            <button type="button" className="foot-btn" onClick={restart}>
+              Replay intro
+            </button>
+          </div>
         </footer>
       </div>
     </div>
