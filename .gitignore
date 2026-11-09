@@ -42,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Uncropped photo originals. The site only uses the processed files in public/photos.
+/assets/photos/

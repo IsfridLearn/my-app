@@ -1,65 +1,63 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import { Scene } from "../scene";
-import { Sprite } from "../pixel";
-import { ICON } from "../sprites";
-import { hasContact, profile } from "@/lib/content";
+import { prints, profile } from "@/lib/content";
 
 export function Home() {
-  const hasPhoto = profile.photo.trim() !== "";
-  const name = `${profile.first} ${profile.last}`;
+  const [print, setPrint] = useState<"dark" | "light">("dark");
+  const isLight = print === "light";
 
   return (
-    <section id="home" className="home" aria-labelledby="home-title">
-      <div className="wrap">
-        <h1 id="home-title" className="hero-name">
-          <span className="hn-1">{profile.first}</span>{" "}
-          <span className="hn-2">{profile.last}</span>
+    <section id="home" className="intro" data-print={print} aria-labelledby="home-title">
+      <div className="stage">
+        <h1 id="home-title">
+          <span className="name-1">{profile.first}</span>{" "}
+          <span className="name-2">{profile.last}</span>
         </h1>
+        <Image
+          className="fig fig-dark"
+          src={prints.dark.src}
+          alt={prints.dark.alt}
+          width={prints.dark.width}
+          height={prints.dark.height}
+          sizes="(max-width: 1023px) 70vw, 45vw"
+          preload
+        />
+        <Image
+          className="fig fig-light"
+          src={prints.light.src}
+          alt={prints.light.alt}
+          width={prints.light.width}
+          height={prints.light.height}
+          sizes="(max-width: 1023px) 70vw, 45vw"
+          loading="eager"
+        />
+      </div>
 
-        <div className="home-lower">
-          <div className="hero">
-            <ul className="role-line" aria-label="Roles">
-              {profile.roles.map((r) => (
-                <li key={r}>{r}</li>
-              ))}
-            </ul>
-            <p className="hero-lede">{profile.greeting}</p>
-            <div className="actions">
-              <a className="btn" href="#work">
-                See my work
-                <Sprite rows={[...ICON.arrow].map((r) => r.replace(/u/g, "k"))} unit="2px" />
-              </a>
-              {hasContact && (
-                <a className="btn btn-ghost" href="#contact">
-                  Get in touch
-                </a>
-              )}
-            </div>
-          </div>
+      <div className="intro-text">
+        <ul className="file roles" aria-label="Roles">
+          {profile.roles.map((r) => (
+            <li key={r}>{r}</li>
+          ))}
+        </ul>
+        <p>{profile.greeting}</p>
+      </div>
 
-          <figure className="plate">
-            <div className="frame">
-              <i className="crop tl" />
-              <i className="crop tr" />
-              <i className="crop bl" />
-              <i className="crop br" />
-              <div className={hasPhoto ? "frame-inner portrait" : "frame-inner"}>
-                {hasPhoto ? (
-                  <Image
-                    className="plate-photo"
-                    src={profile.photo}
-                    alt={name}
-                    width={960}
-                    height={1200}
-                    sizes="(max-width: 900px) 90vw, 440px"
-                  />
-                ) : (
-                  <Scene idPrefix="home" className="plate-scene" />
-                )}
-              </div>
-            </div>
-          </figure>
-        </div>
+      <div className="intro-cap">
+        <p className="file">
+          {isLight ? prints.light.file : prints.dark.file}
+          <br />
+          One portrait, printed dark and light
+        </p>
+        <button
+          type="button"
+          className="file print-btn"
+          aria-pressed={isLight}
+          onClick={() => setPrint(isLight ? "dark" : "light")}
+        >
+          {isLight ? "Print dark" : "Print light"}
+        </button>
       </div>
     </section>
   );
