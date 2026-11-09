@@ -1,42 +1,45 @@
 import Image from "next/image";
-import { SectionHead } from "../section-head";
-import { about, profile } from "@/lib/content";
+import { about, prints } from "@/lib/content";
 
 export function About() {
-  const hasPhoto = about.photo.trim() !== "";
-  const hasInterests = about.interests.length > 0;
-  const hasGoals = about.goals.trim() !== "";
-
   return (
-    <section id="about" className="section" aria-labelledby="about-title">
-      <div className="wrap">
-        <SectionHead id="about-title" title="About" />
+    <>
+      <div className="dither-edge" aria-hidden="true" />
+      <section id="about" className="about grid" aria-labelledby="about-title">
+        <figure className="about-fig">
+          <Image
+            src={prints.light.src}
+            alt={prints.light.alt}
+            width={prints.light.width}
+            height={prints.light.height}
+            sizes="(max-width: 1023px) 90vw, 42vw"
+          />
+        </figure>
 
-        <div className={hasPhoto ? "about-top has-photo" : "about-top"}>
-          <div className="about-copy">
-            <p className="about-headline">
-              <span>{about.headline[0]}</span>
-              <span>{about.headline[1]}</span>
-            </p>
+        <div className="about-text">
+          <p className="file">About</p>
+          <h2 id="about-title">
+            <span className="camera">{about.headline[0]}</span>{" "}
+            <span className="code">{about.headline[1]}</span>
+          </h2>
+          <div className="about-body">
             {about.paragraphs.map((p) => (
               <p key={p}>{p}</p>
             ))}
-            {hasInterests && <p>Interests: {about.interests.join(", ")}.</p>}
-            {hasGoals && <p>{about.goals}</p>}
           </div>
 
-          {hasPhoto && (
-            <Image
-              className="about-photo"
-              src={about.photo}
-              alt={`${profile.first} ${profile.last}`}
-              width={800}
-              height={1000}
-              sizes="(max-width: 900px) 80vw, 340px"
-            />
+          {about.interview.length > 0 && (
+            <dl className="interview">
+              {about.interview.map((item) => (
+                <div key={item.question}>
+                  <dt>{item.question}</dt>
+                  <dd>{item.answer}</dd>
+                </div>
+              ))}
+            </dl>
           )}
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

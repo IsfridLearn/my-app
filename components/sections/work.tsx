@@ -1,71 +1,71 @@
-import { SectionHead } from "../section-head";
+import Image from "next/image";
+import { Sprite } from "../pixel";
+import { ARROW } from "../sprites";
 import { projects } from "@/lib/content";
+
+export const fileNumber = (index: number) => `CODE·${String(index + 1).padStart(2, "0")}`;
 
 export function Work() {
   return (
-    <section id="work" className="section" aria-labelledby="work-title">
-      <div className="wrap">
-        <SectionHead id="work-title" title="Work" />
+    <section id="work" className="work" aria-labelledby="work-title">
+      <h2 id="work-title" className="file work-title">
+        Selected Work
+      </h2>
 
-        <p className="work-lead">
-          {projects.length === 1
-            ? "One project so far: the site you're looking at."
-            : "What I've built so far, and why."}
-        </p>
+      <div className="projects">
+        {projects.map((p, i) => (
+          <article key={p.id} id={p.id} className="project grid">
+            {p.image && (
+              <Image
+                className="project-image"
+                src={p.image.src}
+                alt={p.image.alt}
+                width={p.image.width}
+                height={p.image.height}
+                sizes="(max-width: 1023px) 100vw, 68vw"
+              />
+            )}
 
-        <ol className="projects">
-          {projects.map((p) => (
-            <li key={p.id} className="project">
-              <div className="project-head">
-                <h3>{p.title}</h3>
-                <p className="project-blurb">{p.blurb}</p>
-                {p.stack.length > 0 && (
-                  <p className="project-stack">Built with {p.stack.join(", ")}.</p>
-                )}
-                {(p.href || p.source) && (
-                  <div className="actions">
-                    {p.href && (
-                      <a className="btn" href={p.href} target="_blank" rel="noreferrer">
-                        Open live site
-                      </a>
-                    )}
-                    {p.source && (
-                      <a
-                        className="btn btn-ghost"
-                        href={p.source}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        View code
-                      </a>
-                    )}
-                  </div>
-                )}
-              </div>
-
+            <div className="project-head">
+              <p className="file">{fileNumber(i)}</p>
+              <h3>{p.title}</h3>
+              <p>{p.blurb}</p>
               <dl className="notes">
                 <div>
-                  <dt>Why I made it</dt>
+                  <dt className="file">Why I made it</dt>
                   <dd>{p.why}</dd>
                 </div>
                 <div>
-                  <dt>My part</dt>
+                  <dt className="file">My part</dt>
                   <dd>{p.role}</dd>
                 </div>
-                <div>
-                  <dt>Choices</dt>
-                  <dd>
-                    <ul>
-                      {p.choices.map((c) => (
-                        <li key={c}>{c}</li>
-                      ))}
-                    </ul>
-                  </dd>
-                </div>
               </dl>
-            </li>
-          ))}
-        </ol>
+            </div>
+
+            <div className="project-choices">
+              <h4 className="file">Choices</h4>
+              <ul>
+                {p.choices.map((c) => (
+                  <li key={c}>{c}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="project-foot file">
+              {p.stack.length > 0 && <p>{p.stack.join(", ")}</p>}
+              {p.href && (
+                <a className="go" href={p.href} target="_blank" rel="noreferrer">
+                  Open live site <Sprite rows={ARROW} unit="2px" />
+                </a>
+              )}
+              {p.source && (
+                <a className="go" href={p.source} target="_blank" rel="noreferrer">
+                  View code <Sprite rows={ARROW} unit="2px" />
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

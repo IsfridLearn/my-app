@@ -1,23 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Archivo, Bodoni_Moda, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-// Display type: a condensed editorial serif. Text: a clean sans. Labels: mono.
-const display = Instrument_Serif({
+// Three voices: a fashion serif for the camera side, a wide sans for the code
+// side and for reading, and a mono for archive labels.
+const display = Bodoni_Moda({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: "400",
   style: ["normal", "italic"],
+  axes: ["opsz"],
 });
 
-const text = Instrument_Sans({
+const text = Archivo({
   variable: "--font-text",
   subsets: ["latin"],
+  axes: ["wdth"],
 });
 
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 const title = "Andrei Sanchez | BSIT student, brand ambassador and model";
@@ -25,13 +28,19 @@ const description =
   "Andrei Sanchez is a second-year BSIT student in Davao City, the brand ambassador of Holy Cross of Davao College, a model and a pageant titleholder.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://andreisanchez.vercel.app"),
   title,
   description,
-  openGraph: { title, description },
+  icons: { icon: "/favicon.svg" },
+  openGraph: {
+    title,
+    description,
+    images: [{ url: "/photos/social.jpg", width: 1200, height: 630, alt: "Andrei Sanchez" }],
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0e0e12",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

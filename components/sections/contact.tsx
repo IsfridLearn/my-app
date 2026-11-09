@@ -3,8 +3,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { Sprite } from "../pixel";
-import { SectionHead } from "../section-head";
-import { ICON } from "../sprites";
+import { ARROW } from "../sprites";
 import { contact } from "@/lib/content";
 
 export function Contact() {
@@ -17,6 +16,8 @@ export function Contact() {
 
   // Nothing to show until real details are added in lib/content.ts.
   if (email === "" && links.length === 0) return null;
+
+  const at = email.indexOf("@");
 
   const copyEmail = async () => {
     try {
@@ -37,76 +38,64 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="section" aria-labelledby="contact-title">
-      <div className="wrap">
-        <SectionHead id="contact-title" title="Contact" />
+    <section id="contact" className="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title" className="file">
+        Contact
+      </h2>
 
-        <div className="contact-grid">
-          <p className="contact-statement">
-            Say hello.
-          </p>
+      {email !== "" && (
+        <a className="mail" href={`mailto:${email}`}>
+          <span>{email.slice(0, at)}</span>
+          <span>{email.slice(at)}</span>
+        </a>
+      )}
 
-          <div className="contact-panel">
-            <p className="contact-lead">
-              A brand collaboration, a modeling inquiry or a web project: write to me.
-            </p>
-
-            <ul className="channels">
-              {email !== "" && (
-                <li className="channel">
-                  <span className="channel-label">
-                    <Sprite rows={[...ICON.mail]} unit="2px" /> Email
-                  </span>
-                  <span className="channel-value">
-                    <a href={`mailto:${email}`}>{email}</a>
-                    <button type="button" className="copy-btn" onClick={copyEmail}>
-                      {copied ? "Copied" : "Copy"}
-                    </button>
-                  </span>
-                </li>
-              )}
-              {links.map((l) => (
-                <li key={l.label} className="channel">
-                  <span className="channel-label">{l.label}</span>
-                  <span className="channel-value">
-                    <a href={l.href} target="_blank" rel="noreferrer">
-                      {l.handle}
-                    </a>
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            {email !== "" && (
-              <form className="contact-form" onSubmit={send}>
-                <label>
-                  <span>Your name</span>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    autoComplete="name"
-                  />
-                </label>
-                <label>
-                  <span>Message</span>
-                  <textarea
-                    rows={4}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    required
-                  />
-                </label>
-                <button type="submit" className="btn">
-                  Send message
-                </button>
-                <p className="form-hint">
-                  Opens your email app with the message ready to send.
-                </p>
-              </form>
-            )}
-          </div>
+      <div className="grid contact-low">
+        <div className="contact-lead">
+          <p>A brand collaboration, a modeling inquiry or a web project: write to me.</p>
+          {email !== "" && (
+            <button type="button" className="file print-btn" onClick={copyEmail}>
+              {copied ? "Copied" : "Copy email"}
+            </button>
+          )}
         </div>
+
+        <ul className="channels file">
+          {links.map((l) => (
+            <li key={l.label}>
+              <a className="go" href={l.href} target="_blank" rel="noreferrer">
+                {l.label} <Sprite rows={ARROW} unit="2px" />
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {email !== "" && (
+          <form className="contact-form" onSubmit={send}>
+            <label>
+              <span className="file">Your name</span>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete="name"
+              />
+            </label>
+            <label>
+              <span className="file">Message</span>
+              <textarea
+                rows={3}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
+              />
+            </label>
+            <button type="submit" className="file go">
+              Send message <Sprite rows={ARROW} unit="2px" />
+            </button>
+            <p className="form-hint">Opens your email app with the message ready to send.</p>
+          </form>
+        )}
       </div>
     </section>
   );
