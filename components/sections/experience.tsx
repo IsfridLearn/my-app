@@ -5,20 +5,15 @@ export function Experience() {
   return (
     <section id="experience" className="section" aria-labelledby="experience-title">
       <div className="wrap">
-        <SectionHead index="04" id="experience-title" title="Experience" />
+        <SectionHead id="experience-title" title="Experience" />
 
         <ol className="timeline">
-          {experience.map((r, i) => (
+          {experience.map((r) => (
             <li key={r.title} className="entry">
-              <span className="entry-no" aria-hidden="true">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div className="entry-top">
-                <h3>{r.title}</h3>
-                {r.current && <span className="badge">Current</span>}
-              </div>
+              <h3>{r.title}</h3>
               <p className="entry-where">{r.where}</p>
               <p className="entry-text">{r.text}</p>
+              <span className="entry-now">{r.now ? "Now" : ""}</span>
             </li>
           ))}
         </ol>

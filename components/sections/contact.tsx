@@ -10,11 +10,13 @@ import { contact } from "@/lib/content";
 export function Contact() {
   const email = contact.email.trim();
   const links = contact.links.filter((l) => l.href.trim() !== "");
-  const hasAny = email !== "" || links.length > 0;
 
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [copied, setCopied] = useState(false);
+
+  // Nothing to show until real details are added in lib/content.ts.
+  if (email === "" && links.length === 0) return null;
 
   const copyEmail = async () => {
     try {
@@ -37,49 +39,43 @@ export function Contact() {
   return (
     <section id="contact" className="section" aria-labelledby="contact-title">
       <div className="wrap">
-        <SectionHead index="05" id="contact-title" title="Contact" />
+        <SectionHead id="contact-title" title="Contact" />
 
         <div className="contact-grid">
           <p className="contact-statement">
-            Let&rsquo;s build something <em>together.</em>
+            Say hello.
           </p>
 
           <div className="contact-panel">
             <p className="contact-lead">
-              A web project, a brand collaboration or a modeling inquiry: say hello.
+              A brand collaboration, a modeling inquiry or a web project: write to me.
             </p>
 
-            {!hasAny && (
-              <p className="contact-empty">Contact details are coming soon.</p>
-            )}
-
-            {hasAny && (
-              <ul className="channels">
-                {email !== "" && (
-                  <li className="channel">
-                    <span className="channel-label">
-                      <Sprite rows={[...ICON.mail]} unit="2px" /> Email
-                    </span>
-                    <span className="channel-value">
-                      <a href={`mailto:${email}`}>{email}</a>
-                      <button type="button" className="copy-btn" onClick={copyEmail}>
-                        {copied ? "Copied" : "Copy"}
-                      </button>
-                    </span>
-                  </li>
-                )}
-                {links.map((l) => (
-                  <li key={l.label} className="channel">
-                    <span className="channel-label">{l.label}</span>
-                    <span className="channel-value">
-                      <a href={l.href} target="_blank" rel="noreferrer">
-                        {l.handle}
-                      </a>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
+            <ul className="channels">
+              {email !== "" && (
+                <li className="channel">
+                  <span className="channel-label">
+                    <Sprite rows={[...ICON.mail]} unit="2px" /> Email
+                  </span>
+                  <span className="channel-value">
+                    <a href={`mailto:${email}`}>{email}</a>
+                    <button type="button" className="copy-btn" onClick={copyEmail}>
+                      {copied ? "Copied" : "Copy"}
+                    </button>
+                  </span>
+                </li>
+              )}
+              {links.map((l) => (
+                <li key={l.label} className="channel">
+                  <span className="channel-label">{l.label}</span>
+                  <span className="channel-value">
+                    <a href={l.href} target="_blank" rel="noreferrer">
+                      {l.handle}
+                    </a>
+                  </span>
+                </li>
+              ))}
+            </ul>
 
             {email !== "" && (
               <form className="contact-form" onSubmit={send}>
