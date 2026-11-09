@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Sprite } from "./pixel";
 import { MONOGRAM } from "./sprites";
 import { contact, hasContact, profile } from "@/lib/content";
@@ -14,7 +15,8 @@ export const SECTIONS: ReadonlyArray<{ id: string; label: string }> = [
   ...(hasContact ? [{ id: "contact", label: "Contact" }] : []),
 ];
 
-export function Nav({ active }: { active: string }) {
+/** `base` is "/" on other pages, so section links lead back to the homepage. */
+export function Nav({ active, base = "" }: { active: string; base?: string }) {
   const [open, setOpen] = useState(false);
 
   // Escape closes the mobile menu.
@@ -29,14 +31,14 @@ export function Nav({ active }: { active: string }) {
 
   return (
     <header className={open ? "nav nav-open" : "nav"}>
-      <a
-        href="#home"
+      <Link
+        href={`${base}#home`}
         className="tape tape-brand"
         aria-label={`${profile.first} ${profile.last}, back to top`}
         onClick={() => setOpen(false)}
       >
         <Sprite rows={MONOGRAM} unit="2px" />
-      </a>
+      </Link>
 
       <button
         type="button"
@@ -52,14 +54,14 @@ export function Nav({ active }: { active: string }) {
         <ul id="nav-links" className="nav-links">
           {SECTIONS.map((s) => (
             <li key={s.id}>
-              <a
+              <Link
                 className="tape"
-                href={`#${s.id}`}
+                href={`${base}#${s.id}`}
                 aria-current={active === s.id ? "true" : undefined}
                 onClick={() => setOpen(false)}
               >
                 {s.label}
-              </a>
+              </Link>
             </li>
           ))}
           {contact.email.trim() !== "" && (
