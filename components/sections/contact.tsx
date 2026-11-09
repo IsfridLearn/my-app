@@ -5,7 +5,7 @@ import Image from "next/image";
 import type { FormEvent } from "react";
 import { Sprite } from "../pixel";
 import { ARROW } from "../sprites";
-import { contact, photos } from "@/lib/content";
+import { contact, photos, spreads } from "@/lib/content";
 
 export function Contact() {
   const email = contact.email.trim();
@@ -17,8 +17,6 @@ export function Contact() {
 
   // Nothing to show until real details are added in lib/content.ts.
   if (email === "" && links.length === 0) return null;
-
-  const at = email.indexOf("@");
 
   const copyEmail = async () => {
     try {
@@ -48,6 +46,10 @@ export function Contact() {
           height={photos.eyes.height}
           sizes="100vw"
         />
+        <p className="spread-script contact-script" aria-hidden="true">
+          the
+          <span>{spreads.contact}</span>
+        </p>
       </div>
 
       <h2 id="contact-title" className="file">
@@ -56,8 +58,7 @@ export function Contact() {
 
       {email !== "" && (
         <a className="mail" href={`mailto:${email}`}>
-          <span>{email.slice(0, at)}</span>
-          <span>{email.slice(at)}</span>
+          {email}
         </a>
       )}
 

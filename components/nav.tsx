@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Sprite } from "./pixel";
 import { MONOGRAM } from "./sprites";
-import { hasContact, profile } from "@/lib/content";
+import { contact, hasContact, profile } from "@/lib/content";
 
 export const SECTIONS: ReadonlyArray<{ id: string; label: string }> = [
   { id: "work", label: "Work" },
@@ -59,6 +59,20 @@ export function Nav({ active }: { active: string }) {
                 onClick={() => setOpen(false)}
               >
                 {s.label}
+              </a>
+            </li>
+          ))}
+          {contact.email.trim() !== "" && (
+            <li className="nav-reach">
+              <a className="tape" href={`mailto:${contact.email}`} onClick={() => setOpen(false)}>
+                Email
+              </a>
+            </li>
+          )}
+          {contact.links.map((l) => (
+            <li key={l.label}>
+              <a className="tape" href={l.href} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
+                {l.label}
               </a>
             </li>
           ))}
