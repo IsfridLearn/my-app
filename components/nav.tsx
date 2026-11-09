@@ -7,6 +7,8 @@ import { hasContact, profile } from "@/lib/content";
 
 export const SECTIONS: ReadonlyArray<{ id: string; label: string }> = [
   { id: "work", label: "Work" },
+  { id: "stack", label: "Stack" },
+  { id: "experience", label: "Experience" },
   { id: "beyond", label: "Beyond the Screen" },
   { id: "about", label: "About" },
   ...(hasContact ? [{ id: "contact", label: "Contact" }] : []),

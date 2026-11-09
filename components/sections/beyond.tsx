@@ -81,23 +81,20 @@ export function Beyond() {
         />
       </div>
 
-      <div className="grid gold">
-        <Plate photo={photos.gold} className="plate-gold" sizes="(max-width: 1023px) 100vw, 68vw" />
-      </div>
-
       <div className="grid title-plates">
         <Plate
           photo={photos.ginoo}
           className="plate-ginoo"
-          sizes="(max-width: 1023px) 100vw, 60vw"
+          sizes="(max-width: 1023px) 100vw, 44vw"
           lang="fil"
         />
         <Plate
           photo={photos.patnubay}
           className="plate-patnubay"
-          sizes="(max-width: 1023px) 75vw, 32vw"
+          sizes="(max-width: 1023px) 75vw, 24vw"
           lang="fil"
         />
+        <Plate photo={photos.gold} className="plate-gold" sizes="(max-width: 1023px) 100vw, 36vw" />
       </div>
 
       <div className="ledger">

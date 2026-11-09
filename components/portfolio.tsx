@@ -5,7 +5,9 @@ import { Nav, SECTIONS } from "./nav";
 import { About } from "./sections/about";
 import { Beyond } from "./sections/beyond";
 import { Contact } from "./sections/contact";
+import { Experience } from "./sections/experience";
 import { Home } from "./sections/home";
+import { Stack } from "./sections/stack";
 import { Work, fileNumber } from "./sections/work";
 import { hasContact, photos, prints, profile, projects } from "@/lib/content";
 
@@ -45,6 +47,8 @@ export function Portfolio() {
       <main id="main">
         <Home />
         <Work />
+        <Stack />
+        <Experience />
         <Beyond />
         <About />
         {hasContact && <Contact />}

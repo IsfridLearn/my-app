@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { prints, profile } from "@/lib/content";
+import { Sprite } from "../pixel";
+import { ARROW } from "../sprites";
+import { prints, profile, projects } from "@/lib/content";
 
 export function Home() {
   const [print, setPrint] = useState<"dark" | "light">("dark");
   const isLight = print === "light";
+  const featured = projects[0];
 
   return (
     <section id="home" className="intro" data-print={print} aria-labelledby="home-title">
@@ -36,19 +39,25 @@ export function Home() {
       </div>
 
       <div className="intro-text">
-        <ul className="file roles" aria-label="Roles">
-          {profile.roles.map((r) => (
-            <li key={r}>{r}</li>
+        <p className="intro-role">{profile.title}</p>
+        <p>{profile.greeting}</p>
+        <ul className="file roles" aria-label="Primary technologies">
+          {profile.primaryTech.map((t) => (
+            <li key={t}>{t}</li>
           ))}
         </ul>
-        <p>{profile.greeting}</p>
+        <div className="file intro-links">
+          <a className="go" href={`#${featured.id}`}>
+            See {featured.title} <Sprite rows={ARROW} unit="2px" />
+          </a>
+        </div>
       </div>
 
       <div className="intro-cap">
         <p className="file">
           {isLight ? prints.light.file : prints.dark.file}
           <br />
-          One portrait, printed dark and light
+          Printed dark and light
         </p>
         <button
           type="button"
@@ -58,6 +67,9 @@ export function Home() {
         >
           {isLight ? "Print dark" : "Print light"}
         </button>
+        <a className="file go" href="#beyond">
+          {profile.alsoNote}
+        </a>
       </div>
     </section>
   );

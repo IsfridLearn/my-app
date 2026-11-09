@@ -30,6 +30,8 @@ const PLATES = [
   ['plate-ilang-2026', P + 'ilang-2026.jpg', [0, 0, 1080, 1080]],
   ['plate-ilang-2025', P + 'ilang-2025.jpg', [90, 0, 900, 1085]],
   ['plate-stage', P + 'stage-walk.jpg', [230, 10, 620, 900]],
+  ['plate-headshot', P + 'headshot-three-quarter.jpg', [210, 90, 800, 1200]],
+  ['plate-eyes', P + 'headshot-front.jpg', [0, 530, 1184, 395], 1800],
 ];
 
 const BAYER = [
@@ -40,14 +42,18 @@ const BAYER = [
 ];
 const threshold = (x, y) => (BAYER[y % 4][x % 4] + 0.5) / 16;
 
-async function oneBit(file, width, height, value) {
-  const out = Buffer.alloc(width * height);
+const INK = [12, 11, 10];
+const IVORY = [239, 232, 217];
+const PAPER = [233, 226, 210];
+
+async function oneBit(file, width, height, value, on = IVORY) {
+  const out = Buffer.alloc(width * height * 3);
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      out[y * width + x] = value(x, y) > threshold(x, y) ? 255 : 0;
+      out.set(value(x, y) > threshold(x, y) ? on : INK, (y * width + x) * 3);
     }
   }
-  await sharp(out, { raw: { width, height, channels: 1 } })
+  await sharp(out, { raw: { width, height, channels: 3 } })
     .png({ palette: true, colours: 2, compressionLevel: 9 })
     .toFile(file);
 }
@@ -84,7 +90,10 @@ async function develop(pipeline, file, seed) {
       // A 2x2 average keeps the grain from vanishing when the image is scaled.
       const n = (field[i + y] + field[i + y + 1] + field[i + y + width + 1] + field[i + y + width + 2]) / 2;
       const grey = Math.max(0, Math.min(255, Math.round(value + n * GRAIN * Math.min(1, 4.4 * tone * (1 - tone)))));
-      out.fill(grey, i * 4, i * 4 + 3);
+      // A slight warm tone, so photographs sit with the ink and ivory page.
+      out[i * 4] = grey;
+      out[i * 4 + 1] = Math.round(grey * 0.975);
+      out[i * 4 + 2] = Math.round(grey * 0.925);
       out[i * 4 + 3] = hasAlpha ? data[i * channels + channels - 1] : 255;
     }
   }
@@ -114,12 +123,17 @@ for (const [i, [name, file, [left, top, width, height], outWidth]] of PLATES.ent
   await develop(pipeline, `${OUT}${name}.webp`, 200 + i);
 }
 
-// The black-to-white edge between Beyond the Screen and About.
-await oneBit(`${OUT}dither-edge.png`, 4, 24, (_x, y) => y / 23);
+// Project screenshots, kept neutral so the interface can be read.
+for (const name of ["daba-courses", "daba-match", "daba-webinars"]) {
+  await sharp(`assets/projects/${name}.png`).grayscale().webp({ quality: 84 }).toFile(`${OUT}work-${name}.webp`);
+}
+
+// The ink-to-paper edge between Beyond the Screen and About.
+await oneBit(`${OUT}dither-edge.png`, 4, 24, (_x, y) => y / 23, PAPER);
 
 // Social preview: the dark print on black.
 const figure = await sharp(DARK).grayscale().resize({ height: 830 }).extract({ left: 0, top: 0, width: 626, height: 630 }).toBuffer();
-await sharp({ create: { width: 1200, height: 630, channels: 3, background: "#000000" } })
+await sharp({ create: { width: 1200, height: 630, channels: 3, background: "#0C0B0A" } })
   .composite([{ input: figure, left: 530, top: 0 }])
   .jpeg({ quality: 82 })
   .toFile(`${OUT}social.jpg`);
