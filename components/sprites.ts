@@ -177,3 +177,55 @@ export const arrow = (ch: string): string[] =>
   ["x...", "xx..", "xxx.", "xxxx", "xxx.", "xx..", "x..."].map((r) =>
     r.replace(/x/g, ch),
   );
+
+/* ---------------------------------------------------------- Tiny icons */
+// Single-color (violet) 2px-unit icons used for labels and buttons.
+
+export const ICON = {
+  code: [
+    "...u...u...",
+    "..u.....u..",
+    ".u.......u.",
+    "u.........u",
+    ".u.......u.",
+    "..u.....u..",
+    "...u...u...",
+  ],
+  camera: [
+    "...uuu...",
+    "uuuuuuuuu",
+    "u.......u",
+    "u..uuu..u",
+    "u..u.u..u",
+    "u..uuu..u",
+    "uuuuuuuuu",
+  ],
+  badge: [
+    "u.....u",
+    ".u...u.",
+    "..uuu..",
+    ".u...u.",
+    ".u.u.u.",
+    ".u...u.",
+    "..uuu..",
+  ],
+  mail: [
+    "uuuuuuuuu",
+    "uu.....uu",
+    "u.u...u.u",
+    "u..u.u..u",
+    "u...u...u",
+    "u.......u",
+    "uuuuuuuuu",
+  ],
+  pin: [
+    ".uuuuu.",
+    "u.....u",
+    "u..u..u",
+    "u.....u",
+    ".u...u.",
+    "..u.u..",
+    "...u...",
+  ],
+  arrow: ["uuuuu", "...uu", "..u.u", ".u..u", "u...."],
+} as const;

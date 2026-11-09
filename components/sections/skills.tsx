@@ -3,7 +3,7 @@ import { SectionHead } from "../section-head";
 import { buildText } from "../sprites";
 import { skills } from "@/lib/content";
 
-const MONO_COLOR = { code: "b", stage: "u" } as const;
+const MONO_COLOR = { code: "l", stage: "u" } as const;
 const MONOS: Record<string, string[]> = Object.fromEntries(
   skills.map((s) => [s.id, buildText([s.mono], { top: MONO_COLOR[s.kind] })]),
 );
@@ -15,7 +15,7 @@ const GROUPS = [
 
 export function Skills() {
   return (
-    <section id="skills" className="section band dither" aria-labelledby="skills-title">
+    <section id="skills" className="section skills-wrap" aria-labelledby="skills-title">
       <div className="wrap">
         <SectionHead index="03" id="skills-title" title="Skills" />
 

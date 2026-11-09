@@ -55,8 +55,13 @@ export function Nav({ active }: { active: string }) {
     <header className={open ? "nav nav-open" : "nav"}>
       <div className="nav-inner">
         <a href="#home" className="nav-brand" onClick={() => setOpen(false)}>
-          <Sprite rows={MONOGRAM} unit="3px" />
-          <span>Andrei Sanchez</span>
+          <span className="mark" aria-hidden="true">
+            <Sprite rows={MONOGRAM} unit="2px" />
+          </span>
+          <span className="nav-name">
+            Andrei Sanchez
+            <small>Pixel Atelier</small>
+          </span>
         </a>
 
         <button

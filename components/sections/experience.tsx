@@ -8,8 +8,11 @@ export function Experience() {
         <SectionHead index="04" id="experience-title" title="Experience" />
 
         <ol className="timeline">
-          {experience.map((r) => (
+          {experience.map((r, i) => (
             <li key={r.title} className="entry">
+              <span className="entry-no" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
               <div className="entry-top">
                 <h3>{r.title}</h3>
                 {r.current && <span className="badge">Current</span>}

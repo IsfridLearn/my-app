@@ -1,76 +1,78 @@
 import { LocalTime } from "../local-time";
 import { Scene } from "../scene";
+import { Sprite } from "../pixel";
+import { ICON } from "../sprites";
 import { capabilities, profile } from "@/lib/content";
 
-// A short card of facts that already exist elsewhere on the site.
-const CARD: Array<[string, string]> = [
-  ["Program", "BSIT"],
-  ["Based in", "Davao City"],
-  ["Ambassador", "Holy Cross of Davao College"],
-];
+// Davao City, as a small coordinate label.
+const COORDS = "7.07°N  125.61°E";
+
+const ICON_FOR: Record<string, readonly string[]> = {
+  "Web interfaces": ICON.code,
+  "Brand ambassadorship": ICON.badge,
+  Modeling: ICON.camera,
+};
 
 export function Home() {
   return (
     <section id="home" className="home" aria-labelledby="home-title">
-      <div className="home-stage">
-        <Scene idPrefix="home" className="home-bg" />
-        <div className="home-shade" aria-hidden="true" />
+      <div className="wrap">
+        <div className="home-meta">
+          <span>Pixel Atelier</span>
+          <span>{COORDS}</span>
+          <span>Digital studio portfolio</span>
+        </div>
 
-        <div className="wrap home-inner">
-          <div className="home-meta">
-            <span>Portfolio</span>
-            <span>
+        <h1 id="home-title" className="hero-name">
+          <span className="hn-1">{profile.first}</span>{" "}
+          <span className="hn-2">{profile.last}</span>
+        </h1>
+
+        <div className="home-lower">
+          <div className="hero">
+            <p className="hero-kicker">
               {profile.roles[0]} <span aria-hidden="true">/</span> {profile.location}
-            </span>
+            </p>
+            <p className="hero-lede">{profile.greeting}</p>
+            <div className="actions">
+              <a className="btn" href="#work">
+                Explore My Work
+                <Sprite rows={[...ICON.arrow].map((r) => r.replace(/u/g, "k"))} unit="2px" />
+              </a>
+              <a className="btn btn-ghost" href="#contact">
+                Let&rsquo;s Connect
+              </a>
+            </div>
           </div>
 
-          <h1 id="home-title" className="hero-name">
-            <span>{profile.first}</span> <span>{profile.last}</span>
-          </h1>
-
-          <div className="home-bottom">
-            <div className="hero">
-              <p className="hero-lede">{profile.greeting}</p>
-              <div className="actions">
-                <a className="btn" href="#work">
-                  Explore My Work
-                </a>
-                <a className="btn btn-ghost" href="#contact">
-                  Let&rsquo;s Connect
-                </a>
+          <figure className="plate" aria-hidden="true">
+            <div className="frame">
+              <i className="crop tl" />
+              <i className="crop tr" />
+              <i className="crop bl" />
+              <i className="crop br" />
+              <div className="frame-inner">
+                <Scene idPrefix="home" className="plate-scene" />
               </div>
             </div>
-
-            <aside className="hero-card notched" aria-label="At a glance">
-              <p className="hero-card-title">At a glance</p>
-              <dl>
-                {CARD.map(([label, value]) => (
-                  <div key={label}>
-                    <dt>{label}</dt>
-                    <dd>{value}</dd>
-                  </div>
-                ))}
-                <div>
-                  <dt>Local time</dt>
-                  <dd>
-                    <LocalTime />
-                  </dd>
-                </div>
-              </dl>
-            </aside>
-          </div>
+            <figcaption>
+              <span>Fig. 01 / Sunset study</span>
+              <LocalTime />
+            </figcaption>
+          </figure>
         </div>
-      </div>
 
-      <div className="wrap">
-        <ul className="capabilities" aria-label="What I do">
+        <ul className="index" aria-label="What I do">
           {capabilities.map((c, i) => (
-            <li key={c.title} className="capability">
-              <span className="capability-no" aria-hidden="true">
+            <li key={c.title} className="index-item">
+              <span className="index-no" aria-hidden="true">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p className="capability-title">{c.title}</p>
-              <p className="capability-text">{c.text}</p>
+              <div className="index-head">
+                <Sprite rows={[...(ICON_FOR[c.title] ?? ICON.code)]} unit="2px" />
+                <p className="index-title">{c.title}</p>
+              </div>
+              <p className="index-text">{c.text}</p>
             </li>
           ))}
         </ul>
