@@ -1,0 +1,245 @@
+/* ------------------------------------------------------ DabaShare case study */
+.cs { padding-top: clamp(72px, 7vw, 112px); overflow: hidden; }
+.cs section { position: relative; }
+.cs-pad { padding-inline: var(--gutter); }
+.cs-h {
+  color: var(--red);
+  font-size: clamp(64px, 11vw, 200px);
+  font-weight: 400;
+  line-height: 0.88;
+}
+.cs-sub {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.cs-shot { display: grid; gap: 10px; }
+.cs-shot img { width: 100%; height: auto; }
+.cs p, .cs dd, .cs-list li { hyphens: auto; }
+.cs-list { display: grid; gap: 12px; }
+.cs-list li {
+  padding-top: 10px;
+  border-top: 1px solid var(--white);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.cs-intro {
+  align-items: start;
+  row-gap: 32px;
+  padding-top: clamp(96px, 10vw, 168px);
+}
+.cs-lead { grid-column: 1 / span 8; margin-left: calc(var(--gutter) * -1); }
+.cs-lead img { box-shadow: 16px 16px 0 var(--red); }
+.cs-lead figcaption { margin-top: 16px; padding-left: var(--gutter); }
+.cs-intro-text {
+  grid-column: 9 / -1;
+  display: grid;
+  gap: 22px;
+  justify-items: start;
+}
+.cs-back::before { content: "/ "; }
+.cs-status {
+  padding: 12px 14px;
+  background: var(--red);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.cs-overview {
+  row-gap: 32px;
+  padding-top: clamp(112px, 13vw, 220px);
+  align-items: start;
+}
+.cs-overview-h { grid-column: 1 / -1; }
+.cs-objectives { grid-column: 1 / span 5; }
+.cs-role {
+  grid-column: 8 / -1;
+  display: grid;
+  gap: 6px;
+}
+.cs-role .cs-sub:not(:first-child) { margin-top: 20px; }
+.cs-tech { font-size: clamp(38px, 4.6vw, 84px); line-height: 0.98; }
+
+.cs-process { padding-top: clamp(112px, 13vw, 220px); }
+.cs-flow {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: clamp(32px, 4vw, 64px);
+  padding: 14px var(--gutter);
+  border-block: 1px solid var(--white);
+  font-size: clamp(38px, 6.6vw, 124px);
+  line-height: 1;
+}
+.cs-flow li:not(:last-child)::after {
+  content: "→";
+  margin-inline: 0.22em;
+  color: var(--red);
+  font-family: var(--mono);
+  font-size: 0.5em;
+  vertical-align: 0.24em;
+}
+.cs-explain { row-gap: 28px; padding-top: clamp(36px, 4vw, 64px); }
+.cs-explain-a { grid-column: 1 / span 5; }
+.cs-explain-b { grid-column: 7 / -1; }
+.cs-explain p {
+  max-width: 42em;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.cs-gallery {
+  row-gap: clamp(48px, 6vw, 96px);
+  align-items: start;
+  padding-top: clamp(64px, 8vw, 128px);
+}
+.cs-g1 { grid-column: 1 / span 7; margin-left: calc(var(--gutter) * -1); }
+.cs-g1 figcaption { padding-left: var(--gutter); }
+.cs-g-note { grid-column: 9 / -1; }
+.cs-g2 { grid-column: 7 / -1; margin-right: calc(var(--gutter) * -1); }
+.cs-g2 img { box-shadow: -14px 14px 0 var(--red); }
+.cs-g2 figcaption { margin-top: 14px; }
+.cs-g3 {
+  grid-column: 1 / span 6;
+  grid-row: 2;
+  margin-top: clamp(64px, 9vw, 160px);
+}
+.cs-g4 { grid-column: 1 / span 4; }
+.cs-g5 { grid-column: 6 / -1; margin-right: calc(var(--gutter) * -1); }
+
+.cs-features { padding-top: clamp(112px, 13vw, 220px); }
+.cs-features .grid {
+  padding-top: clamp(36px, 4vw, 64px);
+  row-gap: 48px;
+  align-items: start;
+}
+.cs-works { grid-column: 1 / span 6; }
+.cs-sim { grid-column: 8 / -1; }
+.cs-big {
+  font-size: clamp(44px, 5.6vw, 104px);
+  font-weight: 400;
+  line-height: 0.92;
+}
+.cs-sim .cs-big { color: var(--red); }
+.cs-big-note {
+  margin-block: 10px 18px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.cs-ledger li {
+  padding-block: 9px;
+  border-top: 1px solid var(--white);
+  font-size: 15px;
+  line-height: 1.4;
+}
+.cs-ledger li:last-child { border-bottom: 1px solid var(--white); }
+
+.cs-tech-sec {
+  row-gap: clamp(32px, 4vw, 56px);
+  padding-top: clamp(112px, 13vw, 220px);
+  align-items: start;
+}
+.cs-tech-h { grid-column: 1 / -1; }
+.cs-spec { grid-column: 4 / -1; }
+.cs-spec > div {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 6fr);
+  gap: 6px var(--gap);
+  padding-block: 14px;
+  border-top: 1px solid var(--white);
+}
+.cs-spec > div:last-child { border-bottom: 1px solid var(--white); }
+.cs-spec dt { font-size: clamp(30px, 2.9vw, 52px); line-height: 0.96; }
+.cs-spec dd { font-size: 14px; line-height: 1.5; }
+.cs-phone {
+  grid-column: 1 / span 3;
+  grid-row: 3;
+  align-self: start;
+}
+.cs-phone img { box-shadow: 10px 10px 0 var(--red); }
+.cs-phone figcaption { margin-top: 10px; }
+.cs-code {
+  grid-column: 4 / -1;
+  grid-row: 3;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.cs-code pre {
+  overflow-x: auto;
+  padding: clamp(16px, 2vw, 28px);
+  border-left: 4px solid var(--red);
+  font-family: var(--mono);
+  font-size: clamp(12px, 1.05vw, 16px);
+  line-height: 1.55;
+}
+
+.cs-learn { row-gap: 40px; padding-top: clamp(112px, 13vw, 220px); }
+.cs-learn-h { grid-column: 1 / -1; }
+.cs-notes {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px var(--gap);
+}
+.cs-notes li {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.cs-notes h3 {
+  font-size: clamp(38px, 3.8vw, 68px);
+  font-weight: 400;
+  line-height: 0.94;
+}
+.cs-learned { padding-top: 10px; border-top: 1px solid var(--red); }
+
+.cs-next {
+  row-gap: 32px;
+  align-items: end;
+  padding-top: clamp(112px, 13vw, 220px);
+}
+.cs-next-h { grid-column: 1 / span 6; }
+.cs-next-list { grid-column: 8 / -1; }
+
+.cs-links {
+  display: grid;
+  gap: 12px;
+  padding: clamp(112px, 13vw, 220px) var(--gutter) clamp(72px, 9vw, 144px);
+}
+.cs-repo {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  color: var(--white);
+  font-size: clamp(76px, 17vw, 320px);
+  line-height: 0.88;
+  text-decoration: none;
+}
+.cs-repo:hover { color: var(--red); }
+.cs-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 32px;
+}
+
+@media (max-width: 1023px) {
+  .cs-lead, .cs-intro-text, .cs-objectives, .cs-role, .cs-explain-a, .cs-explain-b,
+  .cs-g-note, .cs-works, .cs-sim, .cs-spec, .cs-code, .cs-next-h, .cs-next-list { grid-column: 1 / -1; grid-row: auto; }
+  .cs-lead img { box-shadow: 10px 10px 0 var(--red); }
+  .cs-g1, .cs-g2, .cs-g3, .cs-g4, .cs-g5 {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    margin-inline: 0;
+    margin-top: 0;
+  }
+  .cs-g1 figcaption { padding-left: 0; }
+  .cs-g2 img { box-shadow: 10px 10px 0 var(--red); }
+  .cs-phone { grid-column: 1 / span 7; grid-row: auto; }
+  .cs-spec > div { grid-template-columns: minmax(0, 1fr); }
+  .cs-notes { grid-template-columns: minmax(0, 1fr); }
+}

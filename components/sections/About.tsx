@@ -1,19 +1,22 @@
-import Image from "next/image";
-import { about, prints } from "@/lib/content";
+import { ContentImage } from "@/components/ui/ContentImage";
+import { DropCap } from "@/components/ui/DropCap";
+import { portraitArt, prints } from "@/data/photos";
+import { about } from "@/data/profile";
 
 export function About() {
-  const [first, ...rest] = about.paragraphs;
+  const [firstParagraph, ...otherParagraphs] = about.paragraphs;
 
   return (
     <section id="about" className="spread about grid" aria-labelledby="about-title">
       <figure className="about-fig">
-        <Image className="about-outline" src="/photos/hero-outline-light.webp" alt="" width={913} height={1164} sizes="(max-width: 1023px) 80vw, 46vw" />
-        <Image
+        <ContentImage
+          className="about-outline"
+          image={portraitArt.outlineLight}
+          sizes="(max-width: 1023px) 80vw, 46vw"
+        />
+        <ContentImage
           className="about-print"
-          src={prints.light.src}
-          alt={prints.light.alt}
-          width={prints.light.width}
-          height={prints.light.height}
+          image={prints.light}
           sizes="(max-width: 1023px) 70vw, 40vw"
         />
       </figure>
@@ -21,19 +24,16 @@ export function About() {
       <div className="about-text">
         <p className="file">About</p>
         <h2 id="about-title">
-          <span className="about-red">{about.headline[0]}</span>{" "}
+          <span className="about-red poster">{about.headline[0]}</span>{" "}
           <span className="about-script">{about.headline[1]}</span>
         </h2>
+
         <div className="about-body">
           <p>
-            <span className="fp-cap" aria-hidden="true">
-              {first.charAt(0)}
-            </span>
-            <span className="sr-only">{first.charAt(0)}</span>
-            {first.slice(1)}
+            <DropCap text={firstParagraph} />
           </p>
-          {rest.map((p) => (
-            <p key={p}>{p}</p>
+          {otherParagraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
 

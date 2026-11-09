@@ -1,0 +1,90 @@
+/* ---------------------------------------------------------------- Contact */
+.contact {
+  position: relative;
+  padding-block: 0 clamp(64px, 8vw, 128px);
+  overflow: hidden;
+  container-type: inline-size;
+}
+.contact::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 34vw;
+  height: 20vw;
+  background: url("/photos/hero-stain.webp") left bottom / contain no-repeat;
+  transform: scaleX(-1);
+  pointer-events: none;
+}
+.contact > * { position: relative; z-index: 1; }
+.eyes-band { position: relative; }
+.eyes-band img { width: 100%; height: auto; }
+.contact-script {
+  top: 3cqw;
+  bottom: auto;
+  left: 3cqw;
+}
+.contact > .file { padding: 9cqw var(--gutter) 0; }
+.mail {
+  position: absolute;
+  top: 29.4cqw;
+  left: 1.6cqw;
+  right: 1.6cqw;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  color: var(--red);
+  font-size: 10.5cqw;
+  line-height: 0.86;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.mail:hover { color: var(--white); }
+.contact-low {
+  row-gap: 40px;
+  align-items: start;
+  padding-top: 28px;
+}
+.contact-lead {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+}
+.channels {
+  grid-column: 6 / span 2;
+  display: grid;
+  gap: 12px;
+}
+.contact-form {
+  grid-column: 8 / -1;
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+}
+.contact-form label {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+}
+.contact-form input, .contact-form textarea {
+  width: 100%;
+  padding: 6px 0;
+  border: 0;
+  border-bottom: 1px solid var(--white);
+  border-radius: 0;
+  background: transparent;
+  color: var(--white);
+  font: inherit;
+  resize: vertical;
+}
+.contact-form input:focus-visible, .contact-form textarea:focus-visible {
+  outline: none;
+  border-bottom-color: var(--red);
+  box-shadow: 0 1px 0 0 var(--red);
+}
+.form-hint { font-size: 13px; }
+
+@media (max-width: 1023px) {
+  .contact-lead, .channels, .contact-form { grid-column: 1 / -1; }
+}

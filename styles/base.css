@@ -1,0 +1,155 @@
+/* ------------------------------------------------------------------
+   Two Prints. One person, printed dark and light.
+   Black and white carry the page, with one red for poster headlines
+   and active links. Condensed poster type, script and typewriter text.
+   ------------------------------------------------------------------ */
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --red: #D4111B;
+  --g: var(--black);
+  --f: var(--white);
+  --a: var(--red);
+  --gutter: clamp(16px, 2.4vw, 40px);
+  --gap: clamp(16px, 2vw, 32px);
+  --mono: var(--font-mono), ui-monospace, Consolas, monospace;
+  --poster: var(--font-poster), "Arial Narrow", Impact, sans-serif;
+  --script: var(--font-script), "Snell Roundhand", cursive;
+}
+
+html {
+  background: var(--black);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.site {
+  flex: 1;
+  min-width: 0;
+  overflow-x: clip;
+}
+::selection { background: var(--f); color: var(--g); }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+.skip {
+  position: absolute;
+  top: 12px;
+  left: -9999px;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--white);
+  color: var(--black);
+  font-size: 0.85rem;
+}
+.skip:focus { left: 16px; }
+
+.sprite { display: block; flex: none; }
+.px-f { fill: currentColor; }
+
+/* The archivist's voice. */
+.file {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  padding-inline: var(--gutter);
+}
+
+.go {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.go:hover { color: var(--a); }
+@media (prefers-reduced-motion: no-preference) {
+  .go:hover .sprite { transform: translate(4px, -4px); }
+}
+
+.print-btn {
+  padding: 8px 12px;
+  border: 1px solid var(--f);
+  cursor: pointer;
+}
+.print-btn:hover { background: var(--f); color: var(--g); }
+
+/* ------------------------------------------------- Shared text patterns */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Condensed poster type. Each use sets its own size and color. */
+.poster {
+  font-family: var(--poster);
+  text-transform: uppercase;
+}
+
+/* The small red [1], [2] markers. */
+.index-num {
+  color: var(--red);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.drop-cap {
+  float: left;
+  padding: 0.2cqw 0.5cqw 0 0;
+  color: var(--red);
+  font-family: var(--poster);
+  font-size: 5.6cqw;
+  line-height: 0.78;
+}
+
+/* Inline list with a red slash between items. */
+.slash-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.slash-list li:not(:last-child)::after {
+  content: "/";
+  margin-inline: 0.2em;
+  color: var(--red);
+}
+
+/* Label and text pairs numbered [1], [2]. */
+.facts {
+  display: grid;
+  gap: 16px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.facts dt {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.facts dt span { color: var(--red); }
+
+@media (max-width: 1099px) {
+  .drop-cap { font-size: 58px; padding: 3px 8px 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

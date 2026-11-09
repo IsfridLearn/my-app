@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CaseStudy } from "@/components/case-study";
+import { Dabashare } from "@/components/dabashare/Dabashare";
 
 export const metadata: Metadata = {
   title: "DabaShare case study | Andrei Sanchez",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function DabaSharePage() {
-  return <CaseStudy />;
+  return <Dabashare />;
 }

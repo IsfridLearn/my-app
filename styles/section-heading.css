@@ -1,0 +1,40 @@
+/* ------------------------------------------------- Shared poster headline */
+.spread { position: relative; overflow: hidden; }
+.spread-head {
+  position: relative;
+  padding-inline: 1.6vw;
+  container-type: inline-size;
+}
+.spread-title {
+  position: relative;
+  z-index: 3;
+  color: var(--red);
+  font-size: var(--title, 20cqw);
+  font-weight: 400;
+  letter-spacing: 0.002em;
+  line-height: 0.86;
+  white-space: nowrap;
+}
+/* White script laid across a headline. Used by the front page and every section. */
+.fp-script, .spread-script {
+  left: 3cqw;
+  z-index: 6;
+  color: var(--white);
+  font-family: var(--script);
+  font-size: 8cqw;
+  line-height: 0.74;
+}
+.fp-script span, .spread-script span {
+  display: block;
+  padding-left: 6cqw;
+}
+.spread-script {
+  position: absolute;
+  bottom: -3.4cqw;
+}
+.spread-right { text-align: right; }
+.spread-right .spread-script {
+  right: 3cqw;
+  left: auto;
+  text-align: left;
+}

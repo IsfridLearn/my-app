@@ -1,0 +1,40 @@
+/* ----------------------------------------------------------------- Footer */
+.foot {
+  display: grid;
+  gap: 40px;
+  padding: 24px var(--gutter) 28px;
+  border-top: 1px solid var(--white);
+}
+.index {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: 8px;
+}
+.index > .file { grid-column: 1 / span 5; }
+.index ul {
+  grid-column: 6 / -1;
+  columns: 2;
+  column-gap: var(--gap);
+}
+.index li { break-inside: avoid; }
+.index a {
+  display: flex;
+  gap: 24px;
+  padding-block: 4px;
+  font-size: 15px;
+  text-decoration: none;
+}
+.index a span {
+  width: 6em;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  line-height: 22px;
+}
+.index a:hover { color: var(--a); }
+
+@media (max-width: 1023px) {
+  .index > .file, .index ul { grid-column: 1 / -1; }
+  .index ul { columns: 1; }
+}
