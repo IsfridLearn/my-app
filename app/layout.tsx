@@ -1,26 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Bodoni_Moda, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Mono, League_Gothic, Pinyon_Script } from "next/font/google";
 import "./globals.css";
 
-// Three voices: a fashion serif for the camera side, a wide sans for the code
-// side and for reading, and a mono for archive labels.
-const display = Bodoni_Moda({
-  variable: "--font-display",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  axes: ["opsz"],
-});
-
-const text = Archivo({
-  variable: "--font-text",
-  subsets: ["latin"],
-  axes: ["wdth"],
-});
-
+// Typewriter text everywhere, with poster and script faces for headlines.
 const mono = IBM_Plex_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "700"],
+});
+
+const poster = League_Gothic({
+  variable: "--font-poster",
+  subsets: ["latin"],
+});
+
+const script = Pinyon_Script({
+  variable: "--font-script",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const title = "Andrei Sanchez | Aspiring developer and creative technologist";
@@ -40,14 +37,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0C0B0A",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${display.variable} ${text.variable} ${mono.variable} h-full antialiased`}
+      className={`${mono.variable} ${poster.variable} ${script.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
