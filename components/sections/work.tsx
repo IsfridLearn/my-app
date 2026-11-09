@@ -30,22 +30,22 @@ function Case({ project, index }: { project: Project; index: number }) {
   };
 
   return (
-    <li className={index % 2 ? "project flip" : "project"}>
+    <li className="project">
       <div className="project-visual">
-        <div className="screen notched">
-          <div className="screen-bar" aria-hidden="true">
-            <span>{project.title.toLowerCase().replace(/\s+/g, "-")}</span>
-            <span>{playing ? "live" : "paused"}</span>
-          </div>
-          <div className="screen-inner" aria-hidden="true">
+        <div className="frame">
+          <i className="crop tl" />
+          <i className="crop tr" />
+          <i className="crop bl" />
+          <i className="crop br" />
+          <div className="frame-inner" aria-hidden="true">
             {project.preview === "scene" ? (
               <Scene
                 idPrefix={`work-${project.id}`}
                 animated={playing}
-                className="screen-scene"
+                className="frame-scene"
               />
             ) : (
-              <div className="screen-blank" />
+              <div className="frame-blank" />
             )}
           </div>
         </div>

@@ -1,26 +1,26 @@
 import Image from "next/image";
 import { Sprite } from "../pixel";
 import { SectionHead } from "../section-head";
-import { CAMERA, LAPTOP, MEDAL } from "../sprites";
+import { ICON } from "../sprites";
 import { about, facts, profile } from "@/lib/content";
 
 const ROLES = [
   {
     title: "Developer",
     note: "BSIT student, 2nd year",
-    rows: LAPTOP,
+    rows: ICON.code,
     unit: "3px",
   },
   {
     title: "Model",
     note: "Works with brands beyond the college",
-    rows: CAMERA,
-    unit: "4px",
+    rows: ICON.camera,
+    unit: "3px",
   },
   {
     title: "Brand ambassador",
     note: "Holy Cross of Davao College",
-    rows: MEDAL,
+    rows: ICON.badge,
     unit: "3px",
   },
 ];
@@ -74,7 +74,7 @@ export function About() {
               {ROLES.map((r) => (
                 <li key={r.title} className="role">
                   <div className="role-art" aria-hidden="true">
-                    <Sprite rows={r.rows} unit={r.unit} />
+                    <Sprite rows={[...r.rows]} unit={r.unit} />
                   </div>
                   <div>
                     <p className="role-title">{r.title}</p>

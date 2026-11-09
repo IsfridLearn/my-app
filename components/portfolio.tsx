@@ -14,13 +14,10 @@ import { profile } from "@/lib/content";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 type Phase = "opening" | "leaving" | "done";
-type Accent = "violet" | "blue" | "rose";
-const ACCENTS: Accent[] = ["violet", "blue", "rose"];
 
 export function Portfolio() {
   const [phase, setPhase] = useState<Phase>("opening");
   const [active, setActive] = useState<string>("home");
-  const [accent, setAccent] = useState<Accent>("violet");
   const reduced = useReducedMotion();
 
   const enter = () => setPhase(reduced ? "done" : "leaving");
@@ -56,7 +53,7 @@ export function Portfolio() {
     if (reduced) return;
     const html = document.documentElement;
     const targets = document.querySelectorAll(
-      ".section-head, .project, .about-grid, .skills-grid, .entry, .contact-window, .capabilities",
+      ".section-head, .project, .about-top, .about-grid, .skills-grid, .entry, .contact-grid, .index",
     );
     const io = new IntersectionObserver(
       (entries) => {
@@ -77,11 +74,6 @@ export function Portfolio() {
       targets.forEach((t) => t.classList.remove("is-in"));
     };
   }, [reduced]);
-
-  // Accent colour: a small detail in the footer, applied through a data attribute.
-  useEffect(() => {
-    document.documentElement.dataset.accent = accent;
-  }, [accent]);
 
   // Highlight the nav link for the section crossing the middle of the screen.
   useEffect(() => {
@@ -125,23 +117,10 @@ export function Portfolio() {
           <p>
             © 2026 {profile.first} {profile.last}
           </p>
-          <div className="foot-tools">
-            <div className="accents" role="group" aria-label="Accent color">
-              {ACCENTS.map((a) => (
-                <button
-                  key={a}
-                  type="button"
-                  className={`accent accent-${a}`}
-                  aria-label={a}
-                  aria-pressed={accent === a}
-                  onClick={() => setAccent(a)}
-                />
-              ))}
-            </div>
-            <button type="button" className="foot-btn" onClick={restart}>
-              Replay intro
-            </button>
-          </div>
+          <p className="foot-coords">7.07°N  125.61°E</p>
+          <button type="button" className="foot-btn" onClick={restart}>
+            Replay intro
+          </button>
         </footer>
       </div>
     </div>

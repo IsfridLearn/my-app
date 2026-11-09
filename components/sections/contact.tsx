@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import type { FormEvent } from "react";
+import { Sprite } from "../pixel";
 import { SectionHead } from "../section-head";
+import { ICON } from "../sprites";
 import { contact } from "@/lib/content";
 
 export function Contact() {
@@ -33,21 +35,20 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="section band" aria-labelledby="contact-title">
+    <section id="contact" className="section" aria-labelledby="contact-title">
       <div className="wrap">
         <SectionHead index="05" id="contact-title" title="Contact" />
 
-        <p className="contact-lead">
-          Have a web project, a brand collaboration or a modeling inquiry in mind?
-          Say hello.
-        </p>
+        <div className="contact-grid">
+          <p className="contact-statement">
+            Let&rsquo;s build something <em>together.</em>
+          </p>
 
-        <div className="window contact-window notched">
-          <div className="window-bar">
-            <span>contact</span>
-          </div>
+          <div className="contact-panel">
+            <p className="contact-lead">
+              A web project, a brand collaboration or a modeling inquiry: say hello.
+            </p>
 
-          <div className="contact-body">
             {!hasAny && (
               <p className="contact-empty">Contact details are coming soon.</p>
             )}
@@ -56,7 +57,9 @@ export function Contact() {
               <ul className="channels">
                 {email !== "" && (
                   <li className="channel">
-                    <span className="channel-label">Email</span>
+                    <span className="channel-label">
+                      <Sprite rows={[...ICON.mail]} unit="2px" /> Email
+                    </span>
                     <span className="channel-value">
                       <a href={`mailto:${email}`}>{email}</a>
                       <button type="button" className="copy-btn" onClick={copyEmail}>

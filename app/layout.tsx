@@ -1,10 +1,13 @@
-import type { Metadata } from "next";
-import { Instrument_Sans, Pixelify_Sans, VT323 } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const pixel = Pixelify_Sans({
-  variable: "--font-pixel",
+// Display type: a condensed editorial serif. Text: a clean sans. Labels: mono.
+const display = Instrument_Serif({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
 });
 
 const text = Instrument_Sans({
@@ -12,15 +15,15 @@ const text = Instrument_Sans({
   subsets: ["latin"],
 });
 
-const terminal = VT323({
-  variable: "--font-terminal",
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-  weight: "400",
 });
 
 export const metadata: Metadata = {
   title: "Andrei Sanchez, BSIT student and developer",
-  description: "I build things for the love of the game.",
+  description:
+    "Andrei Sanchez is a BSIT student, developer, brand ambassador and model in Davao City.",
   openGraph: {
     title: "Andrei Sanchez, BSIT student and developer",
     description:
@@ -28,11 +31,15 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0e0e12",
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${pixel.variable} ${text.variable} ${terminal.variable} h-full antialiased`}
+      className={`${display.variable} ${text.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
