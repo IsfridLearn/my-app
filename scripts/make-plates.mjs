@@ -121,7 +121,7 @@ for (const [i, [name, file, [left, top, width, height], outWidth]] of PLATES.ent
 }
 
 // Project screenshots, kept neutral so the interface can be read.
-for (const name of ["daba-courses", "daba-match", "daba-webinars"]) {
+for (const name of ["daba-courses", "daba-match", "daba-webinars", "daba-login", "daba-messages", "daba-post", "daba-phone"]) {
   await sharp(`assets/projects/${name}.png`).grayscale().webp({ quality: 84 }).toFile(`${OUT}work-${name}.webp`);
 }
 

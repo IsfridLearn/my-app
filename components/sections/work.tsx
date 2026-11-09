@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Sprite } from "../pixel";
 import { SpreadHead } from "../spread-head";
 import { ARROW } from "../sprites";
@@ -73,6 +74,11 @@ export function Work() {
 
               <div className="project-foot file">
                 {p.stack.length > 0 && <p>{p.stack.join(", ")}</p>}
+                {p.caseStudy && (
+                  <Link className="go" href={p.caseStudy}>
+                    Read the case study <Sprite rows={ARROW} unit="2px" />
+                  </Link>
+                )}
                 {p.href && (
                   <a className="go" href={p.href} target="_blank" rel="noreferrer">
                     Open live site <Sprite rows={ARROW} unit="2px" />
