@@ -15,10 +15,10 @@ const CROPS = [
   [P + 'studio-profile.jpg', 1350, 1050, 1000, 750],
   [P + 'gold-drape.jpg', 240, 240, 420, 315],
   [P + 'ilang-2026.jpg', 410, 200, 240, 180],
-  [P + 'stage-walk.jpg', 430, 40, 240, 180],
+  [P + 'ilang-2026.jpg', 90, 100, 320, 240],
   [P + 'studio-profile.jpg', 2040, 1485, 600, 450],
   [P + 'ilang-2025.jpg', 500, 430, 240, 180],
-  [P + 'ilang-2025.jpg', 490, 215, 240, 180],
+  [P + 'gold-set.jpg', 590, 430, 360, 270],
   [P + 'studio-profile.jpg', 1410, 3020, 800, 600],
 ];
 
