@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, League_Gothic, Pinyon_Script } from "next/font/google";
 import "./globals.css";
 
-// Typewriter text everywhere, with poster and script faces for headlines.
 const mono = IBM_Plex_Mono({
   variable: "--font-mono",
   subsets: ["latin"],

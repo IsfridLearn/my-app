@@ -1,0 +1,46 @@
+/* ------------------------------------------------------------------ Stack */
+.stack { padding-bottom: clamp(88px, 11vw, 176px); scroll-margin-top: 48px; }
+.stack::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -4vw;
+  width: 46vw;
+  height: 54vw;
+  background: url("/photos/hero-ghost-l.webp") center / cover no-repeat;
+  opacity: 0.32;
+  pointer-events: none;
+}
+.stack > * { position: relative; }
+.stack-rows { margin-top: clamp(72px, 8vw, 128px); }
+.stack-row {
+  row-gap: 12px;
+  align-items: end;
+  padding-block: clamp(14px, 1.6vw, 26px);
+  border-top: 1px solid var(--white);
+}
+.stack-row:last-child { border-bottom: 1px solid var(--white); }
+.stack-meta {
+  grid-column: 1 / span 3;
+  display: grid;
+  gap: 6px;
+}
+.stack-meta h3 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.stack-meta p:not(.index-num) { font-size: 13px; line-height: 1.4; }
+.stack-items {
+  grid-column: 4 / -1;
+  font-size: clamp(52px, 8.4vw, 156px);
+  line-height: 0.96;
+}
+.stack-row:nth-child(n + 3) .stack-items { font-size: clamp(38px, 5vw, 92px); }
+
+@media (max-width: 1023px) {
+  .stack-meta, .stack-items { grid-column: 1 / -1; }
+  .stack::before { width: 90vw; height: 100vw; }
+}

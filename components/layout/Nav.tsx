@@ -2,79 +2,87 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Sprite } from "./pixel";
-import { MONOGRAM } from "./sprites";
-import { contact, hasContact, profile } from "@/lib/content";
+import { Monogram } from "@/components/ui/Sprite";
+import { contact } from "@/data/contact";
+import { navSections } from "@/data/navigation";
+import { profile } from "@/data/profile";
+import { useActiveSection } from "@/hooks/useActiveSection";
 
-export const SECTIONS: ReadonlyArray<{ id: string; label: string }> = [
-  { id: "work", label: "Work" },
-  { id: "stack", label: "Stack" },
-  { id: "experience", label: "Experience" },
-  { id: "beyond", label: "Beyond the Screen" },
-  { id: "about", label: "About" },
-  ...(hasContact ? [{ id: "contact", label: "Contact" }] : []),
-];
+const TRACKED_SECTION_IDS = ["home", ...navSections.map((section) => section.id)];
 
-/** `base` is "/" on other pages, so section links lead back to the homepage. */
-export function Nav({ active, base = "" }: { active: string; base?: string }) {
-  const [open, setOpen] = useState(false);
+type NavProps = {
+  /** Highlights this link instead of following the scroll position. */
+  active?: string;
+  /** "/" on other pages, so section links lead back to the homepage. */
+  base?: string;
+};
+
+export function Nav({ active, base = "" }: NavProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const scrolledSection = useActiveSection(TRACKED_SECTION_IDS);
+  const currentSection = active ?? scrolledSection;
+  const closeMenu = () => setMenuOpen(false);
 
   // Escape closes the mobile menu.
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+    if (!menuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [menuOpen]);
 
   return (
-    <header className={open ? "nav nav-open" : "nav"}>
+    <header className={menuOpen ? "nav nav-open" : "nav"}>
       <Link
         href={`${base}#home`}
         className="tape tape-brand"
         aria-label={`${profile.first} ${profile.last}, back to top`}
-        onClick={() => setOpen(false)}
+        onClick={closeMenu}
       >
-        <Sprite rows={MONOGRAM} unit="2px" />
+        <Monogram />
       </Link>
 
       <button
         type="button"
         className="tape nav-toggle"
-        aria-expanded={open}
+        aria-expanded={menuOpen}
         aria-controls="nav-links"
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => setMenuOpen((isOpen) => !isOpen)}
       >
-        {open ? "Close" : "Menu"}
+        {menuOpen ? "Close" : "Menu"}
       </button>
 
       <nav aria-label="Sections">
         <ul id="nav-links" className="nav-links">
-          {SECTIONS.map((s) => (
-            <li key={s.id}>
+          {navSections.map((section) => (
+            <li key={section.id}>
               <Link
                 className="tape"
-                href={`${base}#${s.id}`}
-                aria-current={active === s.id ? "true" : undefined}
-                onClick={() => setOpen(false)}
+                href={`${base}#${section.id}`}
+                aria-current={currentSection === section.id ? "true" : undefined}
+                onClick={closeMenu}
               >
-                {s.label}
+                {section.label}
               </Link>
             </li>
           ))}
+
           {contact.email.trim() !== "" && (
             <li className="nav-reach">
-              <a className="tape" href={`mailto:${contact.email}`} onClick={() => setOpen(false)}>
+              <a className="tape" href={`mailto:${contact.email}`} onClick={closeMenu}>
                 Email
               </a>
             </li>
           )}
-          {contact.links.map((l) => (
-            <li key={l.label}>
-              <a className="tape" href={l.href} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
-                {l.label}
+
+          {contact.links.map((link) => (
+            <li key={link.label}>
+              <a className="tape" href={link.href} target="_blank" rel="noreferrer" onClick={closeMenu}>
+                {link.label}
               </a>
             </li>
           ))}

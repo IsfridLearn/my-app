@@ -1,0 +1,140 @@
+/* ----------------------------------------------------------- Selected Work */
+.work { padding-block: clamp(56px, 7vw, 112px) clamp(72px, 9vw, 144px); scroll-margin-top: 48px; }
+.projects {
+  display: grid;
+  gap: clamp(112px, 13vw, 220px);
+  margin-top: clamp(104px, 11vw, 180px);
+}
+.project {
+  position: relative;
+  row-gap: clamp(36px, 4vw, 64px);
+  align-items: start;
+  scroll-margin-top: 64px;
+}
+.project::before {
+  content: "";
+  position: absolute;
+  top: -5vw;
+  right: 0;
+  width: 44vw;
+  height: 54vw;
+  background: url("/photos/hero-ghost-work.webp") center / cover no-repeat;
+  opacity: 0.32;
+  pointer-events: none;
+}
+.project:nth-child(3n + 2)::before {
+  right: auto;
+  left: 0;
+  background-image: url("/photos/hero-ghost-r.webp");
+}
+.project > * { position: relative; z-index: 1; }
+.project-image {
+  grid-column: 1 / span 8;
+  width: calc(100% + var(--gutter));
+  max-width: none;
+  height: auto;
+  margin-left: calc(var(--gutter) * -1);
+  box-shadow: 16px 16px 0 var(--red);
+}
+.project-head {
+  grid-column: 9 / -1;
+  display: grid;
+  gap: 14px;
+}
+.project-head h3 {
+  font-size: clamp(64px, 7.6vw, 140px);
+  font-weight: 400;
+  letter-spacing: 0.002em;
+  line-height: 0.88;
+}
+.project-blurb { hyphens: auto; text-align: justify; }
+.notes { margin-top: 8px; }
+.notes dd { hyphens: auto; text-align: justify; }
+.project-more {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: var(--gap);
+  margin-left: calc(var(--gutter) * -1);
+}
+.project-more img {
+  width: 100%;
+  height: auto;
+  box-shadow: 8px 8px 0 var(--red);
+}
+.project-choices {
+  grid-column: 5 / -1;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  padding-left: 16px;
+}
+.project-choices h4 {
+  color: var(--red);
+  font-size: clamp(40px, 4.4vw, 76px);
+  font-weight: 400;
+  line-height: 0.9;
+}
+.project-choices ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px var(--gap);
+}
+.project-choices li {
+  padding-top: 10px;
+  border-top: 1px solid var(--white);
+  font-size: 14px;
+  line-height: 1.45;
+  hyphens: auto;
+  text-align: justify;
+}
+.project-foot {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 32px;
+}
+/* Later projects take the other two layouts in turn. */
+.project:nth-child(3n + 2) .project-image {
+  grid-column: 5 / -1;
+  grid-row: 1;
+  margin-left: 0;
+  margin-right: calc(var(--gutter) * -1);
+  box-shadow: -16px 16px 0 var(--red);
+}
+.project:nth-child(3n + 2) .project-head { grid-column: 1 / span 4; grid-row: 1; }
+.project:nth-child(3n + 2) .project-choices { grid-column: 1 / span 8; padding-left: 0; }
+.project:nth-child(3n) .project-image {
+  grid-column: 3 / span 8;
+  width: 100%;
+  margin-left: 0;
+}
+.project:nth-child(3n) .project-head { grid-column: 1 / span 5; }
+.project:nth-child(3n) .project-choices { grid-column: 6 / -1; }
+
+@media (max-width: 1023px) {
+  .project-image, .project:nth-child(n) .project-image {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    width: calc(100% + var(--gutter) * 2 - 12px);
+    margin-inline: calc(var(--gutter) * -1) 0;
+    box-shadow: 12px 12px 0 var(--red);
+  }
+  .project-more {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-left: 0;
+  }
+  .project-more img { box-shadow: 5px 5px 0 var(--red); }
+  .project-head, .project-choices,
+  .project:nth-child(n) .project-head,
+  .project:nth-child(n) .project-choices {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    padding-left: 0;
+  }
+  .project::before { width: 80vw; height: 100vw; }
+}
+@media (max-width: 860px) {
+  .project-choices ul { grid-template-columns: minmax(0, 1fr); }
+}

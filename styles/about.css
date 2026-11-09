@@ -1,0 +1,80 @@
+/* ------------------------------------------------------------------ About */
+.about {
+  align-items: end;
+  scroll-margin-top: 48px;
+  padding-top: clamp(64px, 7vw, 112px);
+}
+.about-fig {
+  position: relative;
+  grid-column: 1 / span 5;
+  align-self: end;
+  aspect-ratio: 773 / 1024;
+  margin-left: calc(var(--gutter) * 0.5);
+}
+.about-fig img {
+  position: absolute;
+  max-width: none;
+  height: auto;
+}
+.about-print {
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+}
+.about-outline {
+  top: -5%;
+  left: -11.66%;
+  z-index: 1;
+  width: 118.11%;
+}
+.about-text {
+  grid-column: 6 / -1;
+  align-self: start;
+  display: grid;
+  gap: clamp(20px, 2.4vw, 36px);
+  padding-block: 0 clamp(64px, 7vw, 112px);
+}
+.about-text h2 { display: grid; font-weight: 400; }
+.about-red {
+  color: var(--red);
+  font-size: clamp(76px, 11.4vw, 216px);
+  line-height: 0.88;
+}
+.about-script {
+  z-index: 3;
+  margin-top: -0.5em;
+  padding-left: 0.6em;
+  font-family: var(--script);
+  font-size: clamp(44px, 6.4vw, 124px);
+  line-height: 1;
+}
+.about-body {
+  display: grid;
+  gap: 1em;
+  max-width: 46em;
+  hyphens: auto;
+  text-align: justify;
+}
+.about-body .drop-cap { font-size: clamp(56px, 5.6vw, 104px); padding-right: 10px; }
+.interview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 24px var(--gap);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.interview dt { font-weight: 700; }
+
+@media (max-width: 1023px) {
+  .about-fig {
+    grid-column: 2 / -2;
+    grid-row: 2;
+    margin-left: 0;
+  }
+  .about-text {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    padding-bottom: 24px;
+  }
+}

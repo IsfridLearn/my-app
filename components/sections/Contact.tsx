@@ -1,113 +1,52 @@
-"use client";
-
-import { useState } from "react";
-import Image from "next/image";
-import type { FormEvent } from "react";
-import { Sprite } from "../pixel";
-import { ARROW } from "../sprites";
-import { contact, photos, spreads } from "@/lib/content";
+import { ContactForm } from "@/components/sections/ContactForm";
+import { CopyEmailButton } from "@/components/sections/CopyEmailButton";
+import { ContentImage } from "@/components/ui/ContentImage";
+import { ScriptOverlay } from "@/components/ui/SectionHeading";
+import { Arrow } from "@/components/ui/Sprite";
+import { contact } from "@/data/contact";
+import { sectionHeadings } from "@/data/navigation";
+import { photos } from "@/data/photos";
 
 export function Contact() {
   const email = contact.email.trim();
-  const links = contact.links.filter((l) => l.href.trim() !== "");
-
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  const [copied, setCopied] = useState(false);
-
-  // Nothing to show until real details are added in lib/content.ts.
-  if (email === "" && links.length === 0) return null;
-
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(email);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      // Clipboard can be blocked; the address is still visible to copy by hand.
-    }
-  };
-
-  const send = (e: FormEvent) => {
-    e.preventDefault();
-    const subject = `Hello from ${name.trim() || "your portfolio"}`;
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(message)}`;
-  };
+  const hasEmail = email !== "";
+  const links = contact.links.filter((link) => link.href.trim() !== "");
+  const heading = sectionHeadings.contact;
 
   return (
     <section id="contact" className="contact" aria-labelledby="contact-title">
       <div id={photos.eyes.id} className="eyes-band">
-        <Image
-          src={photos.eyes.src}
-          alt={photos.eyes.alt}
-          width={photos.eyes.width}
-          height={photos.eyes.height}
-          sizes="100vw"
-        />
-        <p className="spread-script contact-script" aria-hidden="true">
-          the
-          <span>{spreads.contact}</span>
-        </p>
+        <ContentImage image={photos.eyes} sizes="100vw" />
+        <ScriptOverlay className="spread-script contact-script" word={heading.script} />
       </div>
 
       <h2 id="contact-title" className="file">
-        Contact
+        {heading.title}
       </h2>
 
-      {email !== "" && (
-        <a className="mail" href={`mailto:${email}`}>
+      {hasEmail && (
+        <a className="mail poster" href={`mailto:${email}`}>
           {email}
         </a>
       )}
 
       <div className="grid contact-low">
         <div className="contact-lead">
-          <p>A brand collaboration, a modeling inquiry or a web project: write to me.</p>
-          {email !== "" && (
-            <button type="button" className="file print-btn" onClick={copyEmail}>
-              {copied ? "Copied" : "Copy email"}
-            </button>
-          )}
+          <p>{contact.lead}</p>
+          {hasEmail && <CopyEmailButton email={email} />}
         </div>
 
         <ul className="channels file">
-          {links.map((l) => (
-            <li key={l.label}>
-              <a className="go" href={l.href} target="_blank" rel="noreferrer">
-                {l.label} <Sprite rows={ARROW} unit="2px" />
+          {links.map((link) => (
+            <li key={link.label}>
+              <a className="go" href={link.href} target="_blank" rel="noreferrer">
+                {link.label} <Arrow />
               </a>
             </li>
           ))}
         </ul>
 
-        {email !== "" && (
-          <form className="contact-form" onSubmit={send}>
-            <label>
-              <span className="file">Your name</span>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                autoComplete="name"
-              />
-            </label>
-            <label>
-              <span className="file">Message</span>
-              <textarea
-                rows={3}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required
-              />
-            </label>
-            <button type="submit" className="file go">
-              Send message <Sprite rows={ARROW} unit="2px" />
-            </button>
-            <p className="form-hint">Opens your email app with the message ready to send.</p>
-          </form>
-        )}
+        {hasEmail && <ContactForm email={email} />}
       </div>
     </section>
   );

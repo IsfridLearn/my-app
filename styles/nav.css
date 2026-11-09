@@ -1,0 +1,55 @@
+/* ------------------------------------------------------------------ Nav */
+/* Black label tape. Readable over black, white and any photograph. */
+.nav {
+  position: fixed;
+  top: env(safe-area-inset-top, 0px);
+  right: 0;
+  left: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12px var(--gutter) 0;
+  pointer-events: none;
+}
+.tape {
+  display: block;
+  padding: 5px 8px;
+  border: 1px solid var(--black);
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.015em;
+  line-height: 1.4;
+  pointer-events: auto;
+  text-decoration: none;
+}
+.tape-brand { padding: 8px; }
+.tape:hover, .tape[aria-current="true"] {
+  border-color: var(--red);
+  background: var(--red);
+  color: var(--white);
+}
+.nav-links { display: flex; gap: 2px; }
+.nav-reach { margin-left: 14px; }
+.nav-toggle { display: none; cursor: pointer; }
+
+@media (max-width: 1099px) {
+  .nav-toggle { display: block; }
+  .nav nav {
+    position: absolute;
+    top: 100%;
+    right: var(--gutter);
+  }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .nav-open .nav-links { display: flex; }
+  .nav-links .tape { padding: 12px 16px; }
+  .nav-reach { margin-left: 0; }
+}

@@ -1,23 +1,21 @@
-import Image from "next/image";
-import { brands, photos, spreads, titles } from "@/lib/content";
-import type { Photo } from "@/lib/content";
+import { ContentImage } from "@/components/ui/ContentImage";
+import { ScriptOverlay } from "@/components/ui/SectionHeading";
+import { brands, titles } from "@/data/beyond";
+import { sectionHeadings } from "@/data/navigation";
+import { contactSheetFrames, photos } from "@/data/photos";
+import type { Photo } from "@/types";
 
-const FRAMES = [1, 2, 3, 4, 5, 6, 7, 8];
-
-function Plate({
-  photo,
-  className,
-  sizes,
-  lang,
-}: {
+type PlateProps = {
   photo: Photo;
   className: string;
   sizes: string;
   lang?: string;
-}) {
+};
+
+function Plate({ photo, className, sizes, lang }: PlateProps) {
   return (
     <figure id={photo.id} className={`plate ${className}`}>
-      <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes={sizes} />
+      <ContentImage image={photo} sizes={sizes} />
       <figcaption className="file">
         {photo.file} <span lang={lang}>{photo.label}</span>
       </figcaption>
@@ -25,32 +23,25 @@ function Plate({
   );
 }
 
-export function Beyond() {
+export function BeyondTheScreen() {
+  const heading = sectionHeadings.beyond;
+
   return (
     <section id="beyond" className="spread beyond" aria-labelledby="beyond-title">
       <div id={photos.profile.id} className="opener">
-        <Image
-          src={photos.profile.src}
-          alt={photos.profile.alt}
-          width={photos.profile.width}
-          height={photos.profile.height}
-          sizes="100vw"
-        />
-        <h2 id="beyond-title" className="beyond-title">
-          Beyond the Screen
+        <ContentImage image={photos.profile} sizes="100vw" />
+        <h2 id="beyond-title" className="beyond-title poster">
+          {heading.title}
         </h2>
-        <p className="spread-script beyond-script" aria-hidden="true">
-          the
-          <span>{spreads.beyond}</span>
-        </p>
+        <ScriptOverlay className="spread-script beyond-script" word={heading.script} />
       </div>
 
       <div className="grid beyond-top">
         <div className="sheet" role="img" aria-label="Eight close-ups from shoots and pageants">
-          {FRAMES.map((n) => (
-            <span key={n} className="frame">
-              <Image className="frame-dither" src={`/photos/frame-${n}-dither.png`} alt="" width={240} height={180} unoptimized />
-              <Image className="frame-photo" src={`/photos/frame-${n}.webp`} alt="" width={640} height={480} unoptimized />
+          {contactSheetFrames.map(({ frame, dither, photo }) => (
+            <span key={frame} className="frame">
+              <ContentImage className="frame-dither" image={dither} unoptimized />
+              <ContentImage className="frame-photo" image={photo} unoptimized />
             </span>
           ))}
         </div>
@@ -58,18 +49,28 @@ export function Beyond() {
       </div>
 
       <div className="grid title-plates">
-        <Plate photo={photos.ginoo} className="plate-ginoo" sizes="(max-width: 1023px) 100vw, 44vw" lang="fil" />
-        <Plate photo={photos.patnubay} className="plate-patnubay" sizes="(max-width: 1023px) 75vw, 24vw" lang="fil" />
+        <Plate
+          photo={photos.ginoo}
+          className="plate-ginoo"
+          sizes="(max-width: 1023px) 100vw, 44vw"
+          lang="fil"
+        />
+        <Plate
+          photo={photos.patnubay}
+          className="plate-patnubay"
+          sizes="(max-width: 1023px) 75vw, 24vw"
+          lang="fil"
+        />
         <Plate photo={photos.gold} className="plate-gold" sizes="(max-width: 1023px) 100vw, 36vw" />
       </div>
 
       <div className="ledger">
-        <p className="stack-num ledger-head">[1] Titles</p>
+        <p className="index-num ledger-head">[1] Titles</p>
         <ul className="titles">
-          {titles.map((t) => (
-            <li key={t.name}>
-              <span lang={t.lang}>{t.name}</span>
-              <span className="ledger-year">{t.year}</span>
+          {titles.map((title) => (
+            <li key={title.name} className="poster">
+              <span lang={title.lang}>{title.name}</span>
+              <span className="ledger-year">{title.year}</span>
             </li>
           ))}
         </ul>
@@ -78,12 +79,12 @@ export function Beyond() {
       <div className="grid brands-row">
         <Plate photo={photos.stage} className="plate-stage" sizes="(max-width: 1023px) 75vw, 34vw" />
         <div className="ledger brands">
-          <p className="stack-num">[2] Brands</p>
+          <p className="index-num">[2] Brands</p>
           <ul>
-            {brands.map((b) => (
-              <li key={b.name}>
-                <span>{b.name}</span>
-                {b.note && <span className="file">{b.note}</span>}
+            {brands.map((brand) => (
+              <li key={brand.name} className="poster">
+                <span>{brand.name}</span>
+                {brand.note && <span className="file">{brand.note}</span>}
               </li>
             ))}
           </ul>
