@@ -203,11 +203,11 @@ type SceneProps = {
   /** Unique per instance on the page, so SVG pattern ids never collide. */
   idPrefix: string;
   className?: string;
-  /** Twinkling stars and drifting clouds. Off for small previews. */
+  /** Twinkling stars and drifting clouds. Off by default: the scene is still. */
   animated?: boolean;
 };
 
-export function Scene({ idPrefix, className, animated = true }: SceneProps) {
+export function Scene({ idPrefix, className, animated = false }: SceneProps) {
   return (
     <svg
       className={className}

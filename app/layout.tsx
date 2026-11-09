@@ -20,15 +20,14 @@ const mono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
+const title = "Andrei Sanchez | BSIT student, brand ambassador and model";
+const description =
+  "Andrei Sanchez is a second-year BSIT student in Davao City, the brand ambassador of Holy Cross of Davao College, a model and a pageant titleholder.";
+
 export const metadata: Metadata = {
-  title: "Andrei Sanchez, BSIT student and developer",
-  description:
-    "Andrei Sanchez is a BSIT student, developer, brand ambassador and model in Davao City.",
-  openGraph: {
-    title: "Andrei Sanchez, BSIT student and developer",
-    description:
-      "Andrei Sanchez is a BSIT student, developer, brand ambassador, and model in Davao City.",
-  },
+  title,
+  description,
+  openGraph: { title, description },
 };
 
 export const viewport: Viewport = {
