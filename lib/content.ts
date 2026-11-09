@@ -6,9 +6,11 @@ export const profile = {
   first: "Andrei",
   last: "Sanchez",
   location: "Davao City",
-  roles: ["BSIT student", "Brand ambassador", "Model", "Pageant titleholder"],
+  title: "Aspiring Developer & Creative Technologist",
   greeting:
-    "I'm a second-year IT student in Davao City, still early in learning to build for the web. This site is where the camera side of my life and the code side meet.",
+    "I'm a second-year BSIT student in Davao City, learning to build for the web one project at a time. My main project so far is DabaShare, a skill-exchange site for Davao students.",
+  primaryTech: ["JavaScript", "React", "Next.js", "Tailwind CSS"],
+  alsoNote: "Also a model, brand ambassador and pageant titleholder",
 };
 
 /* ---------------------------------------------------------------- Prints */
@@ -46,7 +48,7 @@ export type Photo = {
 
 // Pictures in Beyond the Screen. Crops are set in scripts/make-plates.mjs.
 export const photos: Record<
-  "profile" | "set" | "gold" | "ginoo" | "patnubay" | "stage",
+  "profile" | "set" | "gold" | "ginoo" | "patnubay" | "stage" | "headshot" | "eyes",
   Photo
 > = {
   profile: {
@@ -103,9 +105,29 @@ export const photos: Record<
     width: 620,
     height: 900,
   },
+  headshot: {
+    id: "cam-09",
+    file: "CAM·09",
+    label: "Headshot",
+    src: "/photos/plate-headshot.webp",
+    alt: "Andrei Sanchez in a black t-shirt, turned slightly and looking at the camera",
+    width: 800,
+    height: 1200,
+  },
+  eyes: {
+    id: "cam-10",
+    file: "CAM·10",
+    label: "Headshot, eyes",
+    src: "/photos/plate-eyes.webp",
+    alt: "A close crop across Andrei Sanchez's eyes",
+    width: 1800,
+    height: 600,
+  },
 };
 
 /* ------------------------------------------------------------------ Work */
+
+export type Shot = { src: string; alt: string; width: number; height: number };
 
 export type Project = {
   id: string;
@@ -115,8 +137,12 @@ export type Project = {
   role: string;
   choices: string[];
   stack: string[];
-  /** Screenshot inside /public, with its pixel size. */
-  image?: { src: string; alt: string; width: number; height: number };
+  /** Where the project stands today, stated plainly. */
+  status?: string;
+  /** Main screenshot inside /public, with its pixel size. */
+  image?: Shot;
+  /** Further screenshots. */
+  more?: Shot[];
   /** Live link. */
   href?: string;
   /** Code link. */
@@ -126,13 +152,51 @@ export type Project = {
 // Add a project here and it appears on the page. Only write what is true.
 export const projects: Project[] = [
   {
+    id: "dabashare",
+    title: "DabaShare",
+    blurb:
+      "A skill-exchange site where students across Davao City universities can find tutors, trade skills and join study sessions.",
+    why: "Students who need help with a subject and students who can teach it have no shared place to find each other. I built this as my final project for a Human-Computer Interaction class.",
+    role: "A solo school project. I built the screens, the styling and the JavaScript.",
+    status:
+      "A front-end prototype. Sign-in is simulated, and the courses, matches and messages are sample data. There is no backend yet.",
+    choices: [
+      "I split the JavaScript into ES modules by feature: auth, courses, profile, messages and webinars, with one entry file wiring up navigation and events.",
+      "Shared values such as the active user and selected filters live in a single state module, so the features don't pass them around.",
+      "Course cards, match cards, webinars and conversations are rendered from data arrays instead of being written by hand in the HTML.",
+      "Navigation swaps views inside one page, and courses can be narrowed by search and by free or paid.",
+    ],
+    stack: ["HTML", "CSS", "JavaScript (ES modules)"],
+    image: {
+      src: "/photos/work-daba-courses.webp",
+      alt: "DabaShare's course page, with a search bar, price filters and a grid of student-run courses",
+      width: 1600,
+      height: 1000,
+    },
+    more: [
+      {
+        src: "/photos/work-daba-match.webp",
+        alt: "DabaShare's profile page, listing what a student can teach and wants to learn beside suggested matches",
+        width: 1600,
+        height: 1000,
+      },
+      {
+        src: "/photos/work-daba-webinars.webp",
+        alt: "DabaShare's webinars page, with cards for upcoming study groups and sessions",
+        width: 1600,
+        height: 1000,
+      },
+    ],
+    source: "https://github.com/IsfridLearn/DabaShare-FinalProject",
+  },
+  {
     id: "portfolio",
     title: "This portfolio",
-    blurb: "My personal site, designed as an archive printed in black and white.",
+    blurb: "My personal site, designed as an archive of one person in two prints.",
     why: "My first version leaned on template content and didn't say who I am. I wanted a site that introduces me, what I do and what I'm learning.",
-    role: "I directed, wrote and built the whole site: concept, layout, interactions and copy.",
+    role: "I set the creative direction, chose the photos and supplied the facts. Claude wrote much of the code with me, and I reviewed each change in the browser.",
     choices: [
-      "The interface uses two values, pure black and pure white. The only greys on the page are inside the photographs.",
+      "Ink and ivory carry the page, and oxide red marks only active links.",
       "A serif speaks for the camera side and a wide sans for the code side, so my name is set half in each.",
       "Image details are reduced to 1-bit dither, the way early computers drew photographs, and jump to the real image on hover.",
       "All the text lives in one content file, so updating the site never means touching components.",
@@ -147,6 +211,46 @@ export const projects: Project[] = [
     source: "https://github.com/IsfridLearn/my-app",
   },
 ];
+
+/* ----------------------------------------------------------------- Stack */
+
+export const stack: Array<{ category: string; note?: string; items: string[] }> = [
+  { category: "Languages", items: ["HTML", "CSS", "JavaScript", "C++", "Java"] },
+  {
+    category: "Frontend development",
+    items: ["React", "Next.js", "Tailwind CSS", "Responsive web design"],
+  },
+  {
+    category: "Environment and tools",
+    note: "Where I write code and keep track of it.",
+    items: ["Visual Studio Code", "Git", "GitHub"],
+  },
+  {
+    category: "AI-assisted development",
+    note: "Assistants in my workflow for explanations, debugging and drafting code. They are tools, and this site was built with their help.",
+    items: ["ChatGPT", "Claude"],
+  },
+];
+
+/* ------------------------------------------------------------ Experience */
+
+export const experience: { note: string; roles: Array<{ title: string; text: string }> } = {
+  note: "Practiced through school and personal projects.",
+  roles: [
+    {
+      title: "Web Developer",
+      text: "I build sites with HTML, CSS and JavaScript. This portfolio runs on Next.js and deploys through Vercel.",
+    },
+    {
+      title: "Frontend Developer",
+      text: "I work on interfaces in React, Next.js and Tailwind CSS. DabaShare's screens, filtering and navigation are written in plain JavaScript.",
+    },
+    {
+      title: "UI/UX Designer",
+      text: "DabaShare began as my final project for a Human-Computer Interaction class, including its screens and user flows.",
+    },
+  ],
+};
 
 /* ----------------------------------------------------- Beyond the Screen */
 

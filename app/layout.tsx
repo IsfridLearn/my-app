@@ -23,9 +23,9 @@ const mono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-const title = "Andrei Sanchez | BSIT student, brand ambassador and model";
+const title = "Andrei Sanchez | Aspiring developer and creative technologist";
 const description =
-  "Andrei Sanchez is a second-year BSIT student in Davao City, the brand ambassador of Holy Cross of Davao College, a model and a pageant titleholder.";
+  "Andrei Sanchez is a second-year BSIT student in Davao City learning web development, with a creative background as a model, brand ambassador and pageant titleholder.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://andreisanchez.vercel.app"),
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: "#0C0B0A",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

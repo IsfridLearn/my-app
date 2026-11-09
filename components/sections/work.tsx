@@ -32,18 +32,39 @@ export function Work() {
               <p>{p.blurb}</p>
               <dl className="notes">
                 <div>
-                  <dt className="file">Why I made it</dt>
+                  <dt className="file">The idea</dt>
                   <dd>{p.why}</dd>
                 </div>
                 <div>
                   <dt className="file">My part</dt>
                   <dd>{p.role}</dd>
                 </div>
+                {p.status && (
+                  <div>
+                    <dt className="file">Status</dt>
+                    <dd>{p.status}</dd>
+                  </div>
+                )}
               </dl>
             </div>
 
+            {p.more && p.more.length > 0 && (
+              <div className="project-more">
+                {p.more.map((shot) => (
+                  <Image
+                    key={shot.src}
+                    src={shot.src}
+                    alt={shot.alt}
+                    width={shot.width}
+                    height={shot.height}
+                    sizes="(max-width: 1023px) 50vw, 34vw"
+                  />
+                ))}
+              </div>
+            )}
+
             <div className="project-choices">
-              <h4 className="file">Choices</h4>
+              <h4 className="file">Technical decisions</h4>
               <ul>
                 {p.choices.map((c) => (
                   <li key={c}>{c}</li>

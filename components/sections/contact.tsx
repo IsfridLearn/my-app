@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { FormEvent } from "react";
 import { Sprite } from "../pixel";
 import { ARROW } from "../sprites";
-import { contact } from "@/lib/content";
+import { contact, photos } from "@/lib/content";
 
 export function Contact() {
   const email = contact.email.trim();
@@ -39,6 +40,16 @@ export function Contact() {
 
   return (
     <section id="contact" className="contact" aria-labelledby="contact-title">
+      <div id={photos.eyes.id} className="eyes-band">
+        <Image
+          src={photos.eyes.src}
+          alt={photos.eyes.alt}
+          width={photos.eyes.width}
+          height={photos.eyes.height}
+          sizes="100vw"
+        />
+      </div>
+
       <h2 id="contact-title" className="file">
         Contact
       </h2>
