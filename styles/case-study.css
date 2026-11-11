@@ -1,0 +1,85 @@
+/* ------------------------------------------------- Case studies built from data */
+/* Shares the cs- layout in dabashare.css; these are the extra pieces. */
+.cs-direction,
+.cs-features-sec {
+  row-gap: clamp(32px, 4vw, 56px);
+  align-items: start;
+  padding-top: clamp(112px, 13vw, 220px);
+}
+.cs-direction-h, .cs-features-h { grid-column: 1 / -1; }
+.cs-direction-list { grid-column: 1 / span 7; }
+.cs-shots {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 4vw, 64px) var(--gap);
+  align-items: start;
+}
+.cs-shots-item img { box-shadow: 10px 10px 0 var(--red); }
+.cs-feature-list { grid-column: 1 / span 8; }
+
+/* A logo shown in place of a screenshot. */
+.cs-shot img[src$=".svg"] {
+  aspect-ratio: 16 / 9;
+  padding: 10% 30%;
+  object-fit: contain;
+  background: radial-gradient(circle at 50% 46%, #1c1a1a 0, var(--black) 62%);
+}
+
+/* Marked gaps for text or screenshots still to come. */
+.cs-todo {
+  padding: 10px 12px;
+  border: 1px dashed var(--red);
+  color: #d8d3d3;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.cs-todo .file { margin-right: 6px; color: var(--red); }
+.cs-todo-frame {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  border: 1px dashed var(--red);
+  color: var(--red);
+}
+.cs-todo-block {
+  grid-column: 1 / span 7;
+  display: grid;
+  gap: 8px;
+}
+
+/* Back to the deck, and on to the next project. */
+.cs-pager {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  margin-inline: var(--gutter);
+  border-block: 1px solid var(--white);
+}
+.cs-pager a { padding: clamp(16px, 2vw, 28px) 0; text-decoration: none; }
+.cs-pager-back { align-self: stretch; }
+.cs-pager-next {
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+  padding-left: var(--gap);
+  border-left: 1px solid var(--white);
+  text-align: right;
+}
+.cs-pager-title {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  font-size: clamp(56px, 9vw, 168px);
+  line-height: 0.88;
+}
+.cs-pager a:hover { color: var(--red); }
+
+@media (max-width: 1023px) {
+  .cs-direction-list, .cs-feature-list, .cs-todo-block { grid-column: 1 / -1; }
+  .cs-shots { grid-template-columns: minmax(0, 1fr); }
+  .cs-shots-item img { box-shadow: 8px 8px 0 var(--red); }
+}
+@media (max-width: 640px) {
+  .cs-pager { grid-template-columns: minmax(0, 1fr); }
+  .cs-pager-next { padding-left: 0; border-left: 0; border-top: 1px solid var(--white); }
+}

@@ -13,7 +13,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     category: "AI-assisted development",
-    note: "Assistants in my workflow for explanations, debugging and drafting code. They are tools, and this site was built with their help.",
+    note: "Assistants in my workflow for explanations, debugging and drafting code.",
     items: ["ChatGPT", "Claude"],
   },
 ];

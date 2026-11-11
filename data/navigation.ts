@@ -1,6 +1,6 @@
 import { hasContact } from "@/data/contact";
 import { photos, prints } from "@/data/photos";
-import { projectFileNumber, projects } from "@/data/projects";
+import { caseStudyHref, projectFileNumber, projects } from "@/data/projects";
 import type { ArchiveEntry, NavSection, SectionHeadingText } from "@/types";
 
 export const navSections: NavSection[] = [
@@ -28,7 +28,7 @@ export const archiveIndex: ArchiveEntry[] = [
   ...projects.map((project, index) => ({
     file: projectFileNumber(index),
     label: project.title,
-    href: `#${project.id}`,
+    href: caseStudyHref(project),
   })),
   { file: prints.dark.file, label: prints.dark.label, href: "#home" },
   { file: prints.light.file, label: prints.light.label, href: "#about" },
