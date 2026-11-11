@@ -1,10 +1,7 @@
 import type { CSSProperties, ReactElement } from "react";
 
-// The only pixel art on the site: the AS monogram and the link arrow.
+// The only pixel art on the site: the link arrow.
 // "f" cells take the current text color, so sprites work on black and on white.
-const LETTER_A = [".fff.", "f...f", "f...f", "fffff", "f...f", "f...f", "f...f"];
-const LETTER_S = [".ffff", "f....", "f....", ".fff.", "....f", "....f", "ffff."];
-const MONOGRAM = LETTER_A.map((row, index) => `${row}.${LETTER_S[index]}`);
 const ARROW = ["fffff", "...ff", "..f.f", ".f..f", "f...."];
 
 type SpriteProps = {
@@ -63,6 +60,3 @@ export function Arrow({ unit = "2px" }: { unit?: string }) {
   return <Sprite rows={ARROW} unit={unit} />;
 }
 
-export function Monogram() {
-  return <Sprite rows={MONOGRAM} unit="2px" />;
-}
