@@ -1,7 +1,8 @@
 /* ------------------------------------------------------------------
    Two Prints. One person, printed dark and light.
    Black and white carry the page, with one red for poster headlines
-   and active links. Condensed poster type, script and typewriter text.
+   and active links. Condensed poster type and script for display,
+   Plex Sans for reading, Plex Mono for labels, navigation and numbers.
    ------------------------------------------------------------------ */
 :root {
   --black: #000000;
@@ -12,6 +13,7 @@
   --a: var(--red);
   --gutter: clamp(16px, 2.4vw, 40px);
   --gap: clamp(16px, 2vw, 32px);
+  --sans: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
   --mono: var(--font-mono), ui-monospace, Consolas, monospace;
   --poster: var(--font-poster), "Arial Narrow", Impact, sans-serif;
   --script: var(--font-script), "Snell Roundhand", cursive;
@@ -25,10 +27,11 @@ html {
 body {
   background: var(--black);
   color: var(--white);
-  font-family: var(--mono);
-  font-size: 15px;
-  line-height: 1.55;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
 }
+b, strong { font-weight: 600; }
 .site {
   flex: 1;
   min-width: 0;
@@ -85,6 +88,11 @@ body {
 
 .print-btn {
   padding: 8px 12px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   border: 1px solid var(--f);
   cursor: pointer;
 }
@@ -109,7 +117,9 @@ body {
 /* The small red [1], [2] markers. */
 .index-num {
   color: var(--red);
-  font-size: 18px;
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: 0.04em;
   line-height: 1;
 }
 
@@ -136,13 +146,16 @@ body {
 /* Label and text pairs numbered [1], [2]. */
 .facts {
   display: grid;
-  gap: 16px;
-  font-size: 14px;
-  line-height: 1.45;
+  gap: 18px;
+  font-size: 15px;
+  line-height: 1.6;
 }
 .facts dt {
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .facts dt span { color: var(--red); }

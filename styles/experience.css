@@ -23,8 +23,8 @@
   display: grid;
   gap: 8px;
   align-content: start;
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: 15px;
+  line-height: 1.55;
 }
 .exp-list h3 {
   font-size: clamp(40px, 4.2vw, 76px);

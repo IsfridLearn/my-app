@@ -1,11 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, League_Gothic, Pinyon_Script } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, League_Gothic, Pinyon_Script } from "next/font/google";
 import "./globals.css";
+
+const sans = IBM_Plex_Sans({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 const mono = IBM_Plex_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500"],
 });
 
 const poster = League_Gothic({
@@ -43,7 +49,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${mono.variable} ${poster.variable} ${script.variable} h-full antialiased`}
+      className={`${sans.variable} ${mono.variable} ${poster.variable} ${script.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
