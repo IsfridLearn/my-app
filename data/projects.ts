@@ -5,11 +5,19 @@ export function projectFileNumber(index: number): string {
   return `CODE·${String(index + 1).padStart(2, "0")}`;
 }
 
+/** The project's case-study page. */
+export function caseStudyHref(project: Project): string {
+  return `/work/${project.id}`;
+}
+
 // Add a project here and it appears on the page. Only write what is true.
+// Each project also needs a case-study page in app/work/{id}.
 export const projects: Project[] = [
   {
     id: "dabashare",
     title: "DabaShare",
+    category: "School project · Web app",
+    label: "Front-end prototype",
     blurb:
       "A skill-exchange site where students across Davao City universities can find tutors, trade skills and join study sessions.",
     why: "Students who need help with a subject and students who can teach it have no shared place to find each other. I built this as my final project for a Human-Computer Interaction class.",
@@ -22,49 +30,62 @@ export const projects: Project[] = [
       "Course cards, match cards, webinars and conversations are rendered from data arrays instead of being written by hand in the HTML.",
       "Navigation swaps views inside one page, and courses can be narrowed by search and by free or paid.",
     ],
-    stack: ["HTML", "CSS", "JavaScript (ES modules)"],
-    image: {
+    stack: ["HTML", "CSS", "JavaScript"],
+    cover: {
+      kind: "screenshot",
       src: "/photos/work-daba-courses.webp",
       alt: "DabaShare's course page, with a search bar, price filters and a grid of student-run courses",
       width: 1600,
       height: 1000,
     },
-    more: [
-      {
-        src: "/photos/work-daba-match.webp",
-        alt: "DabaShare's profile page, listing what a student can teach and wants to learn beside suggested matches",
-        width: 1600,
-        height: 1000,
-      },
-      {
-        src: "/photos/work-daba-webinars.webp",
-        alt: "DabaShare's webinars page, with cards for upcoming study groups and sessions",
-        width: 1600,
-        height: 1000,
-      },
-    ],
     source: "https://github.com/IsfridLearn/DabaShare-FinalProject",
-    caseStudy: "/work/dabashare",
   },
   {
     id: "portfolio",
     title: "This portfolio",
+    category: "Personal site",
+    label: "Live",
     blurb: "My personal site, designed as an archive of one person in two prints.",
     why: "My first version leaned on template content and didn't say who I am. I wanted a site that introduces me, what I do and what I'm learning.",
-    role: "I set the creative direction, chose the photos and supplied the facts. Claude wrote much of the code with me, and I reviewed each change in the browser.",
+    role: "I set the creative direction, chose the photos, supplied the facts and reviewed every change in the browser.",
     choices: [
       "The page is black, white and one red, with a poster headline for every section.",
-      "Condensed poster type, script and a typewriter face do different jobs: names, personality and reading.",
+      "Condensed poster type and script carry names and personality, IBM Plex Sans carries the reading and IBM Plex Mono the labels.",
       "Image details are reduced to 1-bit dither, the way early computers drew photographs, and jump to the real image on hover.",
       "All the text lives in dedicated content files, so updating the site never means touching components.",
     ],
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-    image: {
+    cover: {
+      kind: "screenshot",
       src: "/photos/work-portfolio.webp",
-      alt: "The opening screen of this portfolio, with the name Andrei Sanchez across a portrait",
+      alt: "The opening screen of this portfolio, with the name Andrei Sanchez in red across a portrait",
       width: 1600,
       height: 1000,
     },
     source: "https://github.com/IsfridLearn/my-app",
+  },
+  {
+    id: "rentdavao",
+    title: "RentDavao",
+    category: "Android app",
+    label: "Version 1.0",
+    blurb:
+      "A rental marketplace app for Davao City, where people can rent properties, vehicles, gadgets and more, or list their own things to earn from.",
+    why: "Renting and lending in Davao City should be easier. RentDavao puts things to rent in one place and gives people and businesses a way to earn from what they already own.",
+    choices: [
+      "Activities and fragments are grouped by feature: sign-in, listings, the main tabs and the profile.",
+      "Firebase handles accounts and stores listings in a Realtime Database, so changes reach every phone without a refresh.",
+      "Photos are shrunk on the phone and saved as text inside each listing.",
+    ],
+    stack: ["Java", "Android", "Firebase"],
+    status: "Version 1.0 of an Android app. The code is in a private repository.",
+    cover: {
+      kind: "logo",
+      src: "/logos/rentdavao.svg",
+      alt: "The RentDavao logo, a faceted eagle",
+      width: 785,
+      height: 705,
+      caption: "Rent anything in Davao",
+    },
   },
 ];

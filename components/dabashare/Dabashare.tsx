@@ -1,3 +1,4 @@
+import { CaseStudyPager } from "@/components/case-study/CaseStudyPager";
 import { Build } from "@/components/dabashare/Build";
 import { Introduction } from "@/components/dabashare/Introduction";
 import { Process } from "@/components/dabashare/Process";
@@ -15,6 +16,7 @@ export function Dabashare() {
       <Process />
       <Build />
       <Reflection />
+      <CaseStudyPager id="dabashare" />
     </PageShell>
   );
 }

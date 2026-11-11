@@ -63,25 +63,54 @@ export type AboutContent = {
 };
 
 export type Project = {
+  /** Also the case-study address: /work/{id}. Each id needs a page in app/work/{id}. */
   id: string;
   title: string;
+  /** What kind of project it is, such as "School project · Web app". */
+  category: string;
+  /** A few words on where it stands, shown as a tag on the card. */
+  label: string;
   blurb: string;
   why: string;
-  role: string;
+  /** Leave out when it hasn't been written yet; the case study shows a placeholder. */
+  role?: string;
   choices: string[];
   stack: string[];
   /** Where the project stands today, stated plainly. */
   status?: string;
-  /** Main screenshot inside /public, with its pixel size. */
-  image?: Shot;
-  /** Further screenshots. */
-  more?: Shot[];
+  /** The picture on the project's card: a screenshot, or a logo shown on black. */
+  cover: Shot & { kind: "screenshot" | "logo"; caption?: string };
   /** Live link. */
   href?: string;
-  /** Code link. */
+  /** Code link. Leave out for private repositories. */
   source?: string;
-  /** Link to a longer write-up on this site. */
-  caseStudy?: string;
+};
+
+/** A case-study screenshot, or a marked gap where one still needs to be added. */
+export type CaseShotSlot = CaseShot | { todo: string };
+
+/**
+ * A case study built from data. Optional parts that are left out show as a marked
+ * placeholder on the page, so nothing has to be invented to fill a gap.
+ */
+export type CaseStudyContent = {
+  /** The project's id in data/projects.ts. */
+  id: string;
+  lead: CaseShotSlot;
+  intro: Array<{ label: string; text?: string; todo?: string }>;
+  status: string;
+  goals?: string[];
+  timeline?: string;
+  tech: string[];
+  techNote?: string;
+  direction: string[];
+  shots: CaseShotSlot[];
+  features: string[];
+  implementation: Array<{ label: string; text: string }>;
+  challenges?: Array<{ title: string; challenge: string; solution: string }>;
+  learnings?: string[];
+  future?: string[];
+  linkNote?: string;
 };
 
 export type SkillGroup = {
