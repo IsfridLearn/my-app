@@ -61,10 +61,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 24px var(--gap);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.55;
 }
-.interview dt { font-weight: 700; }
+.interview dt { font-weight: 600; }
 
 @media (max-width: 1023px) {
   .about-fig {

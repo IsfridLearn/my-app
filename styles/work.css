@@ -47,7 +47,11 @@
   letter-spacing: 0.002em;
   line-height: 0.88;
 }
-.project-blurb { hyphens: auto; text-align: justify; }
+.project-blurb {
+  font-size: clamp(17px, 1.3vw, 19px);
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+}
 .notes { margin-top: 8px; }
 .notes dd { hyphens: auto; text-align: justify; }
 .project-more {
@@ -82,8 +86,8 @@
 .project-choices li {
   padding-top: 10px;
   border-top: 1px solid var(--white);
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: 15px;
+  line-height: 1.6;
   hyphens: auto;
   text-align: justify;
 }

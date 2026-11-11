@@ -64,7 +64,7 @@ type HeroCopyProps = {
 function HeroCopy({ isLight, onTogglePrint }: HeroCopyProps) {
   return (
     <div className="fp-text">
-      <p className="fp-mono fp-corner">
+      <p className="fp-copy fp-corner">
         <b>
           {profile.first} {profile.last}
         </b>
@@ -74,28 +74,28 @@ function HeroCopy({ isLight, onTogglePrint }: HeroCopyProps) {
         {hero.role[1]}
       </p>
 
-      <div className="fp-mono fp-lede">
+      <div className="fp-copy fp-lede">
         {hero.lede.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
 
-      <ul className="fp-mono fp-tags" aria-label="Technologies">
+      <ul className="fp-copy fp-tags" aria-label="Technologies">
         {hero.tags.map((tag) => (
           <li key={tag}>/ {tag}</li>
         ))}
       </ul>
-      <p className="fp-mono fp-label">{hero.label}</p>
+      <p className="fp-copy fp-label">{hero.label}</p>
 
-      <p className="fp-mono fp-body">
+      <p className="fp-copy fp-body">
         <DropCap text={hero.body} />
       </p>
 
       {hero.notes.map((note, index) => (
         <div key={note.title} className={`fp-note fp-note-${index + 1}`}>
-          <p className="fp-mono fp-num">[{index + 1}]</p>
+          <p className="fp-copy fp-num">[{index + 1}]</p>
           <h2>{note.title}</h2>
-          <p className="fp-mono">
+          <p className="fp-copy">
             {note.text} <a href={note.href}>{note.link}</a>
           </p>
         </div>
@@ -103,7 +103,7 @@ function HeroCopy({ isLight, onTogglePrint }: HeroCopyProps) {
 
       <button
         type="button"
-        className="fp-mono print-btn fp-print"
+        className="fp-copy print-btn fp-print"
         aria-pressed={isLight}
         onClick={onTogglePrint}
       >

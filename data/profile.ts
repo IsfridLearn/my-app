@@ -10,14 +10,14 @@ export const profile: Profile = {
 };
 
 export const hero: HeroContent = {
-  role: ["Aspiring Developer", "& Creative Technologist"],
+  role: ["Developer", "& Creative Technologist"],
   lede: [
     "Second-year BSIT student at Holy Cross of Davao College, learning to build for the web one project at a time.",
     "My main project so far is DabaShare, a skill-exchange site for students across Davao City universities.",
   ],
   tags: ["HTML, CSS, JavaScript", "React, Next.js", "Tailwind CSS", "C++, Java"],
   label: "Portfolio /2026",
-  script: ["the", "developer"],
+  script: ["art", "meets code"],
   body: "Some of my time is on camera. Some of it is in code. DabaShare is a solo school project, written in plain HTML, CSS and JavaScript modules. This portfolio runs on Next.js and React, and its look comes from the camera side of my life.",
   notes: [
     {

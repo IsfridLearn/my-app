@@ -26,13 +26,12 @@
   gap: 6px;
 }
 .stack-meta h3 {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
   line-height: 1.2;
-  text-transform: uppercase;
 }
-.stack-meta p:not(.index-num) { font-size: 13px; line-height: 1.4; }
+.stack-meta p:not(.index-num) { font-size: 14px; line-height: 1.5; }
 .stack-items {
   grid-column: 4 / -1;
   font-size: clamp(52px, 8.4vw, 156px);
