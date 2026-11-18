@@ -5,16 +5,18 @@ import { PageShell } from "@/components/layout/PageShell";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Arrow } from "@/components/ui/Sprite";
 import { caseStudyHref, projectFileNumber, projects } from "@/data/projects";
+import { pageMetadata } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: "All projects | Andrei Sanchez",
-  description: "Every project by Andrei Sanchez, each with its own case study.",
-};
+export const metadata: Metadata = pageMetadata(
+  "All projects | Andrei Sanchez",
+  "Every project by Andrei Sanchez, each with its own case study.",
+  "/work",
+);
 
 export default function WorkIndexPage() {
   return (
     <PageShell activeSection="work" navBase="/" mainClassName="work-index" footer={<CaseStudyFooter />}>
-      <SectionHeading id="work-index-title" title="All projects" script="archive" />
+      <SectionHeading as="h1" id="work-index-title" title="All projects" script="archive" />
       <ul className="work-list">
         {projects.map((project, index) => (
           <li key={project.id}>

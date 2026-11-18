@@ -11,7 +11,7 @@ import { dabashareCase } from "@/data/dabashare";
 export function Dabashare() {
   return (
     <PageShell activeSection="work" navBase="/" mainClassName="cs" footer={<CaseStudyFooter />}>
-      <SectionHeading id="cs-title" title={dabashareCase.title} script={dabashareCase.script} />
+      <SectionHeading as="h1" id="cs-title" title={dabashareCase.title} script={dabashareCase.script} />
       <Introduction />
       <Process />
       <Build />

@@ -14,10 +14,11 @@ type CaseSlotProps = {
   slot: CaseShotSlot;
   className: string;
   sizes: string;
+  preload?: boolean;
 };
 
 /** A screenshot, or a marked frame where one still needs to be added. */
-export function CaseSlot({ slot, className, sizes }: CaseSlotProps) {
+export function CaseSlot({ slot, className, sizes, preload }: CaseSlotProps) {
   if ("todo" in slot) {
     return (
       <figure className={`cs-shot ${className}`}>
@@ -27,5 +28,5 @@ export function CaseSlot({ slot, className, sizes }: CaseSlotProps) {
     );
   }
 
-  return <CaseFigure shot={slot} className={className} sizes={sizes} />;
+  return <CaseFigure shot={slot} className={className} sizes={sizes} preload={preload} />;
 }

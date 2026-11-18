@@ -19,15 +19,17 @@ type SectionHeadingProps = {
   title: string;
   script: string;
   className?: string;
+  /** "h1" when the headline is the page title, as on project pages. */
+  as?: "h1" | "h2";
 };
 
 /** The poster headline used by each section: a huge red title with white script across it. */
-export function SectionHeading({ id, title, script, className }: SectionHeadingProps) {
+export function SectionHeading({ id, title, script, className, as: Heading = "h2" }: SectionHeadingProps) {
   return (
     <div className={className ? `spread-head ${className}` : "spread-head"}>
-      <h2 id={id} className="spread-title poster">
+      <Heading id={id} className="spread-title poster">
         {title}
-      </h2>
+      </Heading>
       <ScriptOverlay className="spread-script" word={script} />
     </div>
   );

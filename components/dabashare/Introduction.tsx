@@ -11,7 +11,7 @@ export function Introduction() {
   return (
     <>
       <section className="grid cs-intro" aria-label="Project introduction">
-        <CaseFigure shot={shots.courses} className="cs-lead" sizes="(max-width: 1023px) 100vw, 68vw" />
+        <CaseFigure shot={shots.courses} className="cs-lead" sizes="(max-width: 1023px) 100vw, 68vw" preload />
         <div className="cs-intro-text">
           <Link className="file go cs-back" href="/#work">
             Selected Work

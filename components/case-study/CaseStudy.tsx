@@ -19,10 +19,10 @@ export function CaseStudy({ content }: { content: CaseStudyContent }) {
 
   return (
     <PageShell activeSection="work" navBase="/" mainClassName="cs" footer={<CaseStudyFooter />}>
-      <SectionHeading id="cs-title" title={project.title} script="case study" />
+      <SectionHeading as="h1" id="cs-title" title={project.title} script="case study" />
 
       <section className="grid cs-intro" aria-label="Project introduction">
-        <CaseSlot slot={content.lead} className="cs-lead" sizes="(max-width: 1023px) 100vw, 68vw" />
+        <CaseSlot slot={content.lead} className="cs-lead" sizes="(max-width: 1023px) 100vw, 68vw" preload />
         <div className="cs-intro-text">
           <Link className="file go cs-back" href="/#work">
             Selected Work

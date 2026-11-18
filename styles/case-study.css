@@ -83,3 +83,19 @@
   .cs-pager { grid-template-columns: minmax(0, 1fr); }
   .cs-pager-next { padding-left: 0; border-left: 0; border-top: 1px solid var(--white); }
 }
+
+/* ---------------------------------------------------------------- 404 page */
+.missing { padding-block: clamp(72px, 7vw, 112px) clamp(96px, 10vw, 160px); overflow: hidden; }
+.missing-body {
+  display: grid;
+  gap: 16px;
+  max-width: 40em;
+  margin-top: clamp(88px, 10vw, 160px);
+  padding-inline: var(--gutter);
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.45;
+}
+.missing-body .file { font-size: 12px; }
+.missing-body .file:first-child { color: var(--red); }
+.missing-links { display: flex; flex-wrap: wrap; gap: 8px 32px; }
+.missing-links .go { padding-block: 12px; }

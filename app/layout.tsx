@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, League_Gothic, Pinyon_Script } from "next/font/google";
+import { pageMetadata, siteUrl } from "@/data/site";
 import "./globals.css";
 
 const sans = IBM_Plex_Sans({
@@ -25,20 +26,13 @@ const script = Pinyon_Script({
   weight: "400",
 });
 
-const title = "Andrei Sanchez | Aspiring developer and creative technologist";
-const description =
-  "Andrei Sanchez is a second-year BSIT student in Davao City learning web development, with a creative background as a model, brand ambassador and pageant titleholder.";
-
 export const metadata: Metadata = {
-  metadataBase: new URL("https://andreisanchez.vercel.app"),
-  title,
-  description,
+  metadataBase: new URL(siteUrl),
   icons: { icon: "/favicon.svg" },
-  openGraph: {
-    title,
-    description,
-    images: [{ url: "/photos/social.jpg", width: 1200, height: 630, alt: "Andrei Sanchez" }],
-  },
+  ...pageMetadata(
+    "Andrei Sanchez | Developer and creative technologist",
+    "Andrei Sanchez is a second-year BSIT student in Davao City who builds for the web and Android, with a creative background as a model, brand ambassador and pageant titleholder.",
+  ),
 };
 
 export const viewport: Viewport = {
