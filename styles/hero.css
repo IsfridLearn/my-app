@@ -90,8 +90,9 @@
   line-height: 1.42;
 }
 .fp-corner {
-  top: 16px;
-  left: calc(var(--gutter) + 56px);
+  /* Just below the fixed nav bar, lined up with its counter. */
+  top: 64px;
+  left: var(--gutter);
   font-family: var(--mono);
   font-size: max(0.93cqw, 11px);
   letter-spacing: 0.015em;

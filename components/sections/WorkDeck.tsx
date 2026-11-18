@@ -83,12 +83,28 @@ export function WorkDeck({ projects }: { projects: Project[] }) {
                 </div>
               </div>
 
-              <Link className="deck-link file" href={caseStudyHref(project)} tabIndex={isFront ? 0 : -1}>
-                <span>
-                  View case study<span className="sr-only">: {project.title}</span>
-                </span>
-                <Arrow />
-              </Link>
+              <div className="deck-actions file">
+                <Link className="deck-link" href={caseStudyHref(project)} tabIndex={isFront ? 0 : -1}>
+                  <span>
+                    Project details<span className="sr-only">: {project.title}</span>
+                  </span>
+                  <Arrow />
+                </Link>
+                {project.href && (
+                  <a
+                    className="deck-link deck-live"
+                    href={project.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    tabIndex={isFront ? 0 : -1}
+                  >
+                    <span>
+                      Live preview<span className="sr-only">: {project.title}</span>
+                    </span>
+                    <Arrow />
+                  </a>
+                )}
+              </div>
             </article>
           );
         })}

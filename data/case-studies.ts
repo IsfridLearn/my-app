@@ -158,3 +158,79 @@ export const rentdavaoCase: CaseStudyContent = {
   ],
   linkNote: "The code is in a private repository, so there is no public link yet.",
 };
+
+export const isfridiaCase: CaseStudyContent = {
+  id: "isfridia",
+  lead: {
+    src: "/logos/isfridia.svg",
+    alt: "The Isfridia logo, a capital I on a white rounded tile",
+    caption: "The Isfridia logo",
+    width: 512,
+    height: 512,
+  },
+  intro: [
+    {
+      label: "What it is",
+      text: "A web-based manhwa reading platform where people can read for free: browse, read, bookmark and pick up where they left off.",
+    },
+    {
+      label: "The idea",
+      text: "A dark, focused reading site for original manhwa, published and managed from its own admin dashboard.",
+    },
+    { label: "Who it's for", todo: "The readers you want to reach, and the creators whose work it will publish." },
+  ],
+  status: "live at isfridia.vercel.app, deployed on Vercel.",
+  goals: [
+    "Let anyone browse and read without paying.",
+    "Give readers accounts with bookmarks, favorites, reading history and saved progress.",
+    "Run the whole catalog, from comics and chapters to covers and users, from an admin dashboard.",
+    "Only show content the site is allowed to show.",
+  ],
+  tech: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
+  techNote:
+    "Next.js App Router with React, Supabase for the database, sign-in and image storage, and Zod for checking input. Built to deploy on Vercel.",
+  direction: [
+    "Dark only: near-black blue-grey backgrounds with one accent, a glacier blue, a nod to the name, since “is” means ice.",
+    "Bricolage Grotesque for headings and Inter for reading.",
+    "Covers in a 2:3 frame, and cards that lift slightly on hover, with reduced motion respected.",
+    "A reader with three widths, space reserved for every page image so nothing jumps, and controls at the bottom on phones.",
+  ],
+  shots: [
+    { todo: "The homepage, with featured comics, latest updates and trending" },
+    { todo: "A comic's page, with chapters and the bookmark button" },
+    { todo: "The reader" },
+    { todo: "The admin dashboard" },
+  ],
+  features: [
+    "Browse by genre, latest updates, popular and recently added, with search and filters",
+    "A reader with saved progress for signed-in readers and view counting after five seconds of reading",
+    "Accounts with sign-up, login, password reset, bookmarks, favorites and reading history",
+    "Account page with profile editing and a download of your own data",
+    "Admin dashboard for comics, chapters, page and cover uploads, genres, users and a trash bin",
+    "Scheduled chapters that stay hidden until their release time",
+    "A MangaDex catalog that lists titles and links only to official chapters on the publisher's site",
+    "Trending This Week, ranked from each title's weekly follower growth on MangaDex",
+  ],
+  implementation: [
+    {
+      label: "Caching",
+      text: "Public pages are cached, and anything personal, such as bookmark state or continue reading, loads separately for each reader.",
+    },
+    {
+      label: "Security",
+      text: "Supabase row-level security rules decide what visitors, readers and admins can read and change, checked by an automated test suite.",
+    },
+    {
+      label: "Content rules",
+      text: "Chapters hosted on MangaDex are fan translations, so they are never imported or shown. Only official chapters appear, as links to the publisher.",
+    },
+    {
+      label: "Images",
+      text: "Covers are converted on the server with sharp and stored in Supabase Storage, with page sizes saved so the reader never shifts.",
+    },
+    {
+      label: "Testing",
+      text: "Scripts check sign-in, the admin tools, the reader and the library against a running copy of the site.",
+    },
+  ],
+};

@@ -143,6 +143,12 @@ export function CaseStudy({ content }: { content: CaseStudyContent }) {
       </section>
 
       <section className="cs-links" aria-label="Project links">
+        {project.href && (
+          <a className="cs-repo poster" href={project.href} target="_blank" rel="noreferrer">
+            Live preview
+            <Arrow unit="6px" />
+          </a>
+        )}
         {project.source && (
           <a className="cs-repo poster" href={project.source} target="_blank" rel="noreferrer">
             View the code

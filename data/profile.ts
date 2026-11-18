@@ -22,7 +22,7 @@ export const hero: HeroContent = {
   notes: [
     {
       title: "Building",
-      text: "DabaShare and this portfolio, with screenshots, decisions and code.",
+      text: "DabaShare, Isfridia, RentDavao and this portfolio, each with its own case study.",
       link: "See the work",
       href: "#work",
     },

@@ -1,4 +1,5 @@
 /* ------------------------------------------------------------------ Stack */
+/* An index: number and group on the left, the tools on the right. */
 .stack { padding-bottom: clamp(88px, 11vw, 176px); scroll-margin-top: 48px; }
 .stack::before {
   content: "";
@@ -8,36 +9,56 @@
   width: 46vw;
   height: 54vw;
   background: url("/photos/hero-ghost-l.webp") center / cover no-repeat;
-  opacity: 0.32;
+  opacity: 0.2;
   pointer-events: none;
 }
 .stack > * { position: relative; }
 .stack-rows { margin-top: clamp(72px, 8vw, 128px); }
 .stack-row {
-  row-gap: 12px;
-  align-items: end;
-  padding-block: clamp(14px, 1.6vw, 26px);
+  row-gap: 14px;
+  align-items: center;
+  padding-block: clamp(18px, 2vw, 30px);
   border-top: 1px solid var(--white);
 }
 .stack-row:last-child { border-bottom: 1px solid var(--white); }
 .stack-meta {
-  grid-column: 1 / span 3;
+  grid-column: 1 / span 4;
   display: grid;
-  gap: 6px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0 clamp(14px, 1.6vw, 24px);
 }
-.stack-meta h3 {
+.stack-num {
+  color: var(--red);
+  font-size: clamp(48px, 4.6vw, 72px);
+  line-height: 0.82;
+}
+.stack-label { display: grid; gap: 6px; padding-top: 2px; }
+.stack-label h3 {
   font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.012em;
   line-height: 1.2;
 }
-.stack-meta p:not(.index-num) { font-size: 14px; line-height: 1.5; }
+.stack-label p { max-width: 34ch; color: #cfcaca; font-size: 14px; line-height: 1.5; }
 .stack-items {
-  grid-column: 4 / -1;
-  font-size: clamp(52px, 8.4vw, 156px);
-  line-height: 0.96;
+  grid-column: 5 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: clamp(32px, 3.4vw, 56px);
+  line-height: 1.05;
 }
-.stack-row:nth-child(n + 3) .stack-items { font-size: clamp(38px, 5vw, 92px); }
+/* A small red square between tools. */
+.stack-items li:not(:last-child)::after {
+  content: "";
+  display: inline-block;
+  width: 0.2em;
+  height: 0.2em;
+  margin-inline: 0.45em;
+  background: var(--red);
+  vertical-align: 0.24em;
+}
 
 @media (max-width: 1023px) {
   .stack-meta, .stack-items { grid-column: 1 / -1; }

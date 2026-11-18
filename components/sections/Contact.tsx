@@ -32,19 +32,32 @@ export function Contact() {
 
       <div className="grid contact-low">
         <div className="contact-lead">
-          <p>{contact.lead}</p>
-          {hasEmail && <CopyEmailButton email={email} />}
-        </div>
+          <p className="contact-invite">{contact.lead}</p>
 
-        <ul className="channels file">
-          {links.map((link) => (
-            <li key={link.label}>
-              <a className="go" href={link.href} target="_blank" rel="noreferrer">
-                {link.label} <Arrow />
+          {hasEmail && (
+            <div className="contact-email">
+              <a className="file" href={`mailto:${email}`}>
+                {email}
               </a>
-            </li>
-          ))}
-        </ul>
+              <CopyEmailButton email={email} />
+            </div>
+          )}
+
+          {links.length > 0 && (
+            <ul className="channels file">
+              {links.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} target="_blank" rel="noreferrer">
+                    <span>{link.label}</span>
+                    <span className="channel-handle">
+                      {link.handle} <Arrow />
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         {hasEmail && <ContactForm email={email} />}
       </div>

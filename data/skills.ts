@@ -1,13 +1,19 @@
 import type { SkillGroup } from "@/types";
 
+// Only list what the projects on this site actually use.
 export const skillGroups: SkillGroup[] = [
-  { category: "Languages", items: ["HTML", "CSS", "JavaScript", "C++", "Java"] },
+  { category: "Languages", items: ["HTML", "CSS", "JavaScript", "TypeScript", "C++", "Java"] },
   {
-    category: "Frontend development",
+    category: "Frontend",
     items: ["React", "Next.js", "Tailwind CSS", "Responsive web design"],
   },
   {
-    category: "Environment and tools",
+    category: "Backend and data",
+    note: "Accounts, databases and storage for Isfridia and RentDavao.",
+    items: ["Supabase", "Firebase"],
+  },
+  {
+    category: "Development environment",
     note: "Where I write code and keep track of it.",
     items: ["Visual Studio Code", "Git", "GitHub"],
   },
