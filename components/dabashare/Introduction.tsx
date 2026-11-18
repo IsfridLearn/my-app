@@ -6,7 +6,7 @@ import { dabashareCase } from "@/data/dabashare";
 
 /** The opening screenshot and summary, followed by the project overview. */
 export function Introduction() {
-  const { intro, objectives, role, shots, status, tech, techNote } = dabashareCase;
+  const { intro, objectives, role, shots, status, tagline, tech, techNote } = dabashareCase;
 
   return (
     <>
@@ -16,6 +16,7 @@ export function Introduction() {
           <Link className="file go cs-back" href="/#work">
             Selected Work
           </Link>
+          <p className="cs-tagline">{tagline}</p>
           <FactList facts={intro} />
           <p className="cs-status">
             <b>{status.label}</b> {status.text}

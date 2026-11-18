@@ -48,6 +48,11 @@ export const projects: Project[] = [
     blurb:
       "A web-based manhwa reading platform where people can read for free, with accounts, bookmarks and an admin dashboard for publishing comics.",
     why: "I wanted a reading site for original manhwa, run from my own dashboard, where readers don't have to pay to read.",
+    role: [
+      "I developed Isfridia, working across the frontend, backend integration, database structure, authentication, and administrative tools.",
+      "I handled the interface and reading experience, connected the application to Supabase, and worked on the systems that manage accounts, bookmarks, reading progress, and comic content.",
+      "I also worked on the deployment and the overall structure of the application using Next.js.",
+    ].join("\n\n"),
     choices: [
       "Public pages are cached, and personal details such as bookmarks and reading progress load separately for each reader.",
       "Supabase row-level security decides what each visitor, reader and admin can see and change.",
@@ -73,6 +78,13 @@ export const projects: Project[] = [
     blurb:
       "A rental marketplace app for Davao City, where people can rent properties, vehicles, gadgets and more, or list their own things to earn from.",
     why: "Renting and lending in Davao City should be easier. RentDavao puts things to rent in one place and gives people and businesses a way to earn from what they already own.",
+    role: [
+      "Overall Developer · AI-Assisted Development",
+      "I was responsible for developing RentDavao as an Android application, working across its interface, application logic, Firebase integration, and overall functionality.",
+      "AI tools were part of my development workflow. I used AI assistance to help explore implementation approaches, draft and refine code, work through errors, and speed up parts of the development process.",
+      "But building the application still required me to understand how its different parts worked together, review the generated code, make implementation decisions, and test the resulting functionality.",
+      "This experience helped me see AI as more than just a tool for generating code. Used properly, it can become part of the development process, helping me work through problems and turn ideas into functioning software.",
+    ].join("\n\n"),
     choices: [
       "Activities and fragments are grouped by feature: sign-in, listings, the main tabs and the profile.",
       "Firebase handles accounts and stores listings in a Realtime Database, so changes reach every phone without a refresh.",

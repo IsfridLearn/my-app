@@ -4,7 +4,7 @@ import { dabashareCase } from "@/data/dabashare";
 
 /** Lessons learned, what comes next and the link to the code. */
 export function Reflection() {
-  const { future, learnings, linkNote, repository } = dabashareCase;
+  const { closing, future, futureIntro, keyLearnings, learnings, linkNote, repository } = dabashareCase;
 
   return (
     <>
@@ -22,13 +22,23 @@ export function Reflection() {
             </li>
           ))}
         </ol>
+        <div className="cs-prose">
+          <h3 className="cs-sub">Key learnings</h3>
+          {keyLearnings.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
       </section>
 
       <section className="grid cs-next" aria-labelledby="cs-next-title">
         <h2 id="cs-next-title" className="cs-h poster cs-next-h">
           What comes next
         </h2>
-        <TextList items={future} className="cs-ledger cs-next-list" />
+        <div className="cs-next-list cs-next-body">
+          <p>{futureIntro}</p>
+          <TextList items={future} className="cs-ledger" />
+          <p>{closing}</p>
+        </div>
       </section>
 
       <section className="cs-links" aria-label="Project links">

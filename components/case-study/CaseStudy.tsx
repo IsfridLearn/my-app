@@ -27,6 +27,7 @@ export function CaseStudy({ content }: { content: CaseStudyContent }) {
           <Link className="file go cs-back" href="/#work">
             Selected Work
           </Link>
+          {content.tagline && <p className="cs-tagline">{content.tagline}</p>}
           <dl className="facts">
             {content.intro.map((fact, index) => (
               <div key={fact.label}>
@@ -57,7 +58,11 @@ export function CaseStudy({ content }: { content: CaseStudyContent }) {
         </div>
         <div className="cs-role">
           <h3 className="cs-sub">My role</h3>
-          {project.role ? <p>{project.role}</p> : <Todo>Solo or team, and which parts you built.</Todo>}
+          {project.role ? (
+            project.role.split("\n\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+          ) : (
+            <Todo>Solo or team, and which parts you built.</Todo>
+          )}
           <h3 className="cs-sub">Timeline</h3>
           {content.timeline ? <p>{content.timeline}</p> : <Todo>When you built it, and for how long.</Todo>}
           <h3 className="cs-sub">Technologies</h3>
@@ -119,22 +124,39 @@ export function CaseStudy({ content }: { content: CaseStudyContent }) {
             <Todo>What was hard while building it, and how you solved it.</Todo>
           </div>
         )}
-        <div className="cs-todo-block">
+        <div className="cs-prose">
           <h3 className="cs-sub">Key learnings</h3>
           {content.learnings ? (
-            <TextList items={content.learnings} className="cs-list" />
+            content.learnings.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
           ) : (
             <Todo>What you know now that you didn&apos;t before.</Todo>
           )}
         </div>
       </section>
 
+      {content.approach && (
+        <section className="grid cs-learn" aria-labelledby="cs-approach-title">
+          <h2 id="cs-approach-title" className="cs-h poster cs-learn-h">
+            Development approach
+          </h2>
+          <div className="cs-prose">
+            {content.approach.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="grid cs-next" aria-labelledby="cs-next-title">
         <h2 id="cs-next-title" className="cs-h poster cs-next-h">
           What comes next
         </h2>
         {content.future ? (
-          <TextList items={content.future} className="cs-ledger cs-next-list" />
+          <div className="cs-next-list cs-next-body">
+            {content.futureIntro && <p>{content.futureIntro}</p>}
+            <TextList items={content.future} className="cs-ledger" />
+            {content.closing && <p>{content.closing}</p>}
+          </div>
         ) : (
           <div className="cs-next-list">
             <Todo>What you plan to add or fix next.</Todo>

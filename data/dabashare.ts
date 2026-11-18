@@ -12,6 +12,7 @@ const dabaShot = (name: string, alt: string, caption: string): CaseShot => ({
 export const dabashareCase = {
   title: "DabaShare",
   script: "case study",
+  tagline: "Making skill-sharing between students easier.",
   intro: [
     {
       label: "What it does",
@@ -23,7 +24,7 @@ export const dabashareCase = {
     },
     {
       label: "Who it's for",
-      text: "Students at universities across Davao City, including UM, AdDU and UP Mindanao.",
+      text: "DabaShare is intended for college students across Davao City, especially those who want to learn something new or share what they already know. Whether someone needs help with a subject, wants to teach a skill, or is simply looking for people to study with, the idea is to give them one place to connect. I wanted the platform to feel useful beyond just finding a tutor. It should also make it easier for students from different universities to discover opportunities to learn from each other.",
     },
   ],
   status: {
@@ -138,28 +139,43 @@ export const dabashareCase = {
   },
   learnings: [
     {
-      title: "Wiring by hand",
-      challenge: "Without a framework, every button and input has to be connected manually, and App.js grew into one long list of listeners.",
-      learned: "Event delegation kept dynamic lists working, and showed me what frameworks handle for you.",
+      title: "Building interactions without a framework",
+      challenge:
+        "One of the things I had to figure out was how to keep the different parts of the application working together using plain JavaScript. With multiple screens, dynamically generated cards, and interactive elements, managing event listeners became something I had to pay attention to.",
+      learned:
+        "I used JavaScript modules to separate the different features and event delegation to handle interactions on dynamically generated elements. It wasn't always the cleanest process, but it helped me understand what happens behind the scenes when working with frontend frameworks.",
     },
     {
-      title: "A product with no backend",
-      challenge: "The interface had to feel complete with no server, so sign-in, matches and replies are stand-ins.",
-      learned: "Keeping sample data in its own file means a real data source can replace it later without rewriting the screens.",
+      title: "Making the interface feel like a working platform",
+      challenge:
+        "Since DabaShare doesn't have a backend yet, I had to work with sample data to demonstrate how its features would behave. This includes course listings, student profiles, matches, and conversations.",
+      learned:
+        "This taught me the difference between making an interface look functional and actually building a system that stores and manages real user data. Some interactions work locally, while others are still demonstrations.",
     },
     {
-      title: "Modules don't prevent repeats",
-      challenge: "Splitting the code by feature didn't stop overlap: joinWebinar exists in two files and the search listeners are attached twice.",
-      learned: "Clear file boundaries still need a review pass to find code that has drifted into two places.",
+      title: "Learning where the design falls short",
+      challenge:
+        "Building the different screens also made me notice things I wouldn't have considered at the beginning. Some layouts work on desktop but still need adjustments on smaller screens, particularly the Profile and Messages sections.",
+      learned: "It reminded me that a design isn't finished just because it looks right on one screen size.",
     },
   ],
+  keyLearnings: [
+    "DabaShare helped me understand how much goes into building an interactive web application, even without using a framework.",
+    "I became more familiar with organizing JavaScript modules, managing application state, rendering dynamic content, filtering data, and handling user interactions.",
+    "More importantly, I learned to look beyond individual screens and think about how the entire application connects. A course listing, a student profile, and a conversation shouldn't feel like separate features. They should work together as one experience.",
+  ],
+  futureIntro: "I'd like to take DabaShare beyond its current frontend prototype. Some things I'd like to work on:",
   future: [
-    "A real backend with accounts and sign-in",
-    "Saved courses, profiles and messages",
-    "Matching based on what students actually teach and want to learn",
-    "Media queries so Profile and Messages work on phones",
-    "Escaping typed text, since messages and tags are inserted as raw HTML",
+    "Implement a proper backend and database.",
+    "Add real user registration and authentication.",
+    "Allow students to create and manage their own profiles.",
+    "Store courses, conversations, and study sessions.",
+    "Develop a more meaningful student matching system.",
+    "Improve the mobile layouts, especially Profile and Messages.",
+    "Add proper input handling and validation throughout the application.",
   ],
+  closing:
+    "For now, DabaShare is a working frontend prototype and a project that helped me understand the foundations of building interactive web applications.",
   repository: "https://github.com/IsfridLearn/DabaShare-FinalProject",
   linkNote: "No live demo is published yet.",
 };

@@ -72,7 +72,8 @@ export type Project = {
   label: string;
   blurb: string;
   why: string;
-  /** Leave out when it hasn't been written yet; the case study shows a placeholder. */
+  /** Leave out when it hasn't been written yet; the case study shows a placeholder.
+   *  Separate paragraphs with a blank line. */
   role?: string;
   choices: string[];
   stack: string[];
@@ -96,6 +97,8 @@ export type CaseShotSlot = CaseShot | { todo: string };
 export type CaseStudyContent = {
   /** The project's id in data/projects.ts. */
   id: string;
+  /** One line under the title. */
+  tagline?: string;
   lead: CaseShotSlot;
   intro: Array<{ label: string; text?: string; todo?: string }>;
   status: string;
@@ -108,8 +111,13 @@ export type CaseStudyContent = {
   features: string[];
   implementation: Array<{ label: string; text: string }>;
   challenges?: Array<{ title: string; challenge: string; solution: string }>;
+  /** Key learnings, one paragraph each. */
   learnings?: string[];
+  /** An optional extra section, one paragraph each. */
+  approach?: string[];
+  futureIntro?: string;
   future?: string[];
+  closing?: string;
   linkNote?: string;
 };
 

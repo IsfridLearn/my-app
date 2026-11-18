@@ -156,11 +156,37 @@ export const rentdavaoCase: CaseStudyContent = {
       text: "Saved on the phone for each user, not in Firebase.",
     },
   ],
+  challenges: [
+    {
+      title: "Developing with AI as part of the workflow",
+      challenge:
+        "Working with AI assistance changed how I approached development. Instead of treating every problem as something I had to solve from scratch, I could use AI to explore possible approaches, understand unfamiliar code, and work through implementation issues.",
+      solution:
+        "However, generated code still needed to be reviewed and tested. I learned that getting an answer from an AI tool isn't the same as knowing whether that answer actually works within an application.",
+    },
+    {
+      title: "Connecting the different parts of the application",
+      challenge:
+        "RentDavao also helped me understand how an Android application depends on several systems working together. Authentication, database operations, listing management, and user information all needed to communicate properly.",
+      solution:
+        "Working through these integrations helped me become more familiar with Firebase and the structure of an application that handles real user data.",
+    },
+  ],
+  learnings: [
+    "This project helped me become more comfortable developing an application with AI-assisted tools while still taking responsibility for the implementation.",
+    "I learned to treat AI-generated code as something to understand, review, and improve rather than something to accept without question.",
+    "It also strengthened my understanding of Android development, Firebase integration, application structure, and the importance of handling user information carefully.",
+  ],
+  approach: [
+    "AI-assisted development was part of my workflow, but the goal was always to produce an application that worked as intended.",
+    "I see AI as a development partner for exploring ideas and solving technical problems, while the developer remains responsible for the decisions, implementation, and quality of the final product.",
+  ],
   linkNote: "The code is in a private repository, so there is no public link yet.",
 };
 
 export const isfridiaCase: CaseStudyContent = {
   id: "isfridia",
+  tagline: "A reading space built around the love of manhwa.",
   lead: {
     src: "/logos/isfridia.svg",
     alt: "The Isfridia logo, a capital I on a white rounded tile",
@@ -177,7 +203,10 @@ export const isfridiaCase: CaseStudyContent = {
       label: "The idea",
       text: "A dark, focused reading site for original manhwa, published and managed from its own admin dashboard.",
     },
-    { label: "Who it's for", todo: "The readers you want to reach, and the creators whose work it will publish." },
+    {
+      label: "Who it's for",
+      text: "Isfridia is for people who enjoy reading manhwa and want a straightforward place to discover titles, follow updates, and keep track of what they're reading. I wanted the experience to feel simple and focused. Readers should be able to browse, find something interesting, save titles they like, and continue where they left off without having to figure out how the platform works. It's also built with content management in mind, giving administrators a dedicated space to organize comics, chapters, and releases.",
+    },
   ],
   status: "live at isfridia.vercel.app, deployed on Vercel.",
   goals: [
@@ -196,10 +225,34 @@ export const isfridiaCase: CaseStudyContent = {
     "A reader with three widths, space reserved for every page image so nothing jumps, and controls at the bottom on phones.",
   ],
   shots: [
-    { todo: "The homepage, with featured comics, latest updates and trending" },
-    { todo: "A comic's page, with chapters and the bookmark button" },
-    { todo: "The reader" },
-    { todo: "The admin dashboard" },
+    {
+      src: "/photos/work-isfridia-home.webp",
+      alt: "Isfridia's homepage, with genre buttons and a Trending This Week row of five manhwa covers ranked by followers",
+      caption: "Home: browse by genre, and Trending This Week",
+      width: 1802,
+      height: 917,
+    },
+    {
+      src: "/photos/work-isfridia-comic.webp",
+      alt: "A comic's page on Isfridia, with the cover, genres, status, release year, latest chapter, synopsis and Start reading button",
+      caption: "A comic's page, with Start reading and the bookmark button",
+      width: 1790,
+      height: 895,
+    },
+    {
+      src: "/photos/work-isfridia-comics.webp",
+      alt: "Isfridia's Comics page, with filters for title or author, genre, status, type and sort order above a grid of manhwa covers",
+      caption: "Comics: the whole library, filtered by genre, status or type",
+      width: 1843,
+      height: 890,
+    },
+    {
+      src: "/photos/work-isfridia-genres.webp",
+      alt: "Isfridia's Genres page, a grid of genre tiles from Action to Wuxia, each showing how many series it has",
+      caption: "Genres, each with its number of series",
+      width: 1799,
+      height: 889,
+    },
   ],
   features: [
     "Browse by genre, latest updates, popular and recently added, with search and filters",
@@ -233,4 +286,52 @@ export const isfridiaCase: CaseStudyContent = {
       text: "Scripts check sign-in, the admin tools, the reader and the library against a running copy of the site.",
     },
   ],
+  challenges: [
+    {
+      title: "Keeping reader data separate from public content",
+      challenge:
+        "One thing I had to think carefully about was how to handle information that should only belong to a specific reader. Public comic information can be shared with everyone, but things like bookmarks, reading history, and reading progress should belong to the account that created them.",
+      solution:
+        "I used Supabase Row Level Security to control which records visitors, signed-in readers, and administrators can access or modify. This helped me understand that having authentication isn't enough. An application also needs proper rules for what each account is allowed to do.",
+    },
+    {
+      title: "Building a reader that feels comfortable to use",
+      challenge:
+        "The reading experience needed more attention than simply displaying comic pages. I worked on different reader widths, image sizing, and reserving space for page images so the layout wouldn't constantly shift while images load. I also considered smaller screens, where the reading controls need to remain accessible without getting in the way.",
+      solution:
+        "It made me realize how much small interface decisions can affect the overall experience, especially in applications where people spend a lot of time viewing content.",
+    },
+    {
+      title: "Managing content and scheduled releases",
+      challenge:
+        "Another part of Isfridia that required careful planning was its admin dashboard. Managing comics involves more than uploading a cover. There are chapters, individual pages, genres, users, and release schedules to consider.",
+      solution:
+        "I built administrative tools to organize these parts, including scheduled chapters that remain hidden until their release time. Working on this helped me understand how the administrative side of an application is just as important as the interface regular users see.",
+    },
+    {
+      title: "Handling external content responsibly",
+      challenge:
+        "I also worked on a MangaDex catalog that helps readers discover titles while respecting content availability and publishing rules. Rather than importing fan-translated chapters, Isfridia only links to official chapters available through publishers. Its own reading experience is used for content managed and published through Isfridia.",
+      solution:
+        "This made me consider not just how to implement a feature, but also what content the application should and shouldn't serve.",
+    },
+  ],
+  learnings: [
+    "Isfridia pushed me to think beyond building individual pages and start thinking about an entire application.",
+    "I gained experience working with Next.js, TypeScript, Supabase, authentication, database permissions, storage, image processing, and application deployment.",
+    "I also learned that features are connected in ways that aren't always obvious at first. A bookmark, for example, involves authentication, database access, user-specific state, and the interface that displays it.",
+    "Building Isfridia gave me a better understanding of how frontend and backend systems work together, and why security and data organization need to be considered from the beginning.",
+  ],
+  futureIntro:
+    "I want to keep improving Isfridia as the project grows. Some areas I'd like to focus on include:",
+  future: [
+    "Improving the overall reading experience, especially on mobile.",
+    "Refining the discovery and trending sections.",
+    "Making the admin workflow easier to manage.",
+    "Continuing to improve loading performance and image handling.",
+    "Strengthening testing around authentication, permissions, and reading features.",
+    "Improving the experience for readers who return to the platform regularly.",
+  ],
+  closing:
+    "Isfridia is already live, but I see it as an ongoing project rather than something that's finished just because it's deployed.",
 };
