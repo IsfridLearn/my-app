@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { DropCap } from "@/components/ui/DropCap";
 import { ScriptOverlay } from "@/components/ui/SectionHeading";
@@ -95,6 +95,14 @@ function HeroArt({ bursts }: { bursts: number }) {
       <ContentImage className="fp-stain fp-stain-r" image={portraitArt.stain} sizes="26vw" />
       <ContentImage className="fp-square" image={portraitArt.square} sizes="11vw" />
 
+      {/* Cut-paper backdrop: rays, halftone, torn white paper, a red shard and a splinter. */}
+      <span className="fp-rays" aria-hidden="true" />
+      <span className="fp-dots" aria-hidden="true" />
+      <span className="fp-tear-white" aria-hidden="true" />
+      <span className="fp-tear-red" aria-hidden="true" />
+      <span className="fp-splinter-w" aria-hidden="true" />
+      <span className="fp-splinter" aria-hidden="true" />
+
       {/* Signal interference over the background photographs, under the name. */}
       <div key={bursts} className="fp-glitch" aria-hidden="true">
         <ContentImage className="fp-glitch-tex" image={interference} sizes="100vw" />
@@ -119,9 +127,16 @@ function HeroArt({ bursts }: { bursts: number }) {
       <ContentImage className="fig fig-light" image={prints.light} sizes={PORTRAIT_SIZES} loading="eager" />
 
       <ScriptOverlay className="fp-script" lead={hero.script[0]} word={hero.script[1]} />
-      <svg className="fp-swash" viewBox="0 0 400 40" aria-hidden="true">
-        <path d="M4 30 C 90 22, 200 14, 396 6" />
-      </svg>
+      <span className="fp-swash" aria-hidden="true" />
+
+      {/* Print details: crop marks, a strip of tiny type, a print bar, grain over everything. */}
+      <span className="fp-crop fp-crop-tl" aria-hidden="true" />
+      <span className="fp-crop fp-crop-br" aria-hidden="true" />
+      <span className="fp-strip" aria-hidden="true">
+        Portfolio /2026 — <b>File 00</b> — {profile.location} — Developer &amp; creative technologist
+      </span>
+      <span className="fp-bar" aria-hidden="true" />
+      <span className="fp-grain" aria-hidden="true" />
     </div>
   );
 }
@@ -152,6 +167,24 @@ function NameWord({ word, className, order }: NameWordProps) {
   );
 }
 
+type PaperProps = { className: string; tab?: string; children: ReactNode };
+
+/** A cut-paper panel: red print offset, white paper edge, black ink face, optional torn tab. */
+function Paper({ className, tab, children }: PaperProps) {
+  return (
+    <div className={`paper ${className}`}>
+      {tab && (
+        <span className="paper-tab" aria-hidden="true">
+          {tab}
+        </span>
+      )}
+      <div className="paper-edge">
+        <div className="paper-ink">{children}</div>
+      </div>
+    </div>
+  );
+}
+
 type HeroCopyProps = {
   isLight: boolean;
   onTogglePrint: () => void;
@@ -160,21 +193,24 @@ type HeroCopyProps = {
 function HeroCopy({ isLight, onTogglePrint }: HeroCopyProps) {
   return (
     <div className="fp-text">
-      <p className="fp-copy fp-corner">
-        <b>
-          {profile.first} {profile.last}
-        </b>
-        <br />
-        <b>{hero.role[0]}</b>
-        <br />
-        {hero.role[1]}
-      </p>
+      <Paper className="fp-corner">
+        <p className="fp-id">
+          <b>
+            {profile.first} {profile.last}
+          </b>
+          <span>
+            {hero.role[0]}
+            <br />
+            {hero.role[1]}
+          </span>
+        </p>
+      </Paper>
 
-      <div className="fp-copy fp-lede">
+      <Paper className="fp-lede" tab="Profile">
         {hero.lede.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
-      </div>
+      </Paper>
 
       <ul className="fp-copy fp-tags" aria-label="Technologies">
         {hero.tags.map((tag) => (
@@ -188,13 +224,13 @@ function HeroCopy({ isLight, onTogglePrint }: HeroCopyProps) {
       </p>
 
       {hero.notes.map((note, index) => (
-        <div key={note.title} className={`fp-note fp-note-${index + 1}`}>
-          <p className="fp-copy fp-num">[{index + 1}]</p>
+        <Paper key={note.title} className={`fp-note fp-note-${index + 1}`}>
+          <p className="fp-num">{String(index + 1).padStart(2, "0")}</p>
           <h2>{note.title}</h2>
           <p className="fp-copy">
             {note.text} <a href={note.href}>{note.link}</a>
           </p>
-        </div>
+        </Paper>
       ))}
 
       <button

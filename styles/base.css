@@ -5,9 +5,11 @@
    Plex Sans for reading, Plex Mono for labels, navigation and numbers.
    ------------------------------------------------------------------ */
 :root {
-  --black: #000000;
-  --white: #ffffff;
-  --red: #D4111B;
+  --black: #080808;
+  --white: #F5F5F5;
+  --red: #E50920;
+  --red-deep: #8d0512;
+  --char: #1A1A1A;
   --g: var(--black);
   --f: var(--white);
   --a: var(--red);

@@ -1,4 +1,6 @@
 /* ---------------------------------------------------------- Front page */
+/* A cut-paper poster: torn white paper and a red shard behind the suit portrait,
+   the name inked over them, every text block a pasted clipping. */
 .intro {
   position: relative;
   background: var(--black);
@@ -12,239 +14,91 @@
   container-type: inline-size;
 }
 .fp-art {
-  --fx: 34.2cqw;
-  --fy: 25.3cqw;
-  --fw: 35.6cqw;
+  --fx: 32.4cqw;
+  --fy: 20.6cqw;
+  --fw: 38.6cqw;
   position: relative;
   overflow: hidden;
   aspect-ratio: 1440 / 1010;
 }
 .fp-art > * { position: absolute; }
 .fp-art img { max-width: none; height: auto; }
-.fp-ghost {
-  top: 3cqw;
-  z-index: 1;
-  width: 37cqw;
-  opacity: 0.6;
+
+/* ------------------------------------------------------------ Backdrop */
+.fp-rays {
+  inset: 0;
+  z-index: 0;
+  background: repeating-conic-gradient(from 8deg at 52% 44%, #161616 0deg 5deg, transparent 5deg 13deg, #111 13deg 15deg, transparent 15deg 24deg);
+  mask-image: radial-gradient(ellipse 60% 75% at 52% 44%, #000 20%, transparent 75%);
 }
-.fp-ghost-l { left: -5cqw; }
-.fp-ghost-r {
-  top: 2cqw;
-  right: -5cqw;
-  /* Quieter streaks behind the intro paragraph; full strength below it. */
-  mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0.3) 42%, #000 58%);
+.fp-dots {
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle, rgb(245 245 245 / 0.09) 0.85px, transparent 1.15px) 0 0 / 0.6cqw 0.6cqw;
+  mask-image: linear-gradient(115deg, #000 0%, transparent 30%, transparent 70%, #000 100%);
 }
+.fp-ghost { top: 4cqw; z-index: 1; width: 31cqw; opacity: 0.38; filter: contrast(1.25); }
+.fp-ghost-l { left: -7cqw; clip-path: polygon(0 0, 92% 4%, 80% 100%, 0 96%); }
+.fp-ghost-r { top: 2cqw; right: -7cqw; clip-path: polygon(10% 3%, 100% 0, 100% 100%, 22% 92%); }
 .fp-stain { bottom: 0; z-index: 1; }
 .fp-stain-l { left: 0; width: 38cqw; }
-.fp-stain-r {
-  right: 0;
-  width: 26cqw;
-  transform: scaleX(-1);
+.fp-stain-r { right: 0; width: 26cqw; transform: scaleX(-1); }
+
+/* Torn white paper, then the red shard: solid at the top, breaking into halftone below. */
+.fp-tear-white, .fp-tear-red { top: -3cqw; width: 50cqw; height: 76cqw; z-index: 2; }
+.fp-tear-white {
+  left: 26cqw;
+  background: var(--white);
+  clip-path: polygon(46% 0, 100% 0, 97% 6%, 99% 7%, 82% 34%, 85% 35%, 64% 66%, 67% 67%, 52% 100%, 6% 100%, 9% 95%, 5% 94%, 22% 58%, 18% 57%, 34% 25%, 31% 24%);
 }
+.fp-tear-red {
+  left: 26.8cqw;
+  background: radial-gradient(circle, rgb(8 8 8 / 0.32) 33%, transparent 36%) 0 0 / 0.95cqw 0.95cqw, var(--red);
+  clip-path: polygon(48% 0, 98% 0, 95% 6%, 97% 7%, 80% 34%, 83% 35%, 62% 66%, 65% 67%, 50% 100%, 8% 100%, 11% 95%, 7% 94%, 24% 58%, 20% 57%, 36% 25%, 33% 24%);
+}
+.fp-tear-red::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  mask-image: linear-gradient(180deg, #000 30%, transparent 70%);
+}
+.fp-splinter, .fp-splinter-w { z-index: 3; clip-path: polygon(70% 0, 100% 4%, 26% 100%, 0 97%); }
+.fp-splinter { top: 6cqw; left: 72cqw; width: 6cqw; height: 22cqw; background: var(--red); }
+.fp-splinter-w { top: 5.4cqw; left: 71.4cqw; width: 7.2cqw; height: 23.2cqw; background: var(--white); }
+
+/* Red square portrait, pinned with a white border. */
 .fp-square {
-  top: 21.4cqw;
-  left: 76.4cqw;
-  z-index: 6;
-  width: 10.2cqw;
+  top: 24cqw;
+  left: 82.5cqw;
+  z-index: 7;
+  width: 9.6cqw;
+  border: 0.4cqw solid var(--white);
+  transform: rotate(-7deg);
+  filter: drop-shadow(0.4cqw 0.4cqw 0 var(--black));
 }
+
+/* ------------------------------------------------------------ Name and portrait */
 .name {
-  top: 34.2cqw;
-  right: 1.6cqw;
-  left: 1.6cqw;
-  z-index: 3;
+  top: 32.6cqw;
+  right: 1.4cqw;
+  left: 1.4cqw;
+  z-index: 4;
   display: flex;
   justify-content: space-between;
   color: var(--red);
-  font-size: 17cqw;
+  font-size: 17.4cqw;
   font-weight: 400;
   letter-spacing: 0.002em;
   line-height: 0.86;
   white-space: nowrap;
+  -webkit-text-stroke: 0.3cqw var(--black);
+  paint-order: stroke fill;
+  text-shadow: 0.6cqw 0.6cqw 0 var(--white), 0.95cqw 0.95cqw 0 var(--black);
 }
-.fp-outline {
-  top: calc(var(--fy) - var(--fw) * 0.0534);
-  left: calc(var(--fx) - var(--fw) * 0.1039);
-  z-index: 4;
-  width: calc(var(--fw) * 1.1562);
-}
-.fig {
-  top: var(--fy);
-  left: var(--fx);
-  z-index: 5;
-  width: var(--fw);
-}
-.intro[data-print="dark"] .fig-light, .intro[data-print="light"] .fig-dark { display: none; }
-.fp-script { top: 45cqw; }
-
-.fp-text { display: contents; }
-.fp-text > * { position: absolute; z-index: 6; }
-.fp-copy {
-  font-family: var(--sans);
-  font-size: max(1cqw, 12px);
-  line-height: 1.42;
-}
-.fp-corner {
-  /* Just below the fixed nav bar, lined up with its counter. */
-  top: 64px;
-  left: var(--gutter);
-  font-family: var(--mono);
-  font-size: max(0.93cqw, 11px);
-  letter-spacing: 0.015em;
-  line-height: 1.32;
-}
-.fp-corner b { font-weight: 500; }
-.fp-lede {
-  top: 8.4cqw;
-  right: 2.2cqw;
-  display: grid;
-  gap: 0.9cqw;
-  width: 19.6cqw;
-}
-.fp-tags, .fp-label {
-  font-family: var(--mono);
-  font-size: max(0.84cqw, 11px);
-  letter-spacing: 0.04em;
-  line-height: 1.6;
-}
-.fp-tags { top: 26.4cqw; left: 2.2cqw; }
-.fp-label {
-  top: 26.4cqw;
-  left: 19cqw;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.fp-body {
-  top: 48.4cqw;
-  right: 2.2cqw;
-  width: 22.6cqw;
-  font-size: max(1.1cqw, 12px);
-  line-height: 1.42;
-}
-.fp-note {
-  display: grid;
-  gap: 0.5cqw;
-  top: 60.5cqw;
-}
-.fp-note h2 {
-  font-size: max(1.4cqw, 16px);
-  font-weight: 600;
-  letter-spacing: -0.012em;
-  line-height: 1.15;
-}
-/* The note links are the hero's calls to action: labelled like the site's other links. */
-.fp-note a {
-  display: inline-block;
-  padding-block: 6px;
-  font-family: var(--mono);
-  font-size: 0.82em;
-  letter-spacing: 0.06em;
-  text-decoration: underline;
-  text-decoration-color: var(--red);
-  text-decoration-thickness: 1px;
-  text-transform: uppercase;
-  text-underline-offset: 4px;
-  white-space: nowrap;
-  transition: color 0.2s ease;
-}
-.fp-note a::after { content: " \2192"; }
-.fp-note a:hover { color: var(--red); }
-.fp-num {
-  font-family: var(--mono);
-  font-size: max(0.95cqw, 12px);
-  letter-spacing: 0.04em;
-  line-height: 1;
-}
-.fp-note-1 { left: 2.2cqw; width: 15.4cqw; }
-.fp-note-2 { left: 19.6cqw; width: 14.6cqw; }
-.fp-note-3 { left: 75.2cqw; width: 15cqw; }
-.fp-print {
-  top: 60.5cqw;
-  right: 2.2cqw;
-  padding: 0.55cqw 0.8cqw;
-  background: var(--black);
-  font-family: var(--mono);
-  font-size: max(0.8cqw, 11px);
-}
-
-@media (max-width: 1099px) {
-  .fp-art {
-    --fx: 20cqw;
-    --fy: 30cqw;
-    --fw: 50cqw;
-    aspect-ratio: 100 / 100;
-  }
-  .fp-ghost, .fp-square, .fp-stain-r, .fp-corner, .fp-label { display: none; }
-  .fp-stain-l { width: 70cqw; }
-  .name { top: 38cqw; }
-  .fp-script {
-    top: 61cqw;
-    left: 3cqw;
-    font-size: 11cqw;
-  }
-  .fp-text {
-    display: grid;
-    gap: 28px;
-    padding: 32px var(--gutter) 44px;
-  }
-  .fp-text > * { position: static; width: auto; }
-  .fp-copy { font-size: 15px; line-height: 1.55; }
-  .fp-body { font-size: 16px; line-height: 1.55; }
-  .fp-tags, .fp-label { font-size: 12px; }
-  .fp-lede { gap: 12px; }
-  .fp-note { gap: 6px; }
-  .fp-note h2 { font-size: 18px; }
-  .fp-num { font-size: 13px; }
-  .fp-print { font-size: 11.5px; }
-  .fp-print { justify-self: start; padding: 8px 12px; }
-}
-
-/* ------------------------------------------------------ Hero layers added for motion */
-/* Interference layer: over the background photographs, under the name and portrait. */
-.fp-glitch {
-  inset: 0;
-  z-index: 2;
-  overflow: hidden;
-  pointer-events: none;
-}
-.fp-glitch > * { position: absolute; }
-.fp-glitch-tex {
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  mix-blend-mode: screen;
-  opacity: 0;
-}
-.fp-glitch-scan {
-  left: 0;
-  right: 0;
-  top: -12%;
-  height: 10%;
-  background: repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 3px);
-  opacity: 0;
-}
-
-/* A red brush stroke under "art meets code". */
-.fp-swash {
-  top: 55.5cqw;
-  left: 9cqw;
-  z-index: 6;
-  width: 27cqw;
-  overflow: visible;
-  fill: none;
-  stroke: var(--red);
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  pointer-events: none;
-}
-
-/* The giant name, worn like a printed poster: fine specks and thin scratches. */
-.name {
-  mask-image: url("/photos/hero-grain.png");
-  mask-size: 100% 100%;
-}
+.name-1, .name-2 { position: relative; display: inline-block; }
+.name-2 { transform: rotate(-1.6deg) translateY(-0.4cqw); transform-origin: left bottom; }
 /* A displaced copy of each word, shown only during a glitch burst. */
-.name-1, .name-2 { position: relative; }
 .name-1::after, .name-2::after {
   content: attr(data-text);
   position: absolute;
@@ -255,23 +109,262 @@
 .name-1::after { clip-path: inset(36% 0 50% 0); transform: translateX(1.4cqw); }
 .name-2::after { clip-path: inset(62% 0 26% 0); transform: translateX(-1.1cqw); }
 
-/* The suit portrait stands off the page a little. */
-.fig { filter: drop-shadow(0 1.4cqw 1.8cqw rgb(0 0 0 / 0.55)); }
+.fp-outline {
+  top: calc(var(--fy) - var(--fw) * 0.0534);
+  left: calc(var(--fx) - var(--fw) * 0.1039);
+  z-index: 5;
+  width: calc(var(--fw) * 1.1562);
+}
+/* Cut out like a sticker: white paper edge, then a thin black ink edge. */
+.fig {
+  top: var(--fy);
+  left: var(--fx);
+  z-index: 6;
+  width: var(--fw);
+  filter:
+    drop-shadow(0.32cqw 0 0 var(--white)) drop-shadow(-0.32cqw 0 0 var(--white))
+    drop-shadow(0 0.32cqw 0 var(--white)) drop-shadow(0 -0.32cqw 0 var(--white))
+    drop-shadow(0.18cqw 0 0 var(--black)) drop-shadow(-0.18cqw 0 0 var(--black))
+    drop-shadow(0 -0.18cqw 0 var(--black));
+}
+.intro[data-print="dark"] .fig-light, .intro[data-print="light"] .fig-dark { display: none; }
 
-/* Cursor depth: each layer moves by a different amount, the nearest moves most.
-   Uses the separate translate property so it never fights the entrance animations. */
+.fp-script { top: 45cqw; z-index: 7; text-shadow: 0 0.3cqw 1.2cqw rgb(0 0 0 / 0.8); }
+/* A torn red brush stroke under "art meets code". */
+.fp-swash {
+  top: 56.2cqw;
+  left: 8.4cqw;
+  z-index: 7;
+  width: 27cqw;
+  height: 1.7cqw;
+  background: var(--red);
+  clip-path: polygon(0 62%, 30% 40%, 31% 52%, 70% 18%, 71% 30%, 100% 0, 97% 44%, 64% 70%, 63% 58%, 26% 86%, 25% 76%, 2% 100%);
+}
+
+/* ------------------------------------------------------------ Print details */
+.fp-crop { z-index: 8; width: 2.2cqw; height: 2.2cqw; border: 0 solid #8f8a86; }
+.fp-crop-tl { top: 5.4cqw; left: 1cqw; border-width: 1px 0 0 1px; }
+.fp-crop-br { right: 1cqw; bottom: 1cqw; border-width: 0 1px 1px 0; }
+.fp-strip {
+  top: 30cqw;
+  left: 0.7cqw;
+  z-index: 8;
+  color: #8f8a86;
+  font: 500 max(0.72cqw, 7px)/1 var(--mono);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  transform: rotate(180deg);
+  writing-mode: vertical-rl;
+}
+.fp-strip b { color: var(--red); font-weight: 500; }
+.fp-bar {
+  top: 34.6cqw;
+  right: 2.6cqw;
+  z-index: 3;
+  width: 9cqw;
+  height: 1.6cqw;
+  background: repeating-linear-gradient(90deg, var(--white) 0 0.12cqw, transparent 0.12cqw 0.32cqw, var(--white) 0.32cqw 0.62cqw, transparent 0.62cqw 0.8cqw);
+  opacity: 0.6;
+}
+.fp-grain {
+  inset: 0;
+  z-index: 9;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------ Paper panels */
+.paper { filter: drop-shadow(0.55cqw 0.55cqw 0 var(--red)); }
+.paper-edge { padding: max(0.28cqw, 2px); background: var(--white); clip-path: var(--cut, none); }
+.paper-ink { background: var(--black); clip-path: var(--cut, none); }
+.paper-tab {
+  position: absolute;
+  top: -1.8cqw;
+  left: 1.2cqw;
+  z-index: 1;
+  padding: 0.4cqw 1.4cqw 0.5cqw;
+  border: max(0.22cqw, 2px) solid var(--white);
+  background: var(--red);
+  color: var(--white);
+  box-shadow: 0.35cqw 0.35cqw 0 var(--black);
+  font: 400 max(2.2cqw, 18px)/1 var(--poster);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transform: rotate(-7deg) skewX(-12deg);
+}
+
+/* ------------------------------------------------------------ Copy */
+.fp-text { display: contents; }
+.fp-text > * { position: absolute; z-index: 8; }
+.fp-copy {
+  font-family: var(--sans);
+  font-size: max(1cqw, 12px);
+  line-height: 1.42;
+}
+.fp-corner {
+  /* Just below the fixed nav bar. */
+  top: 66px;
+  left: var(--gutter);
+  width: 23cqw;
+  --cut: polygon(0 4%, 100% 0, 97% 100%, 2% 94%);
+  transform: rotate(-3deg);
+}
+.fp-corner .paper-ink { padding: 1cqw 1.6cqw 1.2cqw; }
+.fp-id b {
+  display: block;
+  color: var(--red);
+  font: 400 max(2.9cqw, 22px)/0.95 var(--poster);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.fp-id span {
+  display: block;
+  font: 500 max(0.95cqw, 11px)/1.4 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.fp-lede {
+  top: 7.4cqw;
+  right: 2.2cqw;
+  width: 23.5cqw;
+  --cut: polygon(3% 0, 100% 3%, 98% 100%, 0 96%);
+  transform: rotate(2.4deg);
+}
+.fp-lede .paper-ink {
+  display: grid;
+  gap: 0.8cqw;
+  padding: 2.2cqw 1.7cqw 1.7cqw;
+  font: max(1cqw, 12px)/1.45 var(--sans);
+}
+.fp-tags, .fp-label {
+  font-family: var(--mono);
+  font-size: max(0.85cqw, 11px);
+  letter-spacing: 0.06em;
+  line-height: 1.75;
+  text-transform: uppercase;
+}
+.fp-tags { top: 19cqw; left: 3cqw; }
+.fp-label { top: 19cqw; left: 19cqw; letter-spacing: 0.1em; }
+.fp-body {
+  top: 47cqw;
+  right: 2.2cqw;
+  width: 23cqw;
+  font-size: max(1.06cqw, 12px);
+  line-height: 1.42;
+}
+.fp-body .drop-cap { -webkit-text-stroke: 0.15cqw var(--white); paint-order: stroke fill; }
+
+.fp-note { top: 56.6cqw; }
+.fp-note .paper-ink { display: grid; gap: 0.3cqw; padding: 0.9cqw 1.3cqw 1.1cqw; }
+.fp-note-1 { left: 2cqw; width: 16.5cqw; --cut: polygon(0 0, 100% 7%, 97% 100%, 1% 96%); transform: rotate(-1.5deg); }
+.fp-note-2 { left: 20cqw; width: 16.5cqw; --cut: polygon(2% 6%, 100% 0, 99% 92%, 0 100%); transform: rotate(1.2deg) translateY(-0.8cqw); }
+.fp-note-2.paper { filter: drop-shadow(-0.5cqw 0.5cqw 0 var(--black)); }
+.fp-note-2 .paper-ink { background: var(--char); }
+.fp-note-3 { left: 63cqw; width: 17.5cqw; --cut: polygon(0 4%, 97% 0, 100% 100%, 3% 95%); transform: rotate(-1deg); }
+.fp-num {
+  color: var(--red);
+  font: 400 max(2.6cqw, 22px)/0.85 var(--poster);
+}
+.fp-note-2 .fp-num { color: var(--white); }
+.fp-note h2 {
+  font-size: max(1.35cqw, 16px);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.15;
+}
+.fp-note .fp-copy { font-size: max(0.9cqw, 12px); color: #d9d4d0; }
+.fp-note a {
+  display: inline-block;
+  margin-top: 0.3cqw;
+  padding-block: 6px;
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: 0.82em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 2px;
+  text-transform: uppercase;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+.fp-note a::after { content: " \2192"; }
+.fp-note a:hover { color: var(--red); }
+.fp-print {
+  top: 61.8cqw;
+  right: 2.2cqw;
+  padding: 0.8cqw 1.5cqw;
+  border: 0;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--mono);
+  font-size: max(0.85cqw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 100%);
+  filter: drop-shadow(0.3cqw 0.3cqw 0 var(--red));
+}
+.fp-print:hover { background: var(--red); color: var(--white); }
+
+/* ------------------------------------------------------------ Glitch layer */
+.fp-glitch { inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
+.fp-glitch > * { position: absolute; }
+.fp-glitch-tex { inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; opacity: 0; }
+.fp-glitch-scan {
+  top: -12%;
+  right: 0;
+  left: 0;
+  height: 10%;
+  background: repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 3px);
+  opacity: 0;
+}
+
+/* Cursor depth: nearer layers move more. Uses translate so it never fights the entrance. */
+.fp-tear-white, .fp-tear-red { translate: calc(var(--mx, 0) * -0.4cqw) calc(var(--my, 0) * -0.3cqw); }
 .fp-outline { translate: calc(var(--mx, 0) * 0.55cqw) calc(var(--my, 0) * 0.4cqw); }
 .fig { translate: calc(var(--mx, 0) * 0.9cqw) calc(var(--my, 0) * 0.6cqw); }
 
-/* Phones and tablets keep the plain poster; the pieces are placed for the wide layout. */
+/* ------------------------------------------------------------ Phones and tablets */
 @media (max-width: 1099px) {
-  .fp-swash { display: none; }
+  .fp-art {
+    --fx: 20cqw;
+    --fy: 26cqw;
+    --fw: 50cqw;
+    aspect-ratio: 100 / 100;
+  }
+  .fp-ghost, .fp-square, .fp-stain-r, .fp-label, .fp-splinter, .fp-splinter-w,
+  .fp-strip, .fp-bar, .fp-crop, .fp-swash { display: none; }
+  .fp-stain-l { width: 70cqw; }
+  .fp-tear-white, .fp-tear-red { top: 0; width: 80cqw; height: 104cqw; }
+  .fp-tear-white { left: 8cqw; }
+  .fp-tear-red { left: 9.4cqw; }
+  .name { top: 36cqw; }
+  .fp-script { top: 59cqw; left: 3cqw; font-size: 11cqw; }
+  .fp-text {
+    display: grid;
+    gap: 32px;
+    padding: 36px var(--gutter) 48px;
+  }
+  .fp-text > * { position: static; width: auto; transform: none; }
+  .paper { filter: drop-shadow(5px 5px 0 var(--red)); }
+  .fp-corner .paper-ink, .fp-note .paper-ink { padding: 12px 16px 14px; }
+  .fp-lede .paper-ink { gap: 12px; padding: 28px 18px 18px; font-size: 15px; line-height: 1.55; }
+  .paper-tab { top: -14px; left: 12px; padding: 4px 12px 5px; box-shadow: 3px 3px 0 var(--black); }
+  .fp-copy { font-size: 15px; line-height: 1.55; }
+  .fp-body { font-size: 16px; line-height: 1.55; }
+  .fp-tags { font-size: 12px; }
+  .fp-note .fp-copy { font-size: 14px; }
+  .fp-note h2 { font-size: 18px; }
+  .fp-print { justify-self: start; padding: 10px 16px; font-size: 12px; }
 }
 
-/* ------------------------------------------------------ Entrance and idle motion */
-/* One timeline of about three seconds:
-   0.0s interference burst · 0.15s big portrait · 0.45s name · 0.9s suit portrait
-   · 1.5s "art meets code" · 1.9s glass. Then: occasional glitch, slow glass turn.
+/* ------------------------------------------------------------ Entrance and idle motion */
+/* About 2.5 seconds, once: paper tears in, the portrait rises, the name slams in,
+   the script writes itself, the clippings paste on. Then occasional glitch bursts.
    With reduced motion none of this runs and the hero is simply there. */
 @property --pen {
   syntax: "<percentage>";
@@ -279,17 +372,66 @@
   initial-value: 120%;
 }
 @media (prefers-reduced-motion: no-preference) {
-  /* Background activation, and the same burst again whenever the print changes. */
-  .fp-glitch-tex {
-    animation:
-      glitch-intro 0.7s steps(1, end) both,
-      glitch-idle 9.7s steps(1, end) 3.4s infinite;
+  .fp-tear-white { animation: tear-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s both; }
+  .fp-tear-red { animation: tear-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both; }
+  .fp-splinter, .fp-splinter-w { animation: tear-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.35s both; }
+  @keyframes tear-in {
+    from { transform: translate(24cqw, -30cqw); }
+    to { transform: none; }
   }
-  .fp-glitch-scan {
-    animation:
-      scan-sweep 0.6s linear 0.05s both,
-      scan-idle 13.3s linear 5.2s infinite;
+
+  .fig, .fp-outline { animation: rise-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.45s both; }
+  @keyframes rise-in {
+    from { clip-path: inset(100% -5% -5% -5%); transform: translateY(4cqw); }
+    to { clip-path: inset(-5% -5% -5% -5%); transform: none; }
   }
+
+  .name-group {
+    display: inline-block;
+    animation: name-in 0.5s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+    animation-delay: calc(0.75s + var(--order) * 0.09s);
+  }
+  @keyframes name-in {
+    from { clip-path: inset(-20% 100% -20% 0); transform: translateX(-0.25em) skewX(-14deg); }
+    to { clip-path: inset(-20% -20% -20% 0); transform: none; }
+  }
+  .name { animation: name-jolt 0.24s steps(2, end) 1.5s both; }
+  @keyframes name-jolt {
+    0% { translate: 0.8cqw 0; }
+    50% { translate: -0.5cqw 0; }
+    100% { translate: 0 0; }
+  }
+
+  .fp-script {
+    --pen: 120%;
+    mask-image: linear-gradient(100deg, #000 calc(var(--pen) - 12%), transparent var(--pen));
+    animation: script-write 1.1s cubic-bezier(0.45, 0.05, 0.3, 1) 1.4s both;
+  }
+  @keyframes script-write {
+    from { --pen: 0%; }
+    to { --pen: 120%; }
+  }
+  .fp-swash { animation: swash-in 0.45s ease-out 2.2s both; }
+  @keyframes swash-in {
+    from { clip-path: polygon(0 62%, 0 62%, 0 100%, 0 100%); }
+  }
+
+  .fp-text > .paper, .fp-square, .fp-print { animation: paste 0.45s cubic-bezier(0.2, 0.9, 0.2, 1.2) both; }
+  .fp-corner { animation-delay: 1.1s; }
+  .fp-lede { animation-delay: 1.2s; }
+  .fp-square { animation-delay: 1.4s; }
+  .fp-note-1 { animation-delay: 1.65s; }
+  .fp-note-2 { animation-delay: 1.75s; }
+  .fp-note-3 { animation-delay: 1.85s; }
+  .fp-print { animation-delay: 1.95s; }
+  @keyframes paste {
+    from { opacity: 0; translate: -3cqw 2cqw; scale: 1.08; }
+    to { opacity: 1; translate: 0 0; scale: 1; }
+  }
+
+  /* Idle: the interference bursts, the glitch panels jump, a slice of the name slips. */
+  .fp-glitch-tex { animation: glitch-intro 0.7s steps(1, end) both, glitch-idle 9.7s steps(1, end) 3.4s infinite; }
+  .fp-glitch-scan { animation: scan-sweep 0.6s linear 0.05s both, scan-idle 13.3s linear 5.2s infinite; }
   @keyframes glitch-intro {
     0% { opacity: 0.7; object-position: 0 0; }
     15% { opacity: 0.25; object-position: 30% 40%; }
@@ -298,7 +440,6 @@
     60% { opacity: 0.4; object-position: 50% 60%; }
     80%, 100% { opacity: 0; }
   }
-  /* Mostly quiet; two short bursts at uneven points in a long cycle. */
   @keyframes glitch-idle {
     0%, 23%, 25.6%, 70%, 71.6%, 100% { opacity: 0; }
     23.4% { opacity: 0.45; object-position: 20% 30%; }
@@ -317,7 +458,6 @@
     45% { opacity: 1; transform: translateY(1200%); }
     45.2%, 100% { opacity: 0; transform: translateY(1200%); }
   }
-
   .fp-ghost-l { animation: ghost-jump 7.9s steps(1, end) 2.6s infinite; }
   .fp-ghost-r { animation: ghost-jump 12.7s steps(1, end) 6.3s infinite reverse; }
   @keyframes ghost-jump {
@@ -325,53 +465,6 @@
     60.3% { transform: translateX(1.4cqw); }
     60.9% { transform: translateX(-0.8cqw); }
   }
-
-  /* The name, group by group, through a mask; then it drifts a few pixels, slowly. */
-  .name-group {
-    display: inline-block;
-    animation: name-in 0.95s cubic-bezier(0.2, 0.75, 0.15, 1) both;
-    animation-delay: calc(0.45s + var(--order) * 0.12s);
-  }
-  @keyframes name-in {
-    from { clip-path: inset(-10% 100% -10% 0); transform: translateX(-0.12em); }
-    to { clip-path: inset(-10% -2% -10% 0); transform: none; }
-  }
-  .name { animation: name-drift 14s ease-in-out 2s infinite alternate; }
-  @keyframes name-drift {
-    from { transform: translateX(0); }
-    to { transform: translateX(-0.35cqw); }
-  }
-
-  /* The suit portrait and its red edge rise into place. */
-  .fig, .fp-outline { animation: rise-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.9s both; }
-  .fp-outline { animation-delay: 0.95s; }
-  @keyframes rise-in {
-    from { opacity: 0; transform: translateY(3cqw); }
-    to { opacity: 1; transform: none; }
-  }
-
-  /* "art meets code", uncovered left to right as if written. */
-  .fp-script {
-    --pen: 120%;
-    mask-image: linear-gradient(100deg, #000 calc(var(--pen) - 12%), transparent var(--pen));
-    animation: script-write 1.2s cubic-bezier(0.45, 0.05, 0.3, 1) 1.5s both;
-  }
-  @keyframes script-write {
-    from { --pen: 0%; }
-    to { --pen: 120%; }
-  }
-
-  /* The brush stroke is drawn just after "art meets code" is written. */
-  .fp-swash path {
-    stroke-dasharray: 400;
-    animation: swash-draw 0.8s cubic-bezier(0.5, 0, 0.2, 1) 2.55s both;
-  }
-  @keyframes swash-draw {
-    from { stroke-dashoffset: 400; }
-    to { stroke-dashoffset: 0; }
-  }
-
-  /* Now and then a slice of the name slips sideways for a moment. */
   .name-1::after { animation: name-tear 8.3s steps(1, end) 4.4s infinite; }
   .name-2::after { animation: name-tear 11.9s steps(1, end) 7.1s infinite; }
   @keyframes name-tear {
