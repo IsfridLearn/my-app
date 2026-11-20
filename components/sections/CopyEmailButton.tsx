@@ -2,24 +2,27 @@
 
 import { useState } from "react";
 
-const COPIED_MESSAGE_MS = 1800;
+const FEEDBACK_MS = 2200;
 
 export function CopyEmailButton({ email }: { email: string }) {
-  const [copied, setCopied] = useState(false);
+  const [state, setState] = useState<"idle" | "copied" | "failed">("idle");
 
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), COPIED_MESSAGE_MS);
+      setState("copied");
     } catch {
-      // Clipboard can be blocked; the address is still visible to copy by hand.
+      // Some browsers block the clipboard; the address stays visible to copy by hand.
+      setState("failed");
     }
+    window.setTimeout(() => setState("idle"), FEEDBACK_MS);
   };
 
+  const label = state === "copied" ? "Copied ✓" : state === "failed" ? "Couldn't copy, select it instead" : "Copy email";
+
   return (
-    <button type="button" className="file print-btn copy-email" onClick={copyEmail}>
-      <span aria-live="polite">{copied ? "Copied" : "Copy email"}</span>
+    <button type="button" className="file print-btn copy-email" data-state={state} onClick={copyEmail}>
+      <span aria-live="polite">{label}</span>
     </button>
   );
 }

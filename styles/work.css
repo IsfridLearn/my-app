@@ -36,6 +36,8 @@
   align-items: center;
   justify-items: center;
   padding-block: 8px 32px;
+  /* Vertical swipes keep scrolling the page; sideways ones change the card. */
+  touch-action: pan-y;
 }
 .deck-stage:focus-visible { outline: 1px dashed var(--white); outline-offset: 12px; }
 
@@ -66,8 +68,11 @@
   opacity: 1;
   filter: none;
   box-shadow: 14px 14px 0 var(--red);
-  cursor: auto;
+  cursor: pointer;
 }
+.deck-card[data-position="front"]:hover { box-shadow: 18px 18px 0 var(--red); }
+.deck-card[data-position="front"]:hover .deck-title { color: var(--red); }
+.deck-title { transition: color 0.25s ease; }
 .deck-card[data-position="next"] { --x: 42%; --r: 5deg; --s: 0.84; z-index: 2; }
 .deck-card[data-position="prev"] { --x: -42%; --r: -5deg; --s: 0.84; z-index: 2; }
 .deck-card[data-position="away"] { --s: 0.7; z-index: 1; opacity: 0; pointer-events: none; }
@@ -156,33 +161,48 @@
 .deck-link:focus-visible { outline: 2px solid var(--white); outline-offset: -4px; }
 .deck-card[data-position="front"] .deck-link:hover { background: var(--red); }
 
+/* Arrow pills either side of the counter and one tick per project. */
 .deck-controls {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: clamp(16px, 3vw, 32px);
 }
 .deck-button {
-  min-height: 44px;
-  padding: 8px 14px;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 44px;
   border: 1px solid var(--white);
+  border-radius: 999px;
   background: var(--black);
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-size: 22px;
+  line-height: 1;
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 .deck-button:hover { border-color: var(--red); background: var(--red); }
+.deck-button:active { transform: translateY(1px); }
+.deck-status { display: grid; gap: 10px; justify-items: center; min-width: 12em; }
 .deck-count {
-  min-width: 5.5em;
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.08em;
   text-align: center;
+  text-transform: uppercase;
 }
 .deck-count b { color: var(--red); font-weight: 500; }
+.deck-count-title { color: #9a9494; }
+.deck-ticks { display: flex; gap: 4px; }
+.deck-tick {
+  display: block;
+  width: 32px;
+  height: 44px;
+  cursor: pointer;
+  background: linear-gradient(rgb(255 255 255 / 0.3), rgb(255 255 255 / 0.3)) center / 100% 2px no-repeat;
+}
+.deck-tick:hover { background-image: linear-gradient(var(--white), var(--white)); }
+.deck-tick[aria-current="true"] { background-image: linear-gradient(var(--red), var(--red)); }
 
 @media (prefers-reduced-motion: no-preference) {
   .deck-card[data-position="front"] .deck-link:hover .sprite { transform: translate(3px, -3px); }

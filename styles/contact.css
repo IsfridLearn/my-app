@@ -155,3 +155,10 @@
   .contact-lead { max-width: none; }
   .contact-form { padding-left: 0; border-left: 0; }
 }
+
+/* Field help, errors and copy feedback. */
+.field-optional { color: #9a9494; text-transform: none; letter-spacing: 0; }
+.field-error { color: #ff8a8f; font-size: 14px; line-height: 1.4; }
+.contact-form [aria-invalid="true"] { border-bottom-color: #ff8a8f; }
+.copy-email[data-state="copied"] { border-color: var(--red); background: var(--red); color: var(--white); }
+.contact-submit:active { transform: translateY(1px); }

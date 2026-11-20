@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, type KeyboardEvent, type MouseEvent } from "react";
+import { useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { Arrow } from "@/components/ui/Sprite";
 import { caseStudyHref, projectFileNumber } from "@/data/projects";
@@ -21,8 +22,29 @@ function positionOf(index: number, active: number, count: number): Position {
 /** The projects as a stack of prints: one in front, its neighbours tilted behind it. */
 export function WorkDeck({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState(0);
+  const router = useRouter();
+  const swipe = useRef<{ x: number; y: number } | null>(null);
+  const swiped = useRef(false);
   const count = projects.length;
   const show = (index: number) => setActive((index + count) % count);
+
+  // A sideways swipe on a touch screen changes the card; a mostly vertical one still scrolls.
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse") return;
+    swipe.current = { x: event.clientX, y: event.clientY };
+    swiped.current = false;
+  };
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const start = swipe.current;
+    swipe.current = null;
+    if (!start) return;
+    const dx = event.clientX - start.x;
+    const dy = event.clientY - start.y;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      swiped.current = true;
+      show(dx < 0 ? active + 1 : active - 1);
+    }
+  };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "ArrowLeft") {
@@ -43,16 +65,28 @@ export function WorkDeck({ projects }: { projects: Project[] }) {
         aria-label="Projects. Use the left and right arrow keys to change project."
         tabIndex={0}
         onKeyDown={handleKeyDown}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={() => (swipe.current = null)}
       >
         {projects.map((project, index) => {
           const position = positionOf(index, active, count);
           const isFront = position === "front";
 
-          // A card behind the front one comes forward when clicked, instead of following its link.
+          // The front card opens its project from anywhere on it. A card behind
+          // comes forward instead. A swipe that just ended is not a click.
           const handleClick = (event: MouseEvent<HTMLElement>) => {
-            if (isFront) return;
-            event.preventDefault();
-            show(index);
+            if (swiped.current) {
+              event.preventDefault();
+              swiped.current = false;
+              return;
+            }
+            if (!isFront) {
+              event.preventDefault();
+              show(index);
+              return;
+            }
+            if (!(event.target as HTMLElement).closest("a")) router.push(caseStudyHref(project));
           };
 
           return (
@@ -112,15 +146,40 @@ export function WorkDeck({ projects }: { projects: Project[] }) {
 
       {count > 1 && (
         <div className="deck-controls">
-          <button type="button" className="deck-button" onClick={() => show(active - 1)}>
-            <span aria-hidden="true">←</span> Prev
+          <button
+            type="button"
+            className="deck-button"
+            aria-label="Previous project"
+            onClick={() => show(active - 1)}
+          >
+            <span aria-hidden="true">⟵</span>
           </button>
-          <p className="deck-count" aria-live="polite">
-            <b>{String(active + 1).padStart(2, "0")}</b> / {String(count).padStart(2, "0")}
-            <span className="sr-only">: {projects[active].title}</span>
-          </p>
-          <button type="button" className="deck-button" onClick={() => show(active + 1)}>
-            Next <span aria-hidden="true">→</span>
+          <div className="deck-status">
+            <p className="deck-count" aria-live="polite">
+              <b>{String(active + 1).padStart(2, "0")}</b> / {String(count).padStart(2, "0")}
+              <span className="deck-count-title"> — {projects[active].title}</span>
+            </p>
+            <ul className="deck-ticks">
+              {projects.map((project, index) => (
+                <li key={project.id}>
+                  <button
+                    type="button"
+                    className="deck-tick"
+                    aria-label={`Show ${project.title}`}
+                    aria-current={index === active ? "true" : undefined}
+                    onClick={() => show(index)}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <button
+            type="button"
+            className="deck-button"
+            aria-label="Next project"
+            onClick={() => show(active + 1)}
+          >
+            <span aria-hidden="true">⟶</span>
           </button>
         </div>
       )}

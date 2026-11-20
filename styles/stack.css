@@ -64,3 +64,9 @@
   .stack-meta, .stack-items { grid-column: 1 / -1; }
   .stack::before { width: 90vw; height: 100vw; }
 }
+
+/* A faint highlight on the row under the pointer, to keep your place while scanning. */
+.stack-row { transition: background-color 0.2s ease; }
+@media (hover: hover) {
+  .stack-row:hover { background-color: rgb(255 255 255 / 0.03); }
+}

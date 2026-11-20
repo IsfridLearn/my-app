@@ -1,3 +1,4 @@
+import { PhotoLightbox } from "@/components/sections/PhotoLightbox";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { ScriptOverlay } from "@/components/ui/SectionHeading";
 import { brands, titles } from "@/data/beyond";
@@ -15,7 +16,17 @@ type PlateProps = {
 function Plate({ photo, className, sizes, lang }: PlateProps) {
   return (
     <figure id={photo.id} className={`plate ${className}`}>
-      <ContentImage image={photo} sizes={sizes} />
+      <button
+        type="button"
+        className="plate-open"
+        data-lightbox={photo.id}
+        aria-label={`View larger: ${photo.label}`}
+      >
+        <ContentImage image={photo} sizes={sizes} />
+        <span className="plate-view file" aria-hidden="true">
+          View
+        </span>
+      </button>
       <figcaption className="file">
         {photo.file} <span lang={lang}>{photo.label}</span>
       </figcaption>
@@ -25,6 +36,14 @@ function Plate({ photo, className, sizes, lang }: PlateProps) {
 
 export function BeyondTheScreen() {
   const heading = sectionHeadings.beyond;
+  // In the order they appear on the page.
+  const lightboxPhotos = [
+    photos.set,
+    { ...photos.ginoo, lang: "fil" },
+    { ...photos.patnubay, lang: "fil" },
+    photos.gold,
+    photos.stage,
+  ];
 
   return (
     <section id="beyond" className="spread beyond" aria-labelledby="beyond-title">
@@ -90,6 +109,8 @@ export function BeyondTheScreen() {
           </ul>
         </div>
       </div>
+
+      <PhotoLightbox photos={lightboxPhotos} />
     </section>
   );
 }
