@@ -224,74 +224,6 @@
   opacity: 0;
 }
 
-/* Red glass and acrylic framing the poster, cut from photoreal renders. Their black
-   backgrounds drop out against the page, and edges that would show a crop fade away.
-   They sit over the background photographs but under every line of text. */
-.fp-3d {
-  z-index: 2;
-  pointer-events: none;
-}
-.fp-3d img { display: block; width: 100%; height: auto; mix-blend-mode: screen; }
-.fp-3d-ribbon {
-  top: -3cqw;
-  left: -4cqw;
-  width: 40cqw;
-  mask-image: radial-gradient(ellipse 100% 100% at 0% 0%, #000 62%, transparent 92%);
-}
-.fp-3d-ribbon img { filter: brightness(1.45) saturate(1.15); }
-.fp-3d-prism {
-  top: 48cqw;
-  left: -4cqw;
-  width: 15cqw;
-  rotate: -28deg;
-  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 55%, transparent 72%);
-}
-.fp-3d-prism-r {
-  top: 17cqw;
-  left: 89.5cqw;
-  width: 13cqw;
-  rotate: 22deg;
-  opacity: 0.85;
-  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 55%, transparent 72%);
-}
-.fp-3d-swirl {
-  top: 52cqw;
-  left: 58cqw;
-  width: 46cqw;
-  mask-image:
-    linear-gradient(to bottom, transparent 0%, #000 38%),
-    linear-gradient(to right, transparent 0%, #000 18%);
-  mask-composite: intersect;
-}
-
-/* The live glass sphere, with two thin orbit lines around it. */
-.fp-sphere {
-  top: 11.5cqw;
-  left: 62cqw;
-  z-index: 2;
-  width: 16cqw;
-  aspect-ratio: 200 / 120;
-  pointer-events: none;
-}
-.fp-orbit {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  fill: none;
-  stroke: rgb(255 255 255 / 0.45);
-  stroke-width: 0.6;
-}
-.fp-sphere-canvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 46%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-}
-
 /* A red brush stroke under "art meets code". */
 .fp-swash {
   top: 55.5cqw;
@@ -330,15 +262,10 @@
    Uses the separate translate property so it never fights the entrance animations. */
 .fp-outline { translate: calc(var(--mx, 0) * 0.55cqw) calc(var(--my, 0) * 0.4cqw); }
 .fig { translate: calc(var(--mx, 0) * 0.9cqw) calc(var(--my, 0) * 0.6cqw); }
-.fp-3d-ribbon { translate: calc(var(--mx, 0) * 1.3cqw) calc(var(--my, 0) * 0.9cqw); }
-.fp-3d-prism { translate: calc(var(--mx, 0) * 2cqw) calc(var(--my, 0) * 1.4cqw); }
-.fp-3d-prism-r { translate: calc(var(--mx, 0) * 1.6cqw) calc(var(--my, 0) * 1.1cqw); }
-.fp-3d-swirl { translate: calc(var(--mx, 0) * 1.1cqw) calc(var(--my, 0) * 0.8cqw); }
-.fp-sphere { translate: calc(var(--mx, 0) * 2.2cqw) calc(var(--my, 0) * 1.5cqw); }
 
 /* Phones and tablets keep the plain poster; the pieces are placed for the wide layout. */
 @media (max-width: 1099px) {
-  .fp-3d, .fp-sphere, .fp-swash { display: none; }
+  .fp-swash { display: none; }
 }
 
 /* ------------------------------------------------------ Entrance and idle motion */
@@ -432,31 +359,6 @@
   @keyframes script-write {
     from { --pen: 0%; }
     to { --pen: 120%; }
-  }
-
-  /* The glass and acrylic arrive last, one after another, then float very slowly. */
-  .fp-3d, .fp-sphere { animation: object-in 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-  .fp-3d-ribbon { animation-delay: 1.8s; }
-  .fp-sphere { animation-delay: 2s; }
-  .fp-3d-prism-r { animation-delay: 2.15s; }
-  .fp-3d-prism { animation-delay: 2.3s; }
-  .fp-3d-swirl { animation-delay: 2.45s; }
-  @keyframes object-in {
-    from { opacity: 0; scale: 0.9; filter: blur(6px); }
-    to { scale: 1; filter: blur(0); }
-  }
-  .fp-3d img { animation: object-float 16s ease-in-out 3.6s infinite alternate; }
-  .fp-3d-prism img { animation-duration: 12s; }
-  .fp-3d-prism-r img { animation-duration: 19s; animation-direction: alternate-reverse; }
-  .fp-3d-swirl img { animation-duration: 21s; }
-  @keyframes object-float {
-    from { transform: translateY(0) rotate(0deg); }
-    to { transform: translateY(-0.8cqw) rotate(2.5deg); }
-  }
-  .fp-orbit ellipse { transform-origin: 100px 60px; animation: orbit-turn 40s linear infinite; }
-  .fp-orbit ellipse + ellipse { animation-duration: 55s; animation-direction: reverse; }
-  @keyframes orbit-turn {
-    to { rotate: 360deg; }
   }
 
   /* The brush stroke is drawn just after "art meets code" is written. */

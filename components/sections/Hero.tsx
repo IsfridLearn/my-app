@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { GlassSphere } from "@/components/sections/GlassSphere";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { DropCap } from "@/components/ui/DropCap";
 import { ScriptOverlay } from "@/components/ui/SectionHeading";
@@ -11,12 +10,6 @@ import { hero, profile } from "@/data/profile";
 const PORTRAIT_SIZES = "(max-width: 1099px) 56vw, 36vw";
 
 const interference = { src: "/photos/hero-interference.webp", alt: "", width: 1200, height: 700 };
-// Cut from photoreal renders; black in them drops out against the page.
-const sculpture = {
-  ribbon: { src: "/photos/hero-3d-ribbon.webp", alt: "", width: 900, height: 654 },
-  swirl: { src: "/photos/hero-3d-swirl.webp", alt: "", width: 1100, height: 501 },
-  prism: { src: "/photos/hero-3d-prism.webp", alt: "", width: 520, height: 368 },
-};
 
 export function Hero() {
   const [print, setPrint] = useState<"dark" | "light">("dark");
@@ -108,26 +101,6 @@ function HeroArt({ bursts }: { bursts: number }) {
         <span className="fp-glitch-scan" />
       </div>
 
-      {/* Red glass and acrylic framing the poster, each at its own depth. */}
-      <span className="fp-3d fp-3d-ribbon" aria-hidden="true">
-        <ContentImage image={sculpture.ribbon} sizes="32vw" />
-      </span>
-      <span className="fp-3d fp-3d-prism" aria-hidden="true">
-        <ContentImage image={sculpture.prism} sizes="16vw" />
-      </span>
-      <span className="fp-3d fp-3d-prism-r" aria-hidden="true">
-        <ContentImage image={sculpture.prism} sizes="14vw" />
-      </span>
-      <span className="fp-3d fp-3d-swirl" aria-hidden="true">
-        <ContentImage image={sculpture.swirl} sizes="44vw" />
-      </span>
-      <span className="fp-sphere" aria-hidden="true">
-        <svg className="fp-orbit" viewBox="0 0 200 120">
-          <ellipse cx="100" cy="60" rx="96" ry="22" transform="rotate(-18 100 60)" />
-          <ellipse cx="100" cy="60" rx="78" ry="34" transform="rotate(14 100 60)" />
-        </svg>
-        <GlassSphere />
-      </span>
 
       <h1 id="home-title" className="name poster">
         <span className="sr-only">
