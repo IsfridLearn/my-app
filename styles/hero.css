@@ -34,12 +34,6 @@
   /* Quieter streaks behind the intro paragraph; full strength below it. */
   mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0.3) 42%, #000 58%);
 }
-.fp-panel {
-  top: -19cqw;
-  left: 26.5cqw;
-  z-index: 1;
-  width: 47cqw;
-}
 .fp-stain { bottom: 0; z-index: 1; }
 .fp-stain-l { left: 0; width: 38cqw; }
 .fp-stain-r {
@@ -175,20 +169,15 @@
 @media (max-width: 1099px) {
   .fp-art {
     --fx: 20cqw;
-    --fy: 74cqw;
+    --fy: 30cqw;
     --fw: 50cqw;
-    aspect-ratio: 100 / 139;
+    aspect-ratio: 100 / 100;
   }
   .fp-ghost, .fp-square, .fp-stain-r, .fp-corner, .fp-label { display: none; }
-  .fp-panel {
-    top: -37cqw;
-    left: -4cqw;
-    width: 108cqw;
-  }
   .fp-stain-l { width: 70cqw; }
-  .name { top: 82cqw; }
+  .name { top: 38cqw; }
   .fp-script {
-    top: 105cqw;
+    top: 61cqw;
     left: 3cqw;
     font-size: 11cqw;
   }
@@ -207,4 +196,285 @@
   .fp-num { font-size: 13px; }
   .fp-print { font-size: 11.5px; }
   .fp-print { justify-self: start; padding: 8px 12px; }
+}
+
+/* ------------------------------------------------------ Hero layers added for motion */
+/* Interference layer: over the background photographs, under the name and portrait. */
+.fp-glitch {
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.fp-glitch > * { position: absolute; }
+.fp-glitch-tex {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+.fp-glitch-scan {
+  left: 0;
+  right: 0;
+  top: -12%;
+  height: 10%;
+  background: repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 3px);
+  opacity: 0;
+}
+
+/* Red glass and acrylic framing the poster, cut from photoreal renders. Their black
+   backgrounds drop out against the page, and edges that would show a crop fade away.
+   They sit over the background photographs but under every line of text. */
+.fp-3d {
+  z-index: 2;
+  pointer-events: none;
+}
+.fp-3d img { display: block; width: 100%; height: auto; mix-blend-mode: screen; }
+.fp-3d-ribbon {
+  top: -3cqw;
+  left: -4cqw;
+  width: 40cqw;
+  mask-image: radial-gradient(ellipse 100% 100% at 0% 0%, #000 62%, transparent 92%);
+}
+.fp-3d-ribbon img { filter: brightness(1.45) saturate(1.15); }
+.fp-3d-prism {
+  top: 48cqw;
+  left: -4cqw;
+  width: 15cqw;
+  rotate: -28deg;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 55%, transparent 72%);
+}
+.fp-3d-prism-r {
+  top: 17cqw;
+  left: 89.5cqw;
+  width: 13cqw;
+  rotate: 22deg;
+  opacity: 0.85;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 55%, transparent 72%);
+}
+.fp-3d-swirl {
+  top: 52cqw;
+  left: 58cqw;
+  width: 46cqw;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 38%),
+    linear-gradient(to right, transparent 0%, #000 18%);
+  mask-composite: intersect;
+}
+
+/* The live glass sphere, with two thin orbit lines around it. */
+.fp-sphere {
+  top: 11.5cqw;
+  left: 62cqw;
+  z-index: 2;
+  width: 16cqw;
+  aspect-ratio: 200 / 120;
+  pointer-events: none;
+}
+.fp-orbit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: rgb(255 255 255 / 0.45);
+  stroke-width: 0.6;
+}
+.fp-sphere-canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+/* A red brush stroke under "art meets code". */
+.fp-swash {
+  top: 55.5cqw;
+  left: 9cqw;
+  z-index: 6;
+  width: 27cqw;
+  overflow: visible;
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+/* The giant name, worn like a printed poster: fine specks and thin scratches. */
+.name {
+  mask-image: url("/photos/hero-grain.png");
+  mask-size: 100% 100%;
+}
+/* A displaced copy of each word, shown only during a glitch burst. */
+.name-1, .name-2 { position: relative; }
+.name-1::after, .name-2::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.name-1::after { clip-path: inset(36% 0 50% 0); transform: translateX(1.4cqw); }
+.name-2::after { clip-path: inset(62% 0 26% 0); transform: translateX(-1.1cqw); }
+
+/* The suit portrait stands off the page a little. */
+.fig { filter: drop-shadow(0 1.4cqw 1.8cqw rgb(0 0 0 / 0.55)); }
+
+/* Cursor depth: each layer moves by a different amount, the nearest moves most.
+   Uses the separate translate property so it never fights the entrance animations. */
+.fp-outline { translate: calc(var(--mx, 0) * 0.55cqw) calc(var(--my, 0) * 0.4cqw); }
+.fig { translate: calc(var(--mx, 0) * 0.9cqw) calc(var(--my, 0) * 0.6cqw); }
+.fp-3d-ribbon { translate: calc(var(--mx, 0) * 1.3cqw) calc(var(--my, 0) * 0.9cqw); }
+.fp-3d-prism { translate: calc(var(--mx, 0) * 2cqw) calc(var(--my, 0) * 1.4cqw); }
+.fp-3d-prism-r { translate: calc(var(--mx, 0) * 1.6cqw) calc(var(--my, 0) * 1.1cqw); }
+.fp-3d-swirl { translate: calc(var(--mx, 0) * 1.1cqw) calc(var(--my, 0) * 0.8cqw); }
+.fp-sphere { translate: calc(var(--mx, 0) * 2.2cqw) calc(var(--my, 0) * 1.5cqw); }
+
+/* Phones and tablets keep the plain poster; the pieces are placed for the wide layout. */
+@media (max-width: 1099px) {
+  .fp-3d, .fp-sphere, .fp-swash { display: none; }
+}
+
+/* ------------------------------------------------------ Entrance and idle motion */
+/* One timeline of about three seconds:
+   0.0s interference burst · 0.15s big portrait · 0.45s name · 0.9s suit portrait
+   · 1.5s "art meets code" · 1.9s glass. Then: occasional glitch, slow glass turn.
+   With reduced motion none of this runs and the hero is simply there. */
+@property --pen {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 120%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Background activation, and the same burst again whenever the print changes. */
+  .fp-glitch-tex {
+    animation:
+      glitch-intro 0.7s steps(1, end) both,
+      glitch-idle 9.7s steps(1, end) 3.4s infinite;
+  }
+  .fp-glitch-scan {
+    animation:
+      scan-sweep 0.6s linear 0.05s both,
+      scan-idle 13.3s linear 5.2s infinite;
+  }
+  @keyframes glitch-intro {
+    0% { opacity: 0.7; object-position: 0 0; }
+    15% { opacity: 0.25; object-position: 30% 40%; }
+    30% { opacity: 0.55; object-position: 70% 10%; }
+    45% { opacity: 0.15; object-position: 10% 80%; }
+    60% { opacity: 0.4; object-position: 50% 60%; }
+    80%, 100% { opacity: 0; }
+  }
+  /* Mostly quiet; two short bursts at uneven points in a long cycle. */
+  @keyframes glitch-idle {
+    0%, 23%, 25.6%, 70%, 71.6%, 100% { opacity: 0; }
+    23.4% { opacity: 0.45; object-position: 20% 30%; }
+    24.2% { opacity: 0.2; object-position: 80% 70%; }
+    25% { opacity: 0.35; object-position: 40% 10%; }
+    70.4% { opacity: 0.3; object-position: 60% 90%; }
+    71% { opacity: 0.5; object-position: 0% 50%; }
+  }
+  @keyframes scan-sweep {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 1; transform: translateY(1200%); }
+  }
+  @keyframes scan-idle {
+    0%, 41% { opacity: 0; transform: translateY(0); }
+    41.2% { opacity: 1; transform: translateY(0); }
+    45% { opacity: 1; transform: translateY(1200%); }
+    45.2%, 100% { opacity: 0; transform: translateY(1200%); }
+  }
+
+  .fp-ghost-l { animation: ghost-jump 7.9s steps(1, end) 2.6s infinite; }
+  .fp-ghost-r { animation: ghost-jump 12.7s steps(1, end) 6.3s infinite reverse; }
+  @keyframes ghost-jump {
+    0%, 60%, 61.5%, 100% { transform: none; }
+    60.3% { transform: translateX(1.4cqw); }
+    60.9% { transform: translateX(-0.8cqw); }
+  }
+
+  /* The name, group by group, through a mask; then it drifts a few pixels, slowly. */
+  .name-group {
+    display: inline-block;
+    animation: name-in 0.95s cubic-bezier(0.2, 0.75, 0.15, 1) both;
+    animation-delay: calc(0.45s + var(--order) * 0.12s);
+  }
+  @keyframes name-in {
+    from { clip-path: inset(-10% 100% -10% 0); transform: translateX(-0.12em); }
+    to { clip-path: inset(-10% -2% -10% 0); transform: none; }
+  }
+  .name { animation: name-drift 14s ease-in-out 2s infinite alternate; }
+  @keyframes name-drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(-0.35cqw); }
+  }
+
+  /* The suit portrait and its red edge rise into place. */
+  .fig, .fp-outline { animation: rise-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.9s both; }
+  .fp-outline { animation-delay: 0.95s; }
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(3cqw); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* "art meets code", uncovered left to right as if written. */
+  .fp-script {
+    --pen: 120%;
+    mask-image: linear-gradient(100deg, #000 calc(var(--pen) - 12%), transparent var(--pen));
+    animation: script-write 1.2s cubic-bezier(0.45, 0.05, 0.3, 1) 1.5s both;
+  }
+  @keyframes script-write {
+    from { --pen: 0%; }
+    to { --pen: 120%; }
+  }
+
+  /* The glass and acrylic arrive last, one after another, then float very slowly. */
+  .fp-3d, .fp-sphere { animation: object-in 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .fp-3d-ribbon { animation-delay: 1.8s; }
+  .fp-sphere { animation-delay: 2s; }
+  .fp-3d-prism-r { animation-delay: 2.15s; }
+  .fp-3d-prism { animation-delay: 2.3s; }
+  .fp-3d-swirl { animation-delay: 2.45s; }
+  @keyframes object-in {
+    from { opacity: 0; scale: 0.9; filter: blur(6px); }
+    to { scale: 1; filter: blur(0); }
+  }
+  .fp-3d img { animation: object-float 16s ease-in-out 3.6s infinite alternate; }
+  .fp-3d-prism img { animation-duration: 12s; }
+  .fp-3d-prism-r img { animation-duration: 19s; animation-direction: alternate-reverse; }
+  .fp-3d-swirl img { animation-duration: 21s; }
+  @keyframes object-float {
+    from { transform: translateY(0) rotate(0deg); }
+    to { transform: translateY(-0.8cqw) rotate(2.5deg); }
+  }
+  .fp-orbit ellipse { transform-origin: 100px 60px; animation: orbit-turn 40s linear infinite; }
+  .fp-orbit ellipse + ellipse { animation-duration: 55s; animation-direction: reverse; }
+  @keyframes orbit-turn {
+    to { rotate: 360deg; }
+  }
+
+  /* The brush stroke is drawn just after "art meets code" is written. */
+  .fp-swash path {
+    stroke-dasharray: 400;
+    animation: swash-draw 0.8s cubic-bezier(0.5, 0, 0.2, 1) 2.55s both;
+  }
+  @keyframes swash-draw {
+    from { stroke-dashoffset: 400; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Now and then a slice of the name slips sideways for a moment. */
+  .name-1::after { animation: name-tear 8.3s steps(1, end) 4.4s infinite; }
+  .name-2::after { animation: name-tear 11.9s steps(1, end) 7.1s infinite; }
+  @keyframes name-tear {
+    0%, 52%, 53.6%, 100% { opacity: 0; }
+    52.2% { opacity: 1; }
+    52.9% { opacity: 0.6; }
+  }
 }
