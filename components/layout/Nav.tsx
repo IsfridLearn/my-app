@@ -29,7 +29,7 @@ export function Nav({ active, base = "" }: NavProps) {
   const closeMenu = () => setMenuOpen(false);
 
   const activeIndex = navSections.findIndex((section) => section.id === currentSection);
-  const activeLabel = activeIndex >= 0 ? navSections[activeIndex].label : "Index";
+  const activeLabel = activeIndex >= 0 ? navSections[activeIndex].label : "Cover";
 
   // While the phone menu is open: lock the page behind it, move focus into it,
   // close it with Escape or when the window grows to desktop width.
@@ -90,6 +90,7 @@ export function Nav({ active, base = "" }: NavProps) {
   const socials = [
     ...(contact.email.trim() !== "" ? [{ label: "Email", href: `mailto:${contact.email}`, external: false }] : []),
     ...contact.links.map((link) => ({ label: link.label, href: link.href, external: true })),
+    ...(contact.resume.trim() !== "" ? [{ label: "Resume", href: contact.resume, external: true }] : []),
   ];
 
   return (

@@ -1,108 +1,84 @@
 import { PhotoLightbox } from "@/components/sections/PhotoLightbox";
 import { ContentImage } from "@/components/ui/ContentImage";
-import { ScriptOverlay } from "@/components/ui/SectionHeading";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { brands, titles } from "@/data/beyond";
 import { sectionHeadings } from "@/data/navigation";
 import { contactSheetFrames, photos } from "@/data/photos";
 import type { Photo } from "@/types";
 
-type PlateProps = {
-  photo: Photo;
-  className: string;
-  sizes: string;
-  lang?: string;
-};
+type GalleryPhoto = Photo & { lang?: string };
 
-function Plate({ photo, className, sizes, lang }: PlateProps) {
-  return (
-    <figure id={photo.id} className={`plate ${className}`}>
-      <button
-        type="button"
-        className="plate-open"
-        data-lightbox={photo.id}
-        aria-label={`View larger: ${photo.label}`}
-      >
-        <ContentImage image={photo} sizes={sizes} />
-        <span className="plate-view file" aria-hidden="true">
-          View
-        </span>
-      </button>
-      <figcaption className="file">
-        {photo.file} <span lang={lang}>{photo.label}</span>
-      </figcaption>
-    </figure>
-  );
-}
-
+/** Beyond the Screen: the photographs in one even grid, then the titles and the brands. */
 export function BeyondTheScreen() {
-  const heading = sectionHeadings.beyond;
   // In the order they appear on the page.
-  const lightboxPhotos = [
+  const gallery: GalleryPhoto[] = [
+    photos.profile,
     photos.set,
+    photos.gold,
     { ...photos.ginoo, lang: "fil" },
     { ...photos.patnubay, lang: "fil" },
-    photos.gold,
     photos.stage,
   ];
 
   return (
     <section id="beyond" className="spread beyond" aria-labelledby="beyond-title">
-      <div id={photos.profile.id} className="opener">
-        <ContentImage image={photos.profile} sizes="100vw" />
-        <h2 id="beyond-title" className="beyond-title poster">
-          {heading.title}
-        </h2>
-        <ScriptOverlay className="spread-script beyond-script" word={heading.script} />
+      <SectionHeading id="beyond-title" {...sectionHeadings.beyond} />
+
+      <ul className="bx-grid">
+        {gallery.map((photo) => (
+          <li key={photo.id}>
+            <figure id={photo.id} className="plate">
+              <button type="button" className="plate-open" data-lightbox={photo.id} aria-label={`View larger: ${photo.label}`}>
+                <span className="plate-tag file">{photo.file}</span>
+                <span className="plate-img">
+                  <ContentImage image={photo} sizes="(max-width: 599px) 92vw, (max-width: 899px) 46vw, 31vw" />
+                </span>
+                <span className="plate-view file" aria-hidden="true">
+                  View
+                </span>
+              </button>
+              <figcaption className="file" lang={photo.lang}>
+                {photo.label}
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+
+      <div className="sheet" role="img" aria-label="Eight close-ups from shoots and pageants">
+        {contactSheetFrames.map(({ frame, dither, photo }) => (
+          <span key={frame} className="frame">
+            <ContentImage className="frame-dither" image={dither} unoptimized />
+            <ContentImage className="frame-photo" image={photo} unoptimized />
+          </span>
+        ))}
       </div>
 
-      <div className="grid beyond-top">
-        <div className="sheet" role="img" aria-label="Eight close-ups from shoots and pageants">
-          {contactSheetFrames.map(({ frame, dither, photo }) => (
-            <span key={frame} className="frame">
-              <ContentImage className="frame-dither" image={dither} unoptimized />
-              <ContentImage className="frame-photo" image={photo} unoptimized />
-            </span>
-          ))}
+      <div className="bx-lists">
+        <div className="bx-list">
+          <h3 className="tape">
+            <span className="tape-num">A</span> Pageant titles
+          </h3>
+          <ul>
+            {titles.map((title) => (
+              <li key={title.name}>
+                <span className="poster" lang={title.lang}>
+                  {title.name}
+                </span>
+                <span className="file">{title.year}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <Plate photo={photos.set} className="plate-set" sizes="(max-width: 1023px) 60vw, 24vw" />
-      </div>
 
-      <div className="grid title-plates">
-        <Plate
-          photo={photos.ginoo}
-          className="plate-ginoo"
-          sizes="(max-width: 1023px) 100vw, 44vw"
-          lang="fil"
-        />
-        <Plate
-          photo={photos.patnubay}
-          className="plate-patnubay"
-          sizes="(max-width: 1023px) 75vw, 24vw"
-          lang="fil"
-        />
-        <Plate photo={photos.gold} className="plate-gold" sizes="(max-width: 1023px) 100vw, 36vw" />
-      </div>
-
-      <div className="ledger">
-        <p className="index-num ledger-head">[1] Titles</p>
-        <ul className="titles">
-          {titles.map((title) => (
-            <li key={title.name} className="poster">
-              <span lang={title.lang}>{title.name}</span>
-              <span className="ledger-year">{title.year}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="grid brands-row">
-        <Plate photo={photos.stage} className="plate-stage" sizes="(max-width: 1023px) 75vw, 34vw" />
-        <div className="ledger brands">
-          <p className="index-num">[2] Brands</p>
+        <div className="bx-list">
+          <h3 className="tape tape-flip">
+            <span className="tape-num">B</span> Ambassador and campaigns
+          </h3>
           <ul>
             {brands.map((brand) => (
-              <li key={brand.name} className="poster">
-                <span>{brand.name}</span>
+              <li key={brand.name}>
+                <span className="poster">{brand.name}</span>
                 {brand.note && <span className="file">{brand.note}</span>}
               </li>
             ))}
@@ -110,7 +86,7 @@ export function BeyondTheScreen() {
         </div>
       </div>
 
-      <PhotoLightbox photos={lightboxPhotos} />
+      <PhotoLightbox photos={gallery} />
     </section>
   );
 }

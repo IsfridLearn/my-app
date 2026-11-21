@@ -13,13 +13,14 @@ export const navSections: NavSection[] = [
 ];
 
 export const sectionHeadings: Record<
-  "work" | "stack" | "experience" | "beyond" | "contact",
+  "work" | "stack" | "experience" | "beyond" | "about" | "contact",
   SectionHeadingText
 > = {
   work: { title: "Selected Work", script: "projects" },
   stack: { title: "Stack", script: "tools" },
   experience: { title: "Experience", script: "roles" },
   beyond: { title: "Beyond the Screen", script: "camera" },
+  about: { title: "About", script: "two sides" },
   contact: { title: "Contact", script: "address" },
 };
 

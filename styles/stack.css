@@ -23,20 +23,8 @@
 }
 .ars-group { display: grid; gap: 26px; align-content: start; }
 
-/* Red tape across the page, angled one way then the other. */
-.ars-tape {
-  margin-inline: calc(var(--gutter) * -1);
-  padding: 7px calc(var(--gutter) + 8px) 6px;
-  background: var(--red);
-  color: var(--white);
-  font-size: clamp(12px, 1.05vw, 15px);
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  box-shadow: 0 5px 0 var(--black), 0 7px 0 var(--white);
-  transform: rotate(-0.6deg);
-}
+/* The tape (base.css) angles the other way on every second group. */
 .ars-group:nth-child(even) > .ars-tape { text-align: right; transform: rotate(0.6deg); }
-.ars-num { margin-right: 0.6em; font-family: var(--poster); font-size: 1.9em; letter-spacing: 0.02em; vertical-align: -0.12em; }
 .ars-note { max-width: 52ch; color: #cfcaca; font-size: 14px; line-height: 1.5; }
 .ars-group:nth-child(even) > .ars-note { justify-self: end; text-align: right; }
 

@@ -45,8 +45,8 @@ function Group({ group, index }: { group: SkillGroup; index: number }) {
 
   return (
     <section className="ars-group" data-layout={group.layout} aria-labelledby={`ars-${index}`}>
-      <h3 id={`ars-${index}`} className="ars-tape file">
-        <span className="ars-num">{number}</span> {group.category}
+      <h3 id={`ars-${index}`} className="tape ars-tape">
+        <span className="tape-num">{number}</span> {group.category}
       </h3>
       {group.note && <p className="ars-note">{group.note}</p>}
       <ul className="ars-tools">

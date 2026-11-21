@@ -146,6 +146,25 @@ b, strong { font-weight: 600; }
   color: var(--red);
 }
 
+/* A strip of red tape across the page, used to head groups (Stack, Beyond the Screen).
+   Add .tape-flip to angle it the other way and set it on the right. */
+.tape {
+  margin-inline: calc(var(--gutter) * -1);
+  padding: 7px calc(var(--gutter) + 8px) 6px;
+  background: var(--red);
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: clamp(12px, 1.05vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  box-shadow: 0 5px 0 var(--black), 0 7px 0 var(--white);
+  transform: rotate(-0.6deg);
+}
+.tape-flip { text-align: right; transform: rotate(0.6deg); }
+.tape-num { margin-right: 0.6em; font-family: var(--poster); font-size: 1.9em; letter-spacing: 0.02em; vertical-align: -0.12em; }
+
 /* Label and text pairs numbered [1], [2]. */
 .facts {
   display: grid;

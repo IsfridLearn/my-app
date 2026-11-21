@@ -16,7 +16,7 @@ export function ArchiveFooter() {
   return (
     <footer className="foot">
       <nav aria-label="Archive index" className="index">
-        <p className="file">Index</p>
+        <p className="file">The archive</p>
         <ul>
           {archiveIndex.map((entry) => (
             <li key={entry.file}>
@@ -28,7 +28,12 @@ export function ArchiveFooter() {
           ))}
         </ul>
       </nav>
-      <Copyright />
+      <div className="foot-end">
+        <Copyright />
+        <a className="to-top file" href="#home">
+          Back to top <span aria-hidden="true">↑</span>
+        </a>
+      </div>
     </footer>
   );
 }

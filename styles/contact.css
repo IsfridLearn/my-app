@@ -1,106 +1,88 @@
-/* ---------------------------------------------------------------- Contact */
-.contact {
+/* --------------------------------------------------------------- Contact */
+/* The closing page: a strip of the eyes photograph, one giant word with its A swapped
+   for a red cut-paper cross, then the email and links beside the form. */
+.contact { position: relative; padding-bottom: clamp(72px, 9vw, 144px); scroll-margin-top: 48px; }
+
+.eyes-band { position: relative; margin: 0; }
+.eyes-band img { display: block; width: 100%; height: clamp(120px, 16vw, 260px); object-fit: cover; object-position: 50% 45%; }
+.eyes-band figcaption { position: absolute; right: var(--gutter); bottom: 10px; padding: 4px 8px; background: var(--black); }
+.eyes-band figcaption b { margin-right: 0.6em; color: var(--red); font-weight: 600; }
+
+.ct-title { margin-top: clamp(-80px, -5vw, -24px); padding-inline: var(--gutter); }
+.ct-word {
   position: relative;
-  padding-block: 0 clamp(64px, 8vw, 128px);
-  overflow: hidden;
-  container-type: inline-size;
-}
-.contact::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 34vw;
-  height: 20vw;
-  background: url("/photos/hero-stain.webp") left bottom / contain no-repeat;
-  transform: scaleX(-1);
-  pointer-events: none;
-}
-.contact > * { position: relative; z-index: 1; }
-.eyes-band { position: relative; }
-.eyes-band img { width: 100%; height: auto; }
-.contact-script {
-  top: 3cqw;
-  bottom: auto;
-  left: 3cqw;
-}
-.contact > .file { padding: 9cqw var(--gutter) 0; }
-.mail {
-  position: absolute;
-  top: 29.4cqw;
-  left: 1.6cqw;
-  right: 1.6cqw;
-  z-index: 3;
-  display: flex;
-  justify-content: center;
-  color: var(--red);
-  font-size: 10.5cqw;
-  line-height: 0.86;
-  text-decoration: none;
+  display: block;
+  color: var(--white);
+  font-family: var(--poster);
+  font-size: clamp(92px, 25vw, 440px);
+  font-weight: 400;
+  line-height: 0.82;
   white-space: nowrap;
+  -webkit-text-stroke: 0.012em var(--black);
+  paint-order: stroke fill;
+  text-shadow: 0.025em 0.025em 0 var(--red);
 }
-.mail:hover { color: var(--white); }
-/* Below the band: the invitation and links on the left, the form on the right. */
-.contact-low {
-  row-gap: 48px;
-  align-items: start;
-  padding-top: clamp(32px, 4vw, 56px);
+.ct-x {
+  display: inline-grid;
+  place-items: center;
+  width: 0.62em;
+  height: 1.06em;
+  margin-inline: 0.02em;
+  background: var(--red);
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: 0.7em;
+  line-height: 1;
+  vertical-align: 0.04em;
+  text-shadow: none;
+  -webkit-text-stroke: 0;
+  clip-path: polygon(8% 0, 100% 4%, 92% 100%, 0 95%);
+  transform: rotate(-6deg);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.contact-lead {
-  grid-column: 1 / span 6;
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ct-title:hover .ct-x { transform: rotate(84deg); }
+}
+
+.ct-body {
   display: grid;
-  gap: clamp(24px, 2.6vw, 36px);
-  align-content: start;
-  max-width: 34em;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: clamp(40px, 6vw, 112px);
+  margin-top: clamp(48px, 6vw, 96px);
+  padding-inline: var(--gutter);
 }
-.contact-invite {
-  font-size: clamp(22px, 1.9vw, 28px);
-  letter-spacing: -0.012em;
-  line-height: 1.3;
-  text-wrap: balance;
-}
-.contact-email {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 20px;
-}
-.contact-email > a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font-size: 14px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-transform: none;
-  overflow-wrap: anywhere;
-}
-.contact-email > a:hover { color: var(--red); }
+.ct-reach { display: grid; gap: clamp(28px, 3vw, 44px); align-content: start; }
+.ct-invite { max-width: 34em; font-family: var(--display); font-size: clamp(22px, 2vw, 32px); line-height: 1.2; text-transform: uppercase; }
+.ct-label { color: var(--red); }
+.ct-email { display: grid; gap: 10px; justify-items: start; }
+.ct-mail { font-family: var(--display); font-size: clamp(22px, 3vw, 48px); line-height: 1.1; overflow-wrap: anywhere; text-decoration: none; }
+.ct-mail:hover { color: var(--red); }
 .copy-email { min-height: 44px; font-size: 12px; }
-.channels a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  min-height: 52px;
-  text-decoration: none;
-  transition: color 0.2s ease;
+.ct-links { display: grid; gap: 18px; }
+.ct-links a { display: grid; gap: 4px; justify-items: start; text-decoration: none; }
+.ct-handle { display: inline-flex; align-items: center; gap: 14px; font-size: clamp(32px, 3.4vw, 60px); line-height: 0.95; transition: color 0.2s ease, translate 0.25s ease; }
+.ct-links a:hover .ct-handle { color: var(--red); translate: 8px 0; }
+.ct-links a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
+
+@media (max-width: 899px) {
+  .ct-body { grid-template-columns: minmax(0, 1fr); }
+  .ct-title { margin-top: 24px; }
 }
-.channels a:hover { color: var(--red); }
-.channel-handle {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: #9a9494;
-  text-transform: none;
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .ct-word { animation: ct-in linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+    @keyframes ct-in { from { opacity: 0; translate: -6% 0; } }
+  }
 }
-.channels a:hover .channel-handle { color: inherit; }
+
 .contact-form {
-  grid-column: 7 / -1;
   display: grid;
   gap: 22px;
-  padding-left: var(--gap);
-  border-left: 1px solid var(--white);
+  align-content: start;
+  padding: clamp(22px, 2.6vw, 36px);
+  border: 2px solid var(--white);
+  background: var(--black);
+  box-shadow: 12px 12px 0 var(--red);
 }
 .contact-form-title { color: var(--red); }
 .contact-form label {
@@ -147,11 +129,6 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .contact-submit:hover .sprite { transform: translate(3px, -3px); }
-}
-@media (max-width: 1023px) {
-  .contact-lead, .contact-form { grid-column: 1 / -1; }
-  .contact-lead { max-width: none; }
-  .contact-form { padding-left: 0; border-left: 0; }
 }
 
 /* Field help, errors and copy feedback. */

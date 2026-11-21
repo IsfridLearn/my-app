@@ -3,6 +3,7 @@ import type { ContactDetails } from "@/types";
 export const contact: ContactDetails = {
   lead: "A brand collaboration, a modeling inquiry or a web project: write to me.",
   email: "andreisanchez077@gmail.com",
+  resume: "/andrei-sanchez-resume.pdf",
   links: [
     { label: "GitHub", handle: "IsfridLearn", href: "https://github.com/IsfridLearn" },
     {

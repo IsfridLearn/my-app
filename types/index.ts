@@ -163,6 +163,8 @@ export type ContactDetails = {
   lead: string;
   email: string;
   links: Array<{ label: string; handle: string; href: string }>;
+  /** The resume PDF in public/, linked from the navigation. Leave empty to hide the link. */
+  resume: string;
 };
 
 /* ---------------------------------------------------------- Navigation */

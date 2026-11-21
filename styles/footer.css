@@ -2,16 +2,33 @@
 .foot {
   display: grid;
   gap: 40px;
-  padding: 24px var(--gutter) 28px;
-  border-top: 1px solid var(--white);
+  padding: clamp(40px, 5vw, 72px) var(--gutter) 28px;
+  background: #0d0c0c;
 }
+/* Last line: copyright, and a red tab back to the top. */
+.foot-end { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; }
+.to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 18px;
+  background: var(--red);
+  color: var(--white);
+  font-weight: 600;
+  text-decoration: none;
+  clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.to-top:hover { background: var(--white); color: var(--black); }
+.to-top:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
 .index {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--gap);
   row-gap: 8px;
 }
-.index > .file { grid-column: 1 / span 5; }
+.index > .file { grid-column: 1 / span 5; color: var(--red); }
 .index ul {
   grid-column: 6 / -1;
   columns: 2;
