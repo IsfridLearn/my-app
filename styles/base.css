@@ -1,8 +1,9 @@
 /* ------------------------------------------------------------------
    Two Prints. One person, printed dark and light.
    Black and white carry the page, with one red for poster headlines
-   and active links. Condensed poster type and script for display,
-   Plex Sans for reading, Plex Mono for labels, navigation and numbers.
+   and active links. League Gothic for the name and section titles,
+   Anton for headings and statements, Plex Sans for reading,
+   Plex Mono for labels, navigation and numbers.
    ------------------------------------------------------------------ */
 :root {
   --black: #080808;
@@ -18,7 +19,7 @@
   --sans: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
   --mono: var(--font-mono), ui-monospace, Consolas, monospace;
   --poster: var(--font-poster), "Arial Narrow", Impact, sans-serif;
-  --script: var(--font-script), "Snell Roundhand", cursive;
+  --display: var(--font-display), Impact, "Arial Narrow", sans-serif;
 }
 
 html {
@@ -110,9 +111,9 @@ b, strong { font-weight: 600; }
   white-space: nowrap;
 }
 
-/* Condensed poster type. Each use sets its own size and color. */
+/* Editorial grotesk: headings, titles and statements. Each use sets its own size and color. */
 .poster {
-  font-family: var(--poster);
+  font-family: var(--display);
   text-transform: uppercase;
 }
 

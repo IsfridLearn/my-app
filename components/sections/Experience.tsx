@@ -1,12 +1,8 @@
-import { ContentImage } from "@/components/ui/ContentImage";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { experience } from "@/data/experience";
 import { sectionHeadings } from "@/data/navigation";
-import { photos } from "@/data/photos";
 
 export function Experience() {
-  const { headshot } = photos;
-
   return (
     <section id="experience" className="spread exp" aria-labelledby="experience-title">
       <SectionHeading id="experience-title" {...sectionHeadings.experience} />
@@ -24,13 +20,6 @@ export function Experience() {
             ))}
           </ul>
         </div>
-
-        <figure id={headshot.id} className="exp-photo">
-          <ContentImage image={headshot} sizes="(max-width: 1023px) 80vw, 36vw" />
-          <figcaption className="file">
-            {headshot.file} {headshot.label}
-          </figcaption>
-        </figure>
       </div>
     </section>
   );

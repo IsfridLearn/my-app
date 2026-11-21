@@ -45,9 +45,11 @@
   z-index: 3;
   margin-top: -0.5em;
   padding-left: 0.6em;
-  font-family: var(--script);
-  font-size: clamp(44px, 6.4vw, 124px);
+  color: var(--white);
+  font-family: var(--display);
+  font-size: clamp(36px, 5vw, 96px);
   line-height: 1;
+  text-transform: uppercase;
 }
 .about-body {
   display: grid;

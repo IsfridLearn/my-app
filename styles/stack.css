@@ -18,9 +18,7 @@
   row-gap: 14px;
   align-items: center;
   padding-block: clamp(18px, 2vw, 30px);
-  border-top: 1px solid var(--white);
 }
-.stack-row:last-child { border-bottom: 1px solid var(--white); }
 .stack-meta {
   grid-column: 1 / span 4;
   display: grid;

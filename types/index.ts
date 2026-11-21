@@ -39,9 +39,8 @@ export type Profile = {
 export type HeroContent = {
   role: [string, string];
   lede: string[];
-  tags: string[];
-  label: string;
-  script: [string, string];
+  /** The statement under the first name, then a small technical descriptor. */
+  statement: { lines: [string, string]; descriptor: string };
   body: string;
   notes: Array<{ title: string; text: string; link: string; href: string }>;
 };
@@ -85,6 +84,12 @@ export type Project = {
   href?: string;
   /** Code link. Leave out for private repositories. */
   source?: string;
+  /** Real screenshots for Selected Work, the main one first. Leave empty to show the cover logo as a poster. */
+  shots: Shot[];
+  /** The colour of the project's spread in Selected Work. */
+  tone: "red" | "black" | "poster" | "white";
+  /** One line of technical notes for the spread's Spec column. Only what is true. */
+  spec: string;
 };
 
 /** A case-study screenshot, or a marked gap where one still needs to be added. */

@@ -10,36 +10,10 @@ export function caseStudyHref(project: Project): string {
   return `/work/${project.id}`;
 }
 
-// Add a project here and it appears on the page. Only write what is true.
+// Add a project here and it appears on the page, in this order: strongest first.
+// Only write what is true.
 // Each project also needs a case-study page in app/work/{id}.
 export const projects: Project[] = [
-  {
-    id: "dabashare",
-    title: "DabaShare",
-    category: "School project · Web app",
-    label: "Front-end prototype",
-    blurb:
-      "A skill-exchange site where students across Davao City universities can find tutors, trade skills and join study sessions.",
-    why: "Students who need help with a subject and students who can teach it have no shared place to find each other. I built this as my final project for a Human-Computer Interaction class.",
-    role: "A solo school project. I built the screens, the styling and the JavaScript.",
-    status:
-      "A front-end prototype. Sign-in is simulated, and the courses, matches and messages are sample data. There is no backend yet.",
-    choices: [
-      "I split the JavaScript into ES modules by feature: auth, courses, profile, messages and webinars, with one entry file wiring up navigation and events.",
-      "Shared values such as the active user and selected filters live in a single state module, so the features don't pass them around.",
-      "Course cards, match cards, webinars and conversations are rendered from data arrays instead of being written by hand in the HTML.",
-      "Navigation swaps views inside one page, and courses can be narrowed by search and by free or paid.",
-    ],
-    stack: ["HTML", "CSS", "JavaScript"],
-    cover: {
-      kind: "logo",
-      src: "/logos/dabashare.svg",
-      alt: "The DabaShare app icon",
-      width: 512,
-      height: 512,
-    },
-    source: "https://github.com/IsfridLearn/DabaShare-FinalProject",
-  },
   {
     id: "isfridia",
     title: "Isfridia",
@@ -69,6 +43,28 @@ export const projects: Project[] = [
     },
     href: "https://isfridia.vercel.app",
     source: "https://github.com/IsfridLearn/Isfridia",
+    tone: "red",
+    spec: "Next.js App Router · Supabase auth and storage · row-level security · cached public pages · official chapters only",
+    shots: [
+      {
+        src: "/photos/work-isfridia-home.webp",
+        alt: "Isfridia's homepage, with genre buttons and a Trending This Week row of manhwa covers",
+        width: 1802,
+        height: 917,
+      },
+      {
+        src: "/photos/work-isfridia-comic.webp",
+        alt: "A comic's page on Isfridia, with the cover, genres, synopsis and Start reading button",
+        width: 1790,
+        height: 895,
+      },
+      {
+        src: "/photos/work-isfridia-comics.webp",
+        alt: "Isfridia's Comics page, with filters above a grid of manhwa covers",
+        width: 1843,
+        height: 890,
+      },
+    ],
   },
   {
     id: "rentdavao",
@@ -91,7 +87,8 @@ export const projects: Project[] = [
       "Photos are shrunk on the phone and saved as text inside each listing.",
     ],
     stack: ["Java", "Android", "Firebase"],
-    status: "Version 1.0 of an Android app. The code is in a private repository.",
+    status:
+      "Version 1.0 of an Android app. The code is in a private repository.",
     cover: {
       kind: "logo",
       src: "/logos/rentdavao.svg",
@@ -100,18 +97,71 @@ export const projects: Project[] = [
       height: 705,
       caption: "Rent anything in Davao",
     },
+    tone: "poster",
+    spec: "Java on Android · Firebase accounts and Realtime Database · listings update live on every phone",
+    shots: [],
+  },
+  {
+    id: "dabashare",
+    title: "DabaShare",
+    category: "School project · Web app",
+    label: "Front-end prototype",
+    blurb:
+      "A skill-exchange site where students across Davao City universities can find tutors, trade skills and join study sessions.",
+    why: "Students who need help with a subject and students who can teach it have no shared place to find each other. I built this as my final project for a Human-Computer Interaction class.",
+    role: "A solo school project. I built the screens, the styling and the JavaScript.",
+    status:
+      "A front-end prototype. Sign-in is simulated, and the courses, matches and messages are sample data. There is no backend yet.",
+    choices: [
+      "I split the JavaScript into ES modules by feature: auth, courses, profile, messages and webinars, with one entry file wiring up navigation and events.",
+      "Shared values such as the active user and selected filters live in a single state module, so the features don't pass them around.",
+      "Course cards, match cards, webinars and conversations are rendered from data arrays instead of being written by hand in the HTML.",
+      "Navigation swaps views inside one page, and courses can be narrowed by search and by free or paid.",
+    ],
+    stack: ["HTML", "CSS", "JavaScript"],
+    cover: {
+      kind: "logo",
+      src: "/logos/dabashare.svg",
+      alt: "The DabaShare app icon",
+      width: 512,
+      height: 512,
+    },
+    source: "https://github.com/IsfridLearn/DabaShare-FinalProject",
+    tone: "black",
+    spec: "Plain HTML, CSS and JavaScript modules · one state module · cards rendered from data · simulated sign-in and sample data",
+    shots: [
+      {
+        src: "/photos/work-daba-courses.webp",
+        alt: "DabaShare's course page, with a search bar, price filters and a grid of student-run courses",
+        width: 1600,
+        height: 1000,
+      },
+      {
+        src: "/photos/work-daba-match.webp",
+        alt: "DabaShare's profile page, listing what a student can teach and wants to learn beside suggested matches",
+        width: 1600,
+        height: 1000,
+      },
+      {
+        src: "/photos/work-daba-messages.webp",
+        alt: "DabaShare's messages screen, with a conversation list beside an open chat",
+        width: 1600,
+        height: 1000,
+      },
+    ],
   },
   {
     id: "portfolio",
     title: "This portfolio",
     category: "Personal site",
     label: "Live",
-    blurb: "My personal site, designed as an archive of one person in two prints.",
+    blurb:
+      "My personal site, designed as an archive of one person in two prints.",
     why: "My first version leaned on template content and didn't say who I am. I wanted a site that introduces me, what I do and what I'm learning.",
     role: "I set the creative direction, chose the photos, supplied the facts and reviewed every change in the browser.",
     choices: [
       "The page is black, white and one red, with a poster headline for every section.",
-      "Condensed poster type and script carry names and personality, IBM Plex Sans carries the reading and IBM Plex Mono the labels.",
+      "League Gothic carries the name and section titles, Anton the headings and statements, IBM Plex Sans the reading and IBM Plex Mono the labels.",
       "Image details are reduced to 1-bit dither, the way early computers drew photographs, and jump to the real image on hover.",
       "All the text lives in dedicated content files, so updating the site never means touching components.",
     ],
@@ -124,5 +174,27 @@ export const projects: Project[] = [
       height: 1000,
     },
     source: "https://github.com/IsfridLearn/my-app",
+    tone: "white",
+    spec: "Next.js App Router · every word in content files · League Gothic, Anton and IBM Plex · one red",
+    shots: [
+      {
+        src: "/photos/work-portfolio.webp",
+        alt: "The opening screen of this portfolio, with the name Andrei Sanchez in red across a portrait",
+        width: 1600,
+        height: 1000,
+      },
+      {
+        src: "/photos/work-portfolio-light.webp",
+        alt: "The front page in the light print, with the portrait in a white suit",
+        width: 1600,
+        height: 1000,
+      },
+      {
+        src: "/photos/work-portfolio-work.webp",
+        alt: "The Selected Work section, showing one project as a cut-paper spread",
+        width: 1600,
+        height: 1000,
+      },
+    ],
   },
 ];

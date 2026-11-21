@@ -33,7 +33,7 @@ export const portfolioCase: CaseStudyContent = {
   techNote: "Built on the Next.js App Router. Fonts load through next/font and images through next/image.",
   direction: [
     "The page is black, white and one red, with a poster headline for every section.",
-    "Condensed poster type and script carry names and personality, IBM Plex Sans carries the reading and IBM Plex Mono the labels.",
+    "League Gothic carries the name and section titles, Anton the headings and statements, IBM Plex Sans the reading and IBM Plex Mono the labels.",
     "The same portrait is printed dark and light, and one button swaps between the two.",
     "Image details are reduced to 1-bit dither, the way early computers drew photographs, and jump to the real image on hover.",
   ],
@@ -45,13 +45,13 @@ export const portfolioCase: CaseStudyContent = {
     ),
     portfolioShot(
       "-work",
-      "The Selected Work section, with project cards stacked and tilted behind the front card",
-      "Selected Work, as a deck of project cards",
+      "The Selected Work section, showing one project as a cut-paper spread with its screenshots and details",
+      "Selected Work, one cut-paper spread per project",
     ),
   ],
   features: [
     "Print dark and print light: one button swaps the front-page portrait between the two prints",
-    "A deck of project cards, changed by clicking, by the buttons or with the arrow keys",
+    "Selected Work as cut-paper spreads, changed with the arrows, the arrow keys or a swipe",
     "A case-study page for every project",
     "Dithered contact sheet in Beyond the Screen, revealing each photo on hover",
     "Navigation that marks the section you are reading",

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { DropCap } from "@/components/ui/DropCap";
-import { ScriptOverlay } from "@/components/ui/SectionHeading";
 import { portraitArt, prints } from "@/data/photos";
 import { hero, profile } from "@/data/profile";
 
@@ -13,18 +12,13 @@ const interference = { src: "/photos/hero-interference.webp", alt: "", width: 12
 
 export function Hero() {
   const [print, setPrint] = useState<"dark" | "light">("dark");
-  // Each print change replays one burst of interference.
-  const [bursts, setBursts] = useState(0);
   const isLight = print === "light";
-  const togglePrint = () => {
-    setBursts((count) => count + 1);
-    setPrint(isLight ? "dark" : "light");
-  };
+  const togglePrint = () => setPrint(isLight ? "dark" : "light");
 
   return (
     <section id="home" className="intro" data-print={print} aria-labelledby="home-title">
       <div className="fp">
-        <HeroArt bursts={bursts} />
+        <HeroArt />
         <HeroCopy isLight={isLight} onTogglePrint={togglePrint} />
       </div>
     </section>
@@ -84,7 +78,7 @@ function useCursorDepth() {
   return ref;
 }
 
-function HeroArt({ bursts }: { bursts: number }) {
+function HeroArt() {
   const ref = useCursorDepth();
 
   return (
@@ -103,12 +97,11 @@ function HeroArt({ bursts }: { bursts: number }) {
       <span className="fp-splinter-w" aria-hidden="true" />
       <span className="fp-splinter" aria-hidden="true" />
 
-      {/* Signal interference over the background photographs, under the name. */}
-      <div key={bursts} className="fp-glitch" aria-hidden="true">
+      {/* Still signal interference over the background photographs, under the name. */}
+      <div className="fp-glitch" aria-hidden="true">
         <ContentImage className="fp-glitch-tex" image={interference} sizes="100vw" />
         <span className="fp-glitch-scan" />
       </div>
-
 
       <h1 id="home-title" className="name poster">
         <span className="sr-only">
@@ -126,8 +119,14 @@ function HeroArt({ bursts }: { bursts: number }) {
       <ContentImage className="fig fig-dark" image={prints.dark} sizes={PORTRAIT_SIZES} preload />
       <ContentImage className="fig fig-light" image={prints.light} sizes={PORTRAIT_SIZES} loading="eager" />
 
-      <ScriptOverlay className="fp-script" lead={hero.script[0]} word={hero.script[1]} />
-      <span className="fp-swash" aria-hidden="true" />
+      <p className="fp-statement">
+        <span className="fp-statement-main poster">
+          {hero.statement.lines[0]}
+          <br />
+          {hero.statement.lines[1]}
+        </span>
+        <span className="fp-statement-sub">{hero.statement.descriptor}</span>
+      </p>
 
       {/* Print details: crop marks, a strip of tiny type, a print bar, grain over everything. */}
       <span className="fp-crop fp-crop-tl" aria-hidden="true" />
@@ -211,13 +210,6 @@ function HeroCopy({ isLight, onTogglePrint }: HeroCopyProps) {
           <p key={paragraph}>{paragraph}</p>
         ))}
       </Paper>
-
-      <ul className="fp-copy fp-tags" aria-label="Technologies">
-        {hero.tags.map((tag) => (
-          <li key={tag}>/ {tag}</li>
-        ))}
-      </ul>
-      <p className="fp-copy fp-label">{hero.label}</p>
 
       <p className="fp-copy fp-body">
         <DropCap text={hero.body} />

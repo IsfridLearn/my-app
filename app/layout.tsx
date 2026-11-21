@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, League_Gothic, Pinyon_Script } from "next/font/google";
+import { Anton, IBM_Plex_Mono, IBM_Plex_Sans, League_Gothic } from "next/font/google";
 import { pageMetadata, siteUrl } from "@/data/site";
 import "./globals.css";
 
@@ -20,8 +20,9 @@ const poster = League_Gothic({
   subsets: ["latin"],
 });
 
-const script = Pinyon_Script({
-  variable: "--font-script",
+// Editorial grotesk for headings, titles and statements.
+const display = Anton({
+  variable: "--font-display",
   subsets: ["latin"],
   weight: "400",
 });
@@ -43,7 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${mono.variable} ${poster.variable} ${script.variable} h-full antialiased`}
+      className={`${sans.variable} ${mono.variable} ${poster.variable} ${display.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

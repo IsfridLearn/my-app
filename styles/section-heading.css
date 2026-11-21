@@ -5,36 +5,47 @@
   padding-inline: 1.6vw;
   container-type: inline-size;
 }
+/* The same lettering as ANDREI SANCHEZ: red, black outline, white then black offset. */
+.spread-title.poster, .beyond-title.poster {
+  font-family: var(--poster);
+  -webkit-text-stroke: 0.2cqw var(--black);
+  paint-order: stroke fill;
+  text-shadow: 0.4cqw 0.4cqw 0 var(--white), 0.65cqw 0.65cqw 0 var(--black);
+}
 .spread-title {
   position: relative;
   z-index: 3;
   color: var(--red);
-  font-size: var(--title, 20cqw);
+  font-size: var(--title, 12cqw);
   font-weight: 400;
   letter-spacing: 0.002em;
   line-height: 0.86;
   white-space: nowrap;
 }
-/* White script laid across a headline. Used by the front page and every section. */
-.fp-script, .spread-script {
-  left: 3cqw;
-  z-index: 6;
-  color: var(--white);
-  font-family: var(--script);
-  font-size: 8cqw;
-  line-height: 0.74;
-}
-.fp-script span, .spread-script span {
-  display: block;
-  padding-left: 6cqw;
-}
+/* A red technical tag across the headline, like the one under the hero statement. */
 .spread-script {
   position: absolute;
-  bottom: -3.4cqw;
+  bottom: -1.4cqw;
+  left: 3cqw;
+  z-index: 6;
+  padding: 0.5em 0.9em;
+  background: var(--red);
+  color: var(--white);
+  font: 500 clamp(11px, 1.05cqw, 16px)/1.2 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 var(--black);
+  transform: rotate(-2deg);
 }
 .spread-right { text-align: right; }
 .spread-right .spread-script {
   right: 3cqw;
   left: auto;
   text-align: left;
+}
+
+/* Small screens: the tag sits under the headline instead of across it. */
+@media (max-width: 700px) {
+  .spread-head .spread-script { position: relative; bottom: auto; left: auto; display: inline-block; margin: 10px 0 0 4px; }
+  .spread-right .spread-script { right: auto; }
 }

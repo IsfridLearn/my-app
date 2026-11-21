@@ -77,8 +77,6 @@
 }
 .contact-email > a:hover { color: var(--red); }
 .copy-email { min-height: 44px; font-size: 12px; }
-.channels { border-bottom: 1px solid var(--white); }
-.channels li { border-top: 1px solid var(--white); }
 .channels a {
   display: flex;
   justify-content: space-between;

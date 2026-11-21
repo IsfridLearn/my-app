@@ -20,7 +20,7 @@
   left: 1.6vw;
   z-index: 3;
   color: var(--red);
-  font-size: 15.4vw;
+  font-size: 10vw;
   font-weight: 400;
   line-height: 0.86;
   text-align: center;
@@ -30,9 +30,7 @@
   top: 6vw;
   bottom: auto;
   left: 3vw;
-  font-size: 8vw;
 }
-.beyond-script span { padding-left: 5vw; }
 .plate { display: grid; gap: 10px; }
 .plate img { width: 100%; height: auto; }
 .beyond-top { align-items: end; padding-top: clamp(40px, 5vw, 80px); }
@@ -83,11 +81,10 @@
   justify-content: space-between;
   gap: 24px;
   padding: clamp(6px, 0.8vw, 12px) var(--gutter) clamp(4px, 0.6vw, 10px);
-  border-top: 1px solid var(--white);
-  font-size: clamp(60px, 12.4vw, 230px);
+  font-size: clamp(38px, 12.4vw, 230px);
   line-height: 0.94;
+  overflow-wrap: anywhere;
 }
-.titles li:last-child { border-bottom: 1px solid var(--white); }
 .ledger-year { color: var(--red); }
 .brands-row { align-items: end; padding-block: clamp(64px, 8vw, 128px) clamp(72px, 9vw, 144px); }
 .plate-stage { grid-column: 1 / span 4; margin-left: calc(var(--gutter) * -1); }
@@ -100,7 +97,6 @@
   justify-content: space-between;
   gap: 4px 24px;
   padding-block: 8px 8px;
-  border-top: 1px solid var(--white);
   font-size: clamp(36px, 4.2vw, 76px);
   line-height: 1;
 }
@@ -182,7 +178,23 @@
   object-fit: contain;
 }
 .lightbox-nav { display: flex; justify-content: center; gap: 16px; }
-.lightbox-nav .deck-button { color: var(--white); }
+/* Arrow pills either side of the photo counter. */
+.deck-button {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 44px;
+  border: 1px solid var(--white);
+  border-radius: 999px;
+  background: var(--black);
+  color: var(--white);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.deck-button:hover { border-color: var(--red); background: var(--red); }
+.deck-button:active { transform: translateY(1px); }
 
 @media (prefers-reduced-motion: no-preference) {
   .lightbox[open] { animation: lightbox-in 0.2s ease; }

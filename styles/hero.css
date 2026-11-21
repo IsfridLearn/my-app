@@ -2,57 +2,64 @@
 /* A cut-paper poster: torn white paper and a red shard behind the suit portrait,
    the name inked over them, every text block a pasted clipping. */
 .intro {
+  --nav-space: 58px;
   position: relative;
+  padding-top: var(--nav-space);
+  overflow: hidden;
   background: var(--black);
   color: var(--white);
 }
 .fp {
+  /* How far the left and right columns sit out from the portrait, toward the screen edges. */
+  --push: 3cqw;
   position: relative;
   max-width: 1920px;
+  /* On desktop the whole poster fits the window below the nav: limited by height as well as width. */
+  width: min(100%, calc((100svh - var(--nav-space)) * 1440 / 900));
   margin-inline: auto;
-  overflow: hidden;
+  overflow: visible;
   container-type: inline-size;
 }
 .fp-art {
-  --fx: 32.4cqw;
-  --fy: 20.6cqw;
-  --fw: 38.6cqw;
+  --fx: 30.5cqw;
+  --fy: 10.5cqw;
+  --fw: 39cqw;
   position: relative;
-  overflow: hidden;
-  aspect-ratio: 1440 / 1010;
+  overflow: visible;
+  aspect-ratio: 1440 / 900;
 }
 .fp-art > * { position: absolute; }
 .fp-art img { max-width: none; height: auto; }
 
 /* ------------------------------------------------------------ Backdrop */
 .fp-rays {
-  inset: 0;
+  inset: -6cqw -60cqw;
   z-index: 0;
   background: repeating-conic-gradient(from 8deg at 52% 44%, #161616 0deg 5deg, transparent 5deg 13deg, #111 13deg 15deg, transparent 15deg 24deg);
   mask-image: radial-gradient(ellipse 60% 75% at 52% 44%, #000 20%, transparent 75%);
 }
 .fp-dots {
-  inset: 0;
+  inset: -6cqw -60cqw;
   z-index: 0;
   background: radial-gradient(circle, rgb(245 245 245 / 0.09) 0.85px, transparent 1.15px) 0 0 / 0.6cqw 0.6cqw;
   mask-image: linear-gradient(115deg, #000 0%, transparent 30%, transparent 70%, #000 100%);
 }
-.fp-ghost { top: 4cqw; z-index: 1; width: 31cqw; opacity: 0.38; filter: contrast(1.25); }
-.fp-ghost-l { left: -7cqw; clip-path: polygon(0 0, 92% 4%, 80% 100%, 0 96%); }
-.fp-ghost-r { top: 2cqw; right: -7cqw; clip-path: polygon(10% 3%, 100% 0, 100% 100%, 22% 92%); }
+.fp-ghost { top: 0; z-index: 1; width: 52cqw; opacity: 0.38; filter: contrast(1.25); }
+.fp-ghost-l { left: -34cqw; clip-path: polygon(0 0, 92% 4%, 80% 100%, 0 96%); }
+.fp-ghost-r { top: 0; right: -34cqw; clip-path: polygon(10% 3%, 100% 0, 100% 100%, 22% 92%); }
 .fp-stain { bottom: 0; z-index: 1; }
 .fp-stain-l { left: 0; width: 38cqw; }
 .fp-stain-r { right: 0; width: 26cqw; transform: scaleX(-1); }
 
 /* Torn white paper, then the red shard: solid at the top, breaking into halftone below. */
-.fp-tear-white, .fp-tear-red { top: -3cqw; width: 50cqw; height: 76cqw; z-index: 2; }
+.fp-tear-white, .fp-tear-red { top: -3cqw; width: 40cqw; height: 68cqw; z-index: 2; }
 .fp-tear-white {
-  left: 26cqw;
+  left: 30.5cqw;
   background: var(--white);
   clip-path: polygon(46% 0, 100% 0, 97% 6%, 99% 7%, 82% 34%, 85% 35%, 64% 66%, 67% 67%, 52% 100%, 6% 100%, 9% 95%, 5% 94%, 22% 58%, 18% 57%, 34% 25%, 31% 24%);
 }
 .fp-tear-red {
-  left: 26.8cqw;
+  left: 31.2cqw;
   background: radial-gradient(circle, rgb(8 8 8 / 0.32) 33%, transparent 36%) 0 0 / 0.95cqw 0.95cqw, var(--red);
   clip-path: polygon(48% 0, 98% 0, 95% 6%, 97% 7%, 80% 34%, 83% 35%, 62% 66%, 65% 67%, 50% 100%, 8% 100%, 11% 95%, 7% 94%, 24% 58%, 20% 57%, 36% 25%, 33% 24%);
 }
@@ -61,33 +68,34 @@
   position: absolute;
   inset: 0;
   background: var(--red);
-  mask-image: linear-gradient(180deg, #000 30%, transparent 70%);
+  mask-image: linear-gradient(180deg, #000 12%, transparent 48%);
 }
 .fp-splinter, .fp-splinter-w { z-index: 3; clip-path: polygon(70% 0, 100% 4%, 26% 100%, 0 97%); }
-.fp-splinter { top: 6cqw; left: 72cqw; width: 6cqw; height: 22cqw; background: var(--red); }
-.fp-splinter-w { top: 5.4cqw; left: 71.4cqw; width: 7.2cqw; height: 23.2cqw; background: var(--white); }
+.fp-splinter { top: 2cqw; left: calc(70cqw + var(--push)); width: 5cqw; height: 14cqw; background: var(--red); }
+.fp-splinter-w { top: 1.5cqw; left: calc(69.5cqw + var(--push)); width: 6cqw; height: 15cqw; background: var(--white); }
 
 /* Red square portrait, pinned with a white border. */
 .fp-square {
-  top: 24cqw;
-  left: 82.5cqw;
+  top: 10.5cqw;
+  left: calc(65cqw + var(--push));
   z-index: 7;
-  width: 9.6cqw;
+  width: 8cqw;
   border: 0.4cqw solid var(--white);
   transform: rotate(-7deg);
   filter: drop-shadow(0.4cqw 0.4cqw 0 var(--black));
 }
 
 /* ------------------------------------------------------------ Name and portrait */
+.name.poster { font-family: var(--poster); }
 .name {
-  top: 32.6cqw;
-  right: 1.4cqw;
-  left: 1.4cqw;
+  top: 21.5cqw;
+  right: calc(1.8cqw - var(--push));
+  left: calc(1.8cqw - var(--push));
   z-index: 4;
   display: flex;
   justify-content: space-between;
   color: var(--red);
-  font-size: 17.4cqw;
+  font-size: 14.8cqw;
   font-weight: 400;
   letter-spacing: 0.002em;
   line-height: 0.86;
@@ -98,16 +106,16 @@
 }
 .name-1, .name-2 { position: relative; display: inline-block; }
 .name-2 { transform: rotate(-1.6deg) translateY(-0.4cqw); transform-origin: left bottom; }
-/* A displaced copy of each word, shown only during a glitch burst. */
+/* A still, displaced slice of each word: a printed glitch, not a moving one. */
 .name-1::after, .name-2::after {
   content: attr(data-text);
   position: absolute;
   inset: 0;
-  opacity: 0;
   pointer-events: none;
 }
-.name-1::after { clip-path: inset(36% 0 50% 0); transform: translateX(1.4cqw); }
-.name-2::after { clip-path: inset(62% 0 26% 0); transform: translateX(-1.1cqw); }
+.name-1::after, .name-2::after { text-shadow: none; }
+.name-1::after { clip-path: inset(41% 0 55.5% 0); transform: translateX(0.7cqw); }
+.name-2::after { clip-path: inset(66% 0 31% 0); transform: translateX(-0.6cqw); }
 
 .fp-outline {
   top: calc(var(--fy) - var(--fw) * 0.0534);
@@ -129,25 +137,32 @@
 }
 .intro[data-print="dark"] .fig-light, .intro[data-print="light"] .fig-dark { display: none; }
 
-.fp-script { top: 45cqw; z-index: 7; text-shadow: 0 0.3cqw 1.2cqw rgb(0 0 0 / 0.8); }
-/* A torn red brush stroke under "art meets code". */
-.fp-swash {
-  top: 56.2cqw;
-  left: 8.4cqw;
-  z-index: 7;
-  width: 27cqw;
-  height: 1.7cqw;
+/* The statement under the first name: editorial grotesk, then a technical line. */
+.fp-statement { top: 34.6cqw; left: calc(2.6cqw - var(--push)); z-index: 7; display: grid; gap: 0.7cqw; }
+.fp-statement-main {
+  color: var(--white);
+  font-size: 2.8cqw;
+  letter-spacing: 0.01em;
+  line-height: 0.98;
+  text-shadow: 0.25cqw 0.25cqw 0 var(--black);
+}
+.fp-statement-sub {
+  justify-self: start;
+  padding: 0.35cqw 0.7cqw;
   background: var(--red);
-  clip-path: polygon(0 62%, 30% 40%, 31% 52%, 70% 18%, 71% 30%, 100% 0, 97% 44%, 64% 70%, 63% 58%, 26% 86%, 25% 76%, 2% 100%);
+  color: var(--white);
+  font: 500 max(0.85cqw, 11px)/1.2 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 /* ------------------------------------------------------------ Print details */
 .fp-crop { z-index: 8; width: 2.2cqw; height: 2.2cqw; border: 0 solid #8f8a86; }
-.fp-crop-tl { top: 5.4cqw; left: 1cqw; border-width: 1px 0 0 1px; }
+.fp-crop-tl { top: 1cqw; left: 1cqw; border-width: 1px 0 0 1px; }
 .fp-crop-br { right: 1cqw; bottom: 1cqw; border-width: 0 1px 1px 0; }
 .fp-strip {
-  top: 30cqw;
-  left: 0.7cqw;
+  top: 19cqw;
+  left: calc(0.7cqw - var(--push));
   z-index: 8;
   color: #8f8a86;
   font: 500 max(0.72cqw, 7px)/1 var(--mono);
@@ -158,7 +173,7 @@
 }
 .fp-strip b { color: var(--red); font-weight: 500; }
 .fp-bar {
-  top: 34.6cqw;
+  top: 19cqw;
   right: 2.6cqw;
   z-index: 3;
   width: 9cqw;
@@ -167,7 +182,7 @@
   opacity: 0.6;
 }
 .fp-grain {
-  inset: 0;
+  inset: -6cqw -60cqw;
   z-index: 9;
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   opacity: 0.1;
@@ -189,7 +204,7 @@
   background: var(--red);
   color: var(--white);
   box-shadow: 0.35cqw 0.35cqw 0 var(--black);
-  font: 400 max(2.2cqw, 18px)/1 var(--poster);
+  font: 400 max(2.2cqw, 18px)/1 var(--display);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   transform: rotate(-7deg) skewX(-12deg);
@@ -204,10 +219,9 @@
   line-height: 1.42;
 }
 .fp-corner {
-  /* Just below the fixed nav bar. */
-  top: 66px;
-  left: var(--gutter);
-  width: 23cqw;
+  top: 2.2cqw;
+  left: calc(2.2cqw - var(--push));
+  width: 21cqw;
   --cut: polygon(0 4%, 100% 0, 97% 100%, 2% 94%);
   transform: rotate(-3deg);
 }
@@ -215,7 +229,8 @@
 .fp-id b {
   display: block;
   color: var(--red);
-  font: 400 max(2.9cqw, 22px)/0.95 var(--poster);
+  font: 400 max(2.3cqw, 18px)/1 var(--display);
+  white-space: nowrap;
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
@@ -226,9 +241,9 @@
   text-transform: uppercase;
 }
 .fp-lede {
-  top: 7.4cqw;
-  right: 2.2cqw;
-  width: 23.5cqw;
+  top: 3.6cqw;
+  right: calc(2.4cqw - var(--push));
+  width: 23cqw;
   --cut: polygon(3% 0, 100% 3%, 98% 100%, 0 96%);
   transform: rotate(2.4deg);
 }
@@ -238,43 +253,34 @@
   padding: 2.2cqw 1.7cqw 1.7cqw;
   font: max(1cqw, 12px)/1.45 var(--sans);
 }
-.fp-tags, .fp-label {
-  font-family: var(--mono);
-  font-size: max(0.85cqw, 11px);
-  letter-spacing: 0.06em;
-  line-height: 1.75;
-  text-transform: uppercase;
-}
-.fp-tags { top: 19cqw; left: 3cqw; }
-.fp-label { top: 19cqw; left: 19cqw; letter-spacing: 0.1em; }
 .fp-body {
-  top: 47cqw;
-  right: 2.2cqw;
-  width: 23cqw;
-  font-size: max(1.06cqw, 12px);
+  top: 35.6cqw;
+  right: calc(2.4cqw - var(--push));
+  width: 29cqw;
+  font-size: max(0.95cqw, 12px);
   line-height: 1.42;
 }
 .fp-body .drop-cap { -webkit-text-stroke: 0.15cqw var(--white); paint-order: stroke fill; }
 
-.fp-note { top: 56.6cqw; }
+.fp-note { top: auto; bottom: 1.4cqw; }
 .fp-note .paper-ink { display: grid; gap: 0.3cqw; padding: 0.9cqw 1.3cqw 1.1cqw; }
-.fp-note-1 { left: 2cqw; width: 16.5cqw; --cut: polygon(0 0, 100% 7%, 97% 100%, 1% 96%); transform: rotate(-1.5deg); }
-.fp-note-2 { left: 20cqw; width: 16.5cqw; --cut: polygon(2% 6%, 100% 0, 99% 92%, 0 100%); transform: rotate(1.2deg) translateY(-0.8cqw); }
+.fp-note-1 { left: calc(2.2cqw - var(--push)); width: 14cqw; --cut: polygon(0 0, 100% 7%, 97% 100%, 1% 96%); transform: rotate(-1.5deg); }
+.fp-note-2 { left: calc(17.6cqw - var(--push)); width: 13.6cqw; --cut: polygon(2% 6%, 100% 0, 99% 92%, 0 100%); transform: rotate(1.2deg) translateY(-0.8cqw); }
 .fp-note-2.paper { filter: drop-shadow(-0.5cqw 0.5cqw 0 var(--black)); }
 .fp-note-2 .paper-ink { background: var(--char); }
-.fp-note-3 { left: 63cqw; width: 17.5cqw; --cut: polygon(0 4%, 97% 0, 100% 100%, 3% 95%); transform: rotate(-1deg); }
+.fp-note-3 { left: calc(68.6cqw + var(--push)); width: 16cqw; --cut: polygon(0 4%, 97% 0, 100% 100%, 3% 95%); transform: rotate(-1deg); }
 .fp-num {
   color: var(--red);
-  font: 400 max(2.6cqw, 22px)/0.85 var(--poster);
+  font: 400 max(2.4cqw, 20px)/0.85 var(--poster);
 }
 .fp-note-2 .fp-num { color: var(--white); }
 .fp-note h2 {
-  font-size: max(1.35cqw, 16px);
+  font-size: max(1.3cqw, 14px);
   font-weight: 600;
   letter-spacing: -0.012em;
   line-height: 1.15;
 }
-.fp-note .fp-copy { font-size: max(0.9cqw, 12px); color: #d9d4d0; }
+.fp-note .fp-copy { font-size: max(0.85cqw, 11px); color: #d9d4d0; }
 .fp-note a {
   display: inline-block;
   margin-top: 0.3cqw;
@@ -295,8 +301,9 @@
 .fp-note a::after { content: " \2192"; }
 .fp-note a:hover { color: var(--red); }
 .fp-print {
-  top: 61.8cqw;
-  right: 2.2cqw;
+  top: auto;
+  bottom: 2.4cqw;
+  right: calc(2.4cqw - var(--push));
   padding: 0.8cqw 1.5cqw;
   border: 0;
   background: var(--white);
@@ -313,14 +320,11 @@
 /* ------------------------------------------------------------ Glitch layer */
 .fp-glitch { inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
 .fp-glitch > * { position: absolute; }
-.fp-glitch-tex { inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; opacity: 0; }
+/* Everything here is still: a faint interference print and fixed scanlines. */
+.fp-glitch-tex { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 40% 30%; mix-blend-mode: screen; opacity: 0.12; }
 .fp-glitch-scan {
-  top: -12%;
-  right: 0;
-  left: 0;
-  height: 10%;
-  background: repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 3px);
-  opacity: 0;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4px);
 }
 
 /* Cursor depth: nearer layers move more. Uses translate so it never fights the entrance. */
@@ -328,22 +332,40 @@
 .fp-outline { translate: calc(var(--mx, 0) * 0.55cqw) calc(var(--my, 0) * 0.4cqw); }
 .fig { translate: calc(var(--mx, 0) * 0.9cqw) calc(var(--my, 0) * 0.6cqw); }
 
+/* Short laptop screens: the poster is narrow, so the minimum text sizes make the cards
+   relatively taller. Tighten the bottom row so nothing collides. */
+@media (min-width: 1100px) {
+  @container (max-width: 1150px) {
+    .fp-body { top: 35.2cqw; width: 30.5cqw; font-size: 11.5px; line-height: 1.38; }
+    .fp-lede .paper-ink { gap: 0.6cqw; padding: 1.9cqw 1.5cqw 1.4cqw; font-size: 11.5px; line-height: 1.38; }
+    .fp-note .paper-ink { gap: 1px; padding: 0.7cqw 1.1cqw 0.8cqw; }
+    .fp-note .fp-copy { font-size: 10.5px; line-height: 1.35; }
+    .fp-note h2 { font-size: 13px; }
+    .fp-num { font-size: 18px; }
+    .fp-note a { padding-block: 3px; }
+  }
+}
+
 /* ------------------------------------------------------------ Phones and tablets */
 @media (max-width: 1099px) {
+  .fp { --push: 0cqw; }
+  .fp, .fp-art { width: 100%; overflow: hidden; }
   .fp-art {
     --fx: 20cqw;
     --fy: 26cqw;
     --fw: 50cqw;
     aspect-ratio: 100 / 100;
   }
-  .fp-ghost, .fp-square, .fp-stain-r, .fp-label, .fp-splinter, .fp-splinter-w,
-  .fp-strip, .fp-bar, .fp-crop, .fp-swash { display: none; }
+  .fp-ghost, .fp-square, .fp-stain-r, .fp-splinter, .fp-splinter-w,
+  .fp-strip, .fp-bar, .fp-crop { display: none; }
   .fp-stain-l { width: 70cqw; }
   .fp-tear-white, .fp-tear-red { top: 0; width: 80cqw; height: 104cqw; }
   .fp-tear-white { left: 8cqw; }
   .fp-tear-red { left: 9.4cqw; }
   .name { top: 36cqw; }
-  .fp-script { top: 59cqw; left: 3cqw; font-size: 11cqw; }
+  .fp-statement { top: 59cqw; left: 3cqw; gap: 2cqw; }
+  .fp-statement-main { font-size: 6.4cqw; }
+  .fp-statement-sub { padding: 1cqw 2cqw; font-size: 11px; }
   .fp-text {
     display: grid;
     gap: 32px;
@@ -356,7 +378,6 @@
   .paper-tab { top: -14px; left: 12px; padding: 4px 12px 5px; box-shadow: 3px 3px 0 var(--black); }
   .fp-copy { font-size: 15px; line-height: 1.55; }
   .fp-body { font-size: 16px; line-height: 1.55; }
-  .fp-tags { font-size: 12px; }
   .fp-note .fp-copy { font-size: 14px; }
   .fp-note h2 { font-size: 18px; }
   .fp-print { justify-self: start; padding: 10px 16px; font-size: 12px; }
@@ -364,13 +385,8 @@
 
 /* ------------------------------------------------------------ Entrance and idle motion */
 /* About 2.5 seconds, once: paper tears in, the portrait rises, the name slams in,
-   the script writes itself, the clippings paste on. Then occasional glitch bursts.
+   the statement and the clippings paste on. Nothing loops afterwards; the glitch graphics are still.
    With reduced motion none of this runs and the hero is simply there. */
-@property --pen {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 120%;
-}
 @media (prefers-reduced-motion: no-preference) {
   .fp-tear-white { animation: tear-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s both; }
   .fp-tear-red { animation: tear-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both; }
@@ -395,26 +411,8 @@
     from { clip-path: inset(-20% 100% -20% 0); transform: translateX(-0.25em) skewX(-14deg); }
     to { clip-path: inset(-20% -20% -20% 0); transform: none; }
   }
-  .name { animation: name-jolt 0.24s steps(2, end) 1.5s both; }
-  @keyframes name-jolt {
-    0% { translate: 0.8cqw 0; }
-    50% { translate: -0.5cqw 0; }
-    100% { translate: 0 0; }
-  }
 
-  .fp-script {
-    --pen: 120%;
-    mask-image: linear-gradient(100deg, #000 calc(var(--pen) - 12%), transparent var(--pen));
-    animation: script-write 1.1s cubic-bezier(0.45, 0.05, 0.3, 1) 1.4s both;
-  }
-  @keyframes script-write {
-    from { --pen: 0%; }
-    to { --pen: 120%; }
-  }
-  .fp-swash { animation: swash-in 0.45s ease-out 2.2s both; }
-  @keyframes swash-in {
-    from { clip-path: polygon(0 62%, 0 62%, 0 100%, 0 100%); }
-  }
+  .fp-statement { animation: paste 0.45s cubic-bezier(0.2, 0.9, 0.2, 1.2) 1.45s both; }
 
   .fp-text > .paper, .fp-square, .fp-print { animation: paste 0.45s cubic-bezier(0.2, 0.9, 0.2, 1.2) both; }
   .fp-corner { animation-delay: 1.1s; }
@@ -427,49 +425,5 @@
   @keyframes paste {
     from { opacity: 0; translate: -3cqw 2cqw; scale: 1.08; }
     to { opacity: 1; translate: 0 0; scale: 1; }
-  }
-
-  /* Idle: the interference bursts, the glitch panels jump, a slice of the name slips. */
-  .fp-glitch-tex { animation: glitch-intro 0.7s steps(1, end) both, glitch-idle 9.7s steps(1, end) 3.4s infinite; }
-  .fp-glitch-scan { animation: scan-sweep 0.6s linear 0.05s both, scan-idle 13.3s linear 5.2s infinite; }
-  @keyframes glitch-intro {
-    0% { opacity: 0.7; object-position: 0 0; }
-    15% { opacity: 0.25; object-position: 30% 40%; }
-    30% { opacity: 0.55; object-position: 70% 10%; }
-    45% { opacity: 0.15; object-position: 10% 80%; }
-    60% { opacity: 0.4; object-position: 50% 60%; }
-    80%, 100% { opacity: 0; }
-  }
-  @keyframes glitch-idle {
-    0%, 23%, 25.6%, 70%, 71.6%, 100% { opacity: 0; }
-    23.4% { opacity: 0.45; object-position: 20% 30%; }
-    24.2% { opacity: 0.2; object-position: 80% 70%; }
-    25% { opacity: 0.35; object-position: 40% 10%; }
-    70.4% { opacity: 0.3; object-position: 60% 90%; }
-    71% { opacity: 0.5; object-position: 0% 50%; }
-  }
-  @keyframes scan-sweep {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 1; transform: translateY(1200%); }
-  }
-  @keyframes scan-idle {
-    0%, 41% { opacity: 0; transform: translateY(0); }
-    41.2% { opacity: 1; transform: translateY(0); }
-    45% { opacity: 1; transform: translateY(1200%); }
-    45.2%, 100% { opacity: 0; transform: translateY(1200%); }
-  }
-  .fp-ghost-l { animation: ghost-jump 7.9s steps(1, end) 2.6s infinite; }
-  .fp-ghost-r { animation: ghost-jump 12.7s steps(1, end) 6.3s infinite reverse; }
-  @keyframes ghost-jump {
-    0%, 60%, 61.5%, 100% { transform: none; }
-    60.3% { transform: translateX(1.4cqw); }
-    60.9% { transform: translateX(-0.8cqw); }
-  }
-  .name-1::after { animation: name-tear 8.3s steps(1, end) 4.4s infinite; }
-  .name-2::after { animation: name-tear 11.9s steps(1, end) 7.1s infinite; }
-  @keyframes name-tear {
-    0%, 52%, 53.6%, 100% { opacity: 0; }
-    52.2% { opacity: 1; }
-    52.9% { opacity: 0.6; }
   }
 }
