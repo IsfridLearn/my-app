@@ -1,67 +1,56 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import Link from "next/link";
 import { contact } from "@/data/contact";
 import { navSections } from "@/data/navigation";
 import { useActiveSection } from "@/hooks/useActiveSection";
 
-const TRACKED_SECTION_IDS = ["home", ...navSections.map((section) => section.id)];
+const commands = [{ id: "home", label: "Home" }, ...navSections];
+const TRACKED_SECTION_IDS = commands.map((command) => command.id);
 const pad = (value: number) => String(value).padStart(2, "0");
-// Wider than this, the links sit in the bar and the menu button is hidden.
-const DESKTOP_QUERY = "(min-width: 1100px)";
 
 type NavProps = {
-  /** Highlights this link instead of following the scroll position. */
+  /** Highlights this command instead of following the scroll position. */
   active?: string;
-  /** "/" on other pages, so section links lead back to the homepage. */
+  /** "/" on other pages, so commands lead back to the homepage. */
   base?: string;
 };
 
+/**
+ * The command menu: a box in the top-left corner that bursts into one slab per
+ * section, stepped down and fanned out. Number keys choose a command while it is
+ * open; Escape or a click outside closes it.
+ */
 export function Nav({ active, base = "" }: NavProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [compact, setCompact] = useState(false);
+  const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
-  const toggleRef = useRef<HTMLButtonElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
   const scrolledSection = useActiveSection(TRACKED_SECTION_IDS);
   const currentSection = active ?? scrolledSection;
-  const closeMenu = () => setMenuOpen(false);
+  const currentIndex = Math.max(0, commands.findIndex((command) => command.id === currentSection));
+  const resume = contact.resume.trim();
 
-  const activeIndex = navSections.findIndex((section) => section.id === currentSection);
-  const activeLabel = activeIndex >= 0 ? navSections[activeIndex].label : "Cover";
+  const close = (returnFocus: boolean) => {
+    setOpen(false);
+    if (returnFocus) triggerRef.current?.focus();
+  };
 
-  // While the phone menu is open: lock the page behind it, move focus into it,
-  // close it with Escape or when the window grows to desktop width.
+  // While open: focus the current command; close on a click outside.
   useEffect(() => {
-    if (!menuOpen) return;
-
-    const root = document.documentElement;
-    const previousOverflow = root.style.overflow;
-    root.style.overflow = "hidden";
-    menuRef.current?.querySelector<HTMLElement>("a")?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-        toggleRef.current?.focus();
-      }
+    if (!open) return;
+    listRef.current?.querySelectorAll<HTMLElement>(".cmd")[currentIndex]?.focus({ preventScroll: true });
+    const handlePointer = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setOpen(false);
     };
-    const desktop = window.matchMedia(DESKTOP_QUERY);
-    const handleResize = () => {
-      if (desktop.matches) setMenuOpen(false);
-    };
+    document.addEventListener("pointerdown", handlePointer);
+    return () => document.removeEventListener("pointerdown", handlePointer);
+    // Focus only when opening, not when the section changes underneath.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
-    window.addEventListener("keydown", handleKeyDown);
-    desktop.addEventListener("change", handleResize);
-    return () => {
-      root.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-      desktop.removeEventListener("change", handleResize);
-    };
-  }, [menuOpen]);
-
-  // The bar tightens once the page has scrolled, and its red line shows how far down you are.
+  // A thin red line along the top edge shows how far down the page you are.
   useEffect(() => {
     let frame = 0;
     const update = () => {
@@ -70,8 +59,6 @@ export function Nav({ active, base = "" }: NavProps) {
       const scrollable = root.scrollHeight - root.clientHeight;
       const progress = scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
       headerRef.current?.style.setProperty("--progress", progress.toFixed(4));
-      headerRef.current?.style.setProperty("--nav-h", `${headerRef.current.offsetHeight}px`);
-      setCompact(window.scrollY > 40);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -86,76 +73,78 @@ export function Nav({ active, base = "" }: NavProps) {
     };
   }, []);
 
-  const classes = ["nav", menuOpen && "nav-open", compact && "nav-compact"].filter(Boolean).join(" ");
-  const socials = [
-    ...(contact.email.trim() !== "" ? [{ label: "Email", href: `mailto:${contact.email}`, external: false }] : []),
-    ...contact.links.map((link) => ({ label: link.label, href: link.href, external: true })),
-    ...(contact.resume.trim() !== "" ? [{ label: "Resume", href: contact.resume, external: true }] : []),
-  ];
+  // Escape closes; arrows move between commands; number keys choose one.
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (!open) return;
+    const items = [...(listRef.current?.querySelectorAll<HTMLAnchorElement>(".cmd") ?? [])];
+    const at = items.indexOf(document.activeElement as HTMLAnchorElement);
+    if (event.key === "Escape") {
+      event.preventDefault();
+      close(true);
+    } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      const step = event.key === "ArrowDown" ? 1 : -1;
+      items[(at + step + items.length) % items.length]?.focus();
+    } else if (/^[1-9]$/.test(event.key) && Number(event.key) <= items.length) {
+      event.preventDefault();
+      items[Number(event.key) - 1].click();
+    }
+  };
 
   return (
-    <header ref={headerRef} className={classes}>
-      <p className="nav-count">
-        <span className="nav-count-num">{pad(activeIndex + 1)}</span>
-        <span className="nav-count-total"> / {pad(navSections.length)}</span>
-        <span className="nav-count-dash" aria-hidden="true">
-          {" "}
-          —{" "}
-        </span>
-        <span className="nav-count-label">{activeLabel}</span>
-      </p>
-
+    <header ref={headerRef} className={open ? "cmdnav cmdnav-open" : "cmdnav"} onKeyDown={handleKeyDown}>
       <button
-        ref={toggleRef}
+        ref={triggerRef}
         type="button"
-        className="nav-toggle"
-        aria-expanded={menuOpen}
-        aria-controls="nav-menu"
-        onClick={() => setMenuOpen((isOpen) => !isOpen)}
+        className="cmd-trigger"
+        aria-expanded={open}
+        aria-controls="cmd-menu"
+        aria-label={open ? "Close the menu" : "Open the menu"}
+        onClick={() => (open ? close(true) : setOpen(true))}
       >
-        {menuOpen ? "Close" : "Menu"}
+        {/* A miniature of the menu: three slabs fanned like the real ones; they cross into an X when open. */}
+        <span className="cmd-glyph" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className="cmd-num" aria-hidden="true">
+          {pad(currentIndex)}
+        </span>
       </button>
 
-      <div id="nav-menu" ref={menuRef} className="nav-menu">
-        <nav aria-label="Sections">
-          <ul className="nav-links">
-            {navSections.map((section, index) => (
-              <li key={section.id}>
-                <Link
-                  className="nav-link"
-                  href={`${base}#${section.id}`}
-                  aria-current={currentSection === section.id ? "true" : undefined}
-                  onClick={closeMenu}
-                >
-                  <span className="nav-link-num" aria-hidden="true">
-                    {pad(index + 1)}
-                  </span>
-                  {section.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+      <p className="cmd-now" aria-hidden={open}>
+        <b>{pad(currentIndex)}</b> / {pad(navSections.length)} — {commands[currentIndex].label}
+      </p>
 
-        {socials.length > 0 && (
-          <ul className="nav-social" aria-label="Elsewhere">
-            {socials.map((link) => (
-              <li key={link.label}>
-                <a
-                  className="nav-link"
-                  href={link.href}
-                  {...(link.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                  onClick={closeMenu}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      {resume && (
+        <a className="cmd-resume" href={resume} target="_blank" rel="noreferrer">
+          Resume <span aria-hidden="true">↗</span>
+        </a>
+      )}
 
-      <span className="nav-progress" aria-hidden="true" />
+      <nav id="cmd-menu" className="cmd-menu" aria-label="Sections">
+        <ul ref={listRef}>
+          {commands.map((command, index) => (
+            <li key={command.id} style={{ "--i": index } as CSSProperties}>
+              <Link
+                className="cmd"
+                href={`${base}#${command.id}`}
+                aria-current={index === currentIndex ? "true" : undefined}
+                tabIndex={open ? 0 : -1}
+                onClick={() => close(false)}
+              >
+                <span className="cmd-label">{command.label}</span>
+                <span className="cmd-key" aria-hidden="true">
+                  {index + 1}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <span className="cmd-progress" aria-hidden="true" />
     </header>
   );
 }

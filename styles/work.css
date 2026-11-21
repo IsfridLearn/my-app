@@ -281,7 +281,7 @@
 .sp-wipe-red { background: var(--red); }
 .sp-wipe-black { background: var(--black); }
 @media (prefers-reduced-motion: no-preference) {
-  .dossier:not([data-inview]) .sp > :not(.sp-field) { opacity: 0; }
+  .dossier:not([data-inview]) .sp > :not(.sp-field, .sp-actions, .sp-arrows) { opacity: 0; }
   .dossier[data-inview] .sp-wipe-red { animation: sp-wipe 0.6s cubic-bezier(0.7, 0, 0.3, 1) both; }
   .dossier[data-inview] .sp-wipe-black { animation: sp-wipe 0.6s cubic-bezier(0.7, 0, 0.3, 1) 0.07s both; }
   @keyframes sp-wipe {
@@ -297,11 +297,11 @@
   .dossier[data-inview] .sp-shot-three { animation-delay: 0.68s; }
   .dossier[data-inview] .sp-shot-two { animation-delay: 0.78s; }
   @keyframes sp-pin { from { opacity: 0; translate: 6cqw -4cqw; scale: 1.12; } }
-  .dossier[data-inview] :is(.sp-title, .sp-meta, .sp-info, .sp-tape, .sp-col, .sp-actions, .sp-arrows) { animation: sp-paste 0.45s cubic-bezier(0.2, 0.9, 0.2, 1.2) 0.9s both; }
+  /* The buttons and arrows never animate, so they can be pressed again straight away. */
+  .dossier[data-inview] :is(.sp-title, .sp-meta, .sp-info, .sp-tape, .sp-col) { animation: sp-paste 0.45s cubic-bezier(0.2, 0.9, 0.2, 1.2) 0.9s both; }
   .dossier[data-inview] .sp-meta { animation-delay: 0.98s; }
   .dossier[data-inview] .sp-info { animation-delay: 1.05s; }
   .dossier[data-inview] :is(.sp-tape, .sp-col) { animation-delay: 1.15s; }
-  .dossier[data-inview] :is(.sp-actions, .sp-arrows) { animation-delay: 1.22s; }
   @keyframes sp-paste { from { opacity: 0; translate: -3cqw 2cqw; scale: 1.06; } }
 }
 /* Hover with a mouse: the frames straighten a little. */

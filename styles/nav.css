@@ -1,186 +1,242 @@
-/* ------------------------------------------------------------------ Nav */
-/* An editorial index: section counter, section links, then elsewhere. */
-.nav {
-  --nav-pad: 14px;
+/* ----------------------------------------------------------- Command menu */
+/* A box in the top-left corner. Its icon is a miniature of the menu: three slabs fanned
+   like the real ones. Opened, one slab per section bursts out of it, each starting a step
+   lower and tilting a little more, from level to about 30 degrees. Closed, only the box,
+   the current-section label, the resume tab and the progress line take any room. */
+.cmdnav {
+  --top: calc(env(safe-area-inset-top, 0px) + 12px);
+  --left: max(12px, env(safe-area-inset-left, 0px));
+  --box: 58px;
+  --h: 48px;
+  --step: 54px;
+  --tilt: 5deg;
+  --fs: 30px;
   --progress: 0;
   position: fixed;
-  top: env(safe-area-inset-top, 0px);
-  right: 0;
-  left: 0;
+  inset: 0 auto auto 0;
   z-index: 40;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  gap: 24px;
-  padding: var(--nav-pad) var(--gutter);
-  border-bottom: 1px solid rgb(255 255 255 / 0.18);
-  background: rgb(0 0 0 / 0.72);
-  backdrop-filter: blur(10px);
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
-  text-transform: uppercase;
-  transition: padding 0.3s ease, background-color 0.3s ease;
+  pointer-events: none;
 }
-.nav-compact { --nav-pad: 8px; background: rgb(0 0 0 / 0.88); }
+.cmdnav > * { pointer-events: auto; }
+/* While open, a dark veil behind the slabs keeps them readable over busy sections.
+   It never takes taps: a tap outside the slabs still closes the menu. */
+.cmdnav::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgb(8 8 8 / 0.62);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.cmdnav-open::before { opacity: 1; }
 
-/* How far down the page you are: a thin red line along the bar's bottom edge. */
-.nav-progress {
+/* The box. */
+.cmd-trigger {
+  position: fixed;
+  top: var(--top);
+  left: var(--left);
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: var(--box);
+  height: var(--box);
+  background: var(--black);
+  border: 2px solid var(--white);
+  box-shadow: 5px 5px 0 var(--red);
+  clip-path: polygon(0 0, 100% 6%, 94% 100%, 4% 94%);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s ease;
+}
+.cmd-trigger:hover { background: #1c1919; }
+.cmd-trigger:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; }
+.cmdnav-open .cmd-trigger { transform: rotate(-6deg); }
+
+/* The icon: three slabs fanned from the left, the last one red. */
+.cmd-glyph { position: relative; width: 28px; height: 24px; margin: -4px 0 0 -2px; }
+.cmd-glyph i {
   position: absolute;
-  right: 0;
-  bottom: -1px;
   left: 0;
-  height: 1px;
+  height: 4px;
+  background: var(--white);
+  clip-path: polygon(0 0, 100% 15%, 96% 100%, 0 85%);
+  transform-origin: 0 50%;
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.25, 1.2), top 0.25s ease, left 0.25s ease, width 0.25s ease, opacity 0.2s ease;
+}
+.cmd-glyph i:nth-child(1) { top: 2px; width: 26px; }
+.cmd-glyph i:nth-child(2) { top: 10px; width: 22px; transform: rotate(12deg); }
+.cmd-glyph i:nth-child(3) { top: 18px; width: 18px; background: var(--red); transform: rotate(24deg); }
+@media (hover: hover) {
+  .cmdnav:not(.cmdnav-open) .cmd-trigger:hover .cmd-glyph i:nth-child(1) { transform: rotate(-6deg); }
+  .cmdnav:not(.cmdnav-open) .cmd-trigger:hover .cmd-glyph i:nth-child(2) { transform: rotate(18deg); }
+  .cmdnav:not(.cmdnav-open) .cmd-trigger:hover .cmd-glyph i:nth-child(3) { transform: rotate(40deg); }
+}
+/* Open: the first and last slab cross into an X, the middle one drops away. */
+.cmdnav-open .cmd-glyph i { top: 10px; left: 1px; width: 26px; transform-origin: 50% 50%; }
+.cmdnav-open .cmd-glyph i:nth-child(1) { transform: rotate(45deg); }
+.cmdnav-open .cmd-glyph i:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.cmdnav-open .cmd-glyph i:nth-child(3) { transform: rotate(-45deg); }
+
+/* The current section's number, tagged on the box. */
+.cmd-num {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  padding: 1px 3px;
+  background: var(--red);
+  color: var(--white);
+  font: 600 9px/1.2 var(--mono);
+  letter-spacing: 0.04em;
+}
+
+/* Beside the box: where you are. Hidden while the menu is open. */
+.cmd-now {
+  position: fixed;
+  top: calc(var(--top) + 18px);
+  left: calc(var(--left) + var(--box) + 14px);
+  z-index: 2;
+  padding: 5px 9px;
+  background: rgb(8 8 8 / 0.82);
+  font: 600 11px/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.cmd-now b { color: var(--red); font-weight: 600; }
+.cmdnav-open .cmd-now { opacity: 0; }
+
+/* The resume, always at hand in the top-right corner. */
+.cmd-resume {
+  position: fixed;
+  top: calc(var(--top) + 12px);
+  right: max(12px, env(safe-area-inset-right, 0px));
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 12px;
+  background: var(--white);
+  color: var(--black);
+  font: 600 11px/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 var(--red);
+  transform: rotate(-3deg);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.cmd-resume:hover { background: var(--red); color: var(--white); }
+.cmd-resume:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+/* How far down the page you are: a red line along the very top. */
+.cmd-progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
   background: var(--red);
   transform: scaleX(var(--progress));
   transform-origin: left;
   pointer-events: none;
 }
 
-/* Section links land just below the bar instead of under it. */
-main [id] { scroll-margin-top: 72px; }
-
-.nav-count { white-space: nowrap; }
-.nav-count-num { color: var(--white); }
-.nav-count-total, .nav-count-dash { color: rgb(255 255 255 / 0.5); }
-.nav-count-label { color: var(--red); }
-
-.nav-menu { display: contents; }
-.nav-links, .nav-social { display: flex; align-items: center; }
-.nav-links { gap: clamp(16px, 1.8vw, 30px); }
-.nav-social { justify-self: end; }
-.nav-social li:not(:last-child)::after {
-  content: "/";
-  margin-inline: 12px;
-  color: rgb(255 255 255 / 0.3);
+/* The commands. Each slab starts a step lower and a little further right than the one
+   above, and tilts a little more, so they fan out of the box without ever going steep. */
+.cmd-menu { position: fixed; top: var(--top); left: var(--left); z-index: 1; pointer-events: none; }
+.cmd-menu li {
+  --len: 260px;
+  position: absolute;
+  top: calc(var(--box) / 2 - var(--h) / 2 + var(--i) * var(--step));
+  left: calc(var(--box) + 10px + var(--i) * 6px);
+  visibility: hidden;
+  transition: visibility 0s linear 0.3s;
 }
+.cmd-menu li:nth-child(1) { --len: 250px; }
+.cmd-menu li:nth-child(2) { --len: 270px; }
+.cmd-menu li:nth-child(3) { --len: 262px; }
+.cmd-menu li:nth-child(4) { --len: 300px; }
+.cmd-menu li:nth-child(5) { --len: 340px; }
+.cmd-menu li:nth-child(6) { --len: 262px; }
+.cmd-menu li:nth-child(7) { --len: 282px; }
+/* Only the slabs themselves take taps, never the boxes that hold them. */
+.cmdnav-open .cmd-menu li { visibility: visible; transition: visibility 0s; }
+.cmdnav-open .cmd { pointer-events: auto; }
 
-.nav-link {
+.cmd {
+  --push: 0px;
+  --scale: 0.04;
   position: relative;
-  display: inline-block;
-  /* A taller hit area without making the bar taller. */
-  margin-block: -10px;
-  padding-block: 14px;
-  color: rgb(255 255 255 / 0.6);
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: min(var(--len), calc(100vw - var(--left) - var(--box) - 10px - var(--i) * 6px - 28px));
+  height: var(--h);
+  padding: 0 14px 0 18px;
+  color: var(--white);
+  font: 400 var(--fs)/1 var(--poster);
+  letter-spacing: 0.02em;
   text-decoration: none;
+  text-transform: uppercase;
   white-space: nowrap;
-  transition: color 0.25s ease;
+  opacity: 0;
+  transform-origin: 0 50%;
+  transform: rotate(calc(var(--i) * var(--tilt))) translateX(var(--push)) scaleX(var(--scale));
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.25, 1.2), opacity 0.15s ease, color 0.15s ease;
 }
-.nav-link::after {
+.cmdnav-open .cmd { --scale: 1; opacity: 1; transition-delay: calc(var(--i) * 40ms); }
+/* The black slab with a white edge, and its red shard behind. */
+.cmd::before {
   content: "";
   position: absolute;
-  right: 0;
-  bottom: 9px;
-  left: 0;
-  height: 1px;
+  inset: 0;
+  z-index: -1;
+  background: var(--black);
+  box-shadow: inset 0 0 0 2px var(--white);
+  clip-path: polygon(0 14%, 100% 0, 97% 100%, 2% 88%);
+  transition: background-color 0.15s ease;
+}
+.cmd::after {
+  content: "";
+  position: absolute;
+  inset: 22% -10px -16% 10px;
+  z-index: -2;
   background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.24, 1);
+  clip-path: polygon(0 30%, 100% 0, 92% 100%, 6% 78%);
+  transition: inset 0.2s ease;
 }
-.nav-link:hover { color: var(--red); }
-.nav-link[aria-current="true"] { color: var(--white); }
-.nav-link[aria-current="true"]::after { transform: scaleX(1); }
-.nav-link-num { display: none; }
+.cmd-key { padding: 3px 6px; border: 2px solid currentColor; font: 600 11px/1 var(--mono); letter-spacing: 0.04em; }
+/* Hover or keyboard focus: the slab turns white and pushes out, its shard stretches. */
+.cmd:hover, .cmd:focus-visible { --push: 12px; color: var(--black); outline: none; transition-delay: 0s; }
+.cmd:hover::before, .cmd:focus-visible::before { background: var(--white); }
+.cmd:hover::after, .cmd:focus-visible::after { inset: 8% -24px -26% 4px; }
+.cmd:focus-visible::before { box-shadow: inset 0 0 0 2px var(--red); }
+/* The section you are in is the red slab. */
+.cmd[aria-current="true"]::before { background: var(--red); }
+.cmd[aria-current="true"]::after { background: var(--white); }
+.cmd[aria-current="true"]:hover, .cmd[aria-current="true"]:focus-visible { color: var(--white); }
+.cmd[aria-current="true"]:hover::before, .cmd[aria-current="true"]:focus-visible::before { background: var(--red-deep); }
 
-.nav-toggle { display: none; }
+/* Section links land just below the box instead of under it. */
+main [id] { scroll-margin-top: 80px; }
 
-/* Phones and tablets: a full-screen index under the bar. */
-@media (max-width: 1099px) {
-  .nav { grid-template-columns: minmax(0, 1fr) auto; }
-  .nav-toggle {
-    display: block;
-    min-width: 44px;
-    min-height: 44px;
-    margin-block: -8px;
-    color: var(--white);
-    font: inherit;
-    letter-spacing: inherit;
-    text-align: right;
-    text-transform: inherit;
-    cursor: pointer;
-  }
-  .nav-toggle:hover { color: var(--red); }
-  /* Sits right under the bar and fills the rest of the screen. */
-  .nav-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    left: 0;
-    height: calc(100dvh - var(--nav-h, 56px) - env(safe-area-inset-top, 0px));
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 32px;
-    overflow-y: auto;
-    padding: 24px var(--gutter) calc(32px + env(safe-area-inset-bottom, 0px));
-    background: var(--black);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-8px);
-    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s;
-  }
-  .nav-open .nav-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s;
-  }
-  .nav-links { flex-direction: column; align-items: stretch; gap: 0; }
-  .nav-links li { border-top: 1px solid rgb(255 255 255 / 0.18); }
-  .nav-links li:last-child { border-bottom: 1px solid rgb(255 255 255 / 0.18); }
-  .nav-links .nav-link {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-block: 0;
-    padding-block: 10px 6px;
-    color: var(--white);
-    font-family: var(--display);
-    font-size: clamp(40px, 11vw, 64px);
-    letter-spacing: 0.01em;
-    line-height: 1;
-  }
-  .nav-links .nav-link::after { display: none; }
-  .nav-links .nav-link[aria-current="true"] { color: var(--red); }
-  .nav-link-num {
-    display: inline;
-    color: rgb(255 255 255 / 0.5);
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-  }
-  .nav-social { justify-self: stretch; flex-wrap: wrap; }
-  .nav-social .nav-link { margin-block: 0; padding-block: 12px; }
-  .nav-social .nav-link::after { bottom: 8px; }
+/* Phones: slabs a little thinner, flatter and closer together, still easy to tap. */
+@media (max-width: 699px) {
+  .cmdnav { --box: 52px; --h: 44px; --step: 50px; --tilt: 2.7deg; --fs: 25px; }
+  .cmd-now { display: none; }
+  /* The resume tab steps aside while the slabs are out, so it never covers Home. */
+  .cmdnav-open .cmd-resume { opacity: 0; pointer-events: none; }
 }
+/* Short screens, such as a phone on its side: everything a notch smaller. */
+@media (max-height: 560px) {
+  .cmdnav { --box: 46px; --h: 38px; --step: 42px; --tilt: 2deg; --fs: 22px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .nav, .nav-link, .nav-link::after, .nav-menu { transition: none; }
-}
-
-/* Active section on wide screens: an angled white tab with a red pointer. */
-@media (min-width: 1100px) {
-  .nav-links .nav-link { padding-inline: 8px; }
-  .nav-links .nav-link[aria-current="true"] { color: var(--black); }
-  .nav-links .nav-link[aria-current="true"]::before {
-    content: "";
-    position: absolute;
-    inset: 8px -4px;
-    z-index: -1;
-    background: var(--white);
-    clip-path: polygon(9% 0, 100% 8%, 91% 100%, 0 92%);
-  }
-  .nav-links .nav-link[aria-current="true"]::after {
-    right: -10px;
-    left: auto;
-    top: 50%;
-    bottom: auto;
-    width: 8px;
-    height: 10px;
-    background: var(--red);
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-    transform: translateY(-50%);
-  }
-  .nav-links li { position: relative; z-index: 0; }
+  .cmd, .cmdnav-open .cmd, .cmd-trigger, .cmd-glyph i, .cmd::before, .cmd::after, .cmd-now, .cmd-resume, .cmdnav::before { transition: none; }
 }
