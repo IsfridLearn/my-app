@@ -130,11 +130,22 @@ export type SkillGroup = {
   category: string;
   note?: string;
   items: string[];
+  /** How the group is laid out: a grid of tiles, wide tiles, large panels, or a compact strip. */
+  layout: "tiles" | "wide" | "panels" | "compact";
 };
 
 export type ExperienceContent = {
   note: string;
-  roles: Array<{ title: string; text: string }>;
+  roles: Array<{
+    title: string;
+    text: string;
+    /** Only what the text says. */
+    tags: string[];
+    /** Real screenshots of the work the role describes, the main one first. */
+    shots: Shot[];
+    /** The case study the previews open. */
+    link: { label: string; href: string };
+  }>;
 };
 
 export type PageantTitle = {

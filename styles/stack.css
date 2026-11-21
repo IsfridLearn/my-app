@@ -1,5 +1,6 @@
 /* ------------------------------------------------------------------ Stack */
-/* An index: number and group on the left, the tools on the right. */
+/* The technical arsenal: every group under a strip of red tape, each laid out for its
+   size. Tools are black blocks with a red underside and their logo. */
 .stack { padding-bottom: clamp(88px, 11vw, 176px); scroll-margin-top: 48px; }
 .stack::before {
   content: "";
@@ -9,62 +10,108 @@
   width: 46vw;
   height: 54vw;
   background: url("/photos/hero-ghost-l.webp") center / cover no-repeat;
-  opacity: 0.2;
+  opacity: 0.14;
   pointer-events: none;
 }
 .stack > * { position: relative; }
-.stack-rows { margin-top: clamp(72px, 8vw, 128px); }
-.stack-row {
-  row-gap: 14px;
-  align-items: center;
-  padding-block: clamp(18px, 2vw, 30px);
-}
-.stack-meta {
-  grid-column: 1 / span 4;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: start;
-  gap: 0 clamp(14px, 1.6vw, 24px);
-}
-.stack-num {
-  color: var(--red);
-  font-size: clamp(48px, 4.6vw, 72px);
-  line-height: 0.82;
-}
-.stack-label { display: grid; gap: 6px; padding-top: 2px; }
-.stack-label h3 {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.012em;
-  line-height: 1.2;
-}
-.stack-label p { max-width: 34ch; color: #cfcaca; font-size: 14px; line-height: 1.5; }
-.stack-items {
-  grid-column: 5 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  font-size: clamp(32px, 3.4vw, 56px);
-  line-height: 1.05;
-}
-/* A small red square between tools. */
-.stack-items li:not(:last-child)::after {
-  content: "";
-  display: inline-block;
-  width: 0.2em;
-  height: 0.2em;
-  margin-inline: 0.45em;
-  background: var(--red);
-  vertical-align: 0.24em;
-}
 
-@media (max-width: 1023px) {
-  .stack-meta, .stack-items { grid-column: 1 / -1; }
+.arsenal {
+  display: grid;
+  gap: clamp(56px, 6vw, 96px);
+  margin-top: clamp(64px, 7vw, 112px);
+  padding-inline: var(--gutter);
+}
+.ars-group { display: grid; gap: 26px; align-content: start; }
+
+/* Red tape across the page, angled one way then the other. */
+.ars-tape {
+  margin-inline: calc(var(--gutter) * -1);
+  padding: 7px calc(var(--gutter) + 8px) 6px;
+  background: var(--red);
+  color: var(--white);
+  font-size: clamp(12px, 1.05vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  box-shadow: 0 5px 0 var(--black), 0 7px 0 var(--white);
+  transform: rotate(-0.6deg);
+}
+.ars-group:nth-child(even) > .ars-tape { text-align: right; transform: rotate(0.6deg); }
+.ars-num { margin-right: 0.6em; font-family: var(--poster); font-size: 1.9em; letter-spacing: 0.02em; vertical-align: -0.12em; }
+.ars-note { max-width: 52ch; color: #cfcaca; font-size: 14px; line-height: 1.5; }
+.ars-group:nth-child(even) > .ars-note { justify-self: end; text-align: right; }
+
+/* A tool: black block, red underside, logo and name. */
+.ars-tools { display: grid; gap: 14px; }
+.tool {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 20px 12px 16px;
+  border: 1px solid #2c2828;
+  background: #0f0e0e;
+  color: var(--white);
+  text-align: center;
+  box-shadow: 0 6px 0 var(--red);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.tool-icon { width: 40px; height: 40px; fill: currentColor; }
+.tool-mono { display: grid; place-items: center; font-family: var(--poster); font-size: 34px; line-height: 1; }
+.tool-name { font: 600 13px/1.25 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; overflow-wrap: anywhere; }
+.tool-used { color: var(--red); font-size: 10.5px; line-height: 1.3; opacity: 0; transition: opacity 0.2s ease; }
+@media (hover: hover) {
+  .tool:hover { background: var(--red); color: var(--black); border-color: var(--red); box-shadow: 0 9px 0 var(--white); transform: translateY(-3px); }
+  .tool:hover .tool-name { color: var(--white); }
+  .tool:hover .tool-used { color: var(--white); opacity: 1; }
+}
+@media (hover: none) { .tool-used { opacity: 1; } }
+
+/* Languages: a row of square tiles. */
+.ars-group[data-layout="tiles"] .ars-tools { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.ars-group[data-layout="tiles"] .tool { padding: clamp(22px, 2.4vw, 34px) 12px clamp(18px, 2vw, 28px); }
+/* Frontend: wide tiles, logo beside the name. */
+.ars-group[data-layout="wide"] .ars-tools { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ars-group[data-layout="wide"] .tool { grid-template-columns: auto minmax(0, 1fr); align-items: center; justify-items: start; column-gap: 14px; padding: 18px 18px 16px; text-align: left; }
+.ars-group[data-layout="wide"] .tool-used { grid-column: 2; margin-top: -6px; }
+/* Backend and data: two large panels, with where each one is used always shown. */
+.ars-group[data-layout="panels"] .ars-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 2vw, 32px); }
+.ars-group[data-layout="panels"] .tool { grid-template-columns: auto minmax(0, 1fr); justify-items: start; column-gap: 22px; padding: clamp(22px, 2.4vw, 36px); text-align: left; box-shadow: 10px 10px 0 var(--red); }
+.ars-group[data-layout="panels"] .tool-icon { grid-row: span 2; width: clamp(48px, 5vw, 72px); height: clamp(48px, 5vw, 72px); }
+.ars-group[data-layout="panels"] .tool-name { font: 400 clamp(32px, 3.4vw, 56px)/0.95 var(--display); letter-spacing: 0.01em; }
+.ars-group[data-layout="panels"] .tool-used { font-size: 12px; opacity: 1; }
+@media (hover: hover) {
+  .ars-group[data-layout="panels"] .tool:hover { box-shadow: 14px 14px 0 var(--white); }
+}
+/* Environment and AI: compact strips, side by side on wide screens. */
+.arsenal-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 4vw, 64px); }
+.arsenal-pair > .ars-group:nth-child(even) > .ars-tape { text-align: left; }
+.arsenal-pair > .ars-group:nth-child(even) > .ars-note { justify-self: start; text-align: left; }
+.ars-group[data-layout="compact"] .ars-tape { margin-inline: 0; padding-inline: 14px; }
+.ars-group[data-layout="compact"] .ars-tools { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+.ars-group[data-layout="compact"] .tool { padding: 16px 10px 14px; }
+.ars-group[data-layout="compact"] .tool-icon { width: 32px; height: 32px; }
+.ars-group[data-layout="compact"] .tool-mono { font-size: 28px; }
+
+@media (max-width: 899px) {
+  .ars-group[data-layout="wide"] .ars-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .arsenal-pair { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 699px) {
+  .ars-group[data-layout="tiles"] .ars-tools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ars-group[data-layout="panels"] .ars-tools { grid-template-columns: minmax(0, 1fr); }
+  .ars-group:nth-child(even) > .ars-tape, .ars-group:nth-child(even) > .ars-note { text-align: left; justify-self: start; }
   .stack::before { width: 90vw; height: 100vw; }
 }
+@media (max-width: 420px) {
+  .ars-group[data-layout="wide"] .ars-tools { grid-template-columns: minmax(0, 1fr); }
+}
 
-/* A faint highlight on the row under the pointer, to keep your place while scanning. */
-.stack-row { transition: background-color 0.2s ease; }
-@media (hover: hover) {
-  .stack-row:hover { background-color: rgb(255 255 255 / 0.03); }
+/* Tiles pop in as they scroll into view. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .tool { animation: tool-in linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+    @keyframes tool-in { from { opacity: 0; translate: 0 24px; } }
+  }
 }

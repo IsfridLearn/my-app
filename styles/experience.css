@@ -1,34 +1,142 @@
 /* ------------------------------------------------------------- Experience */
+/* The roles as case files: a red tape strip carries the note, then each role is its own
+   composition, alternating sides, with a pinned preview of the work it describes. */
 .exp { padding-bottom: clamp(88px, 11vw, 176px); scroll-margin-top: 48px; }
-.exp-body { position: relative; }
-.exp-text {
-  grid-column: 1 / -1;
-  position: relative;
-  z-index: 4;
-  display: grid;
-  gap: 28px;
-  padding-top: clamp(48px, 6vw, 96px);
-}
-.exp-note { max-width: 36em; }
-.exp-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px var(--gap);
-}
-.exp-list li {
-  display: grid;
-  gap: 8px;
-  align-content: start;
-  font-size: 15px;
-  line-height: 1.55;
-}
-.exp-list h3 {
-  font-size: clamp(40px, 4.2vw, 76px);
-  font-weight: 400;
-  line-height: 0.92;
-}
-.exp-list li > p:last-child { hyphens: auto; text-align: justify; }
 
-@media (max-width: 720px) {
-  .exp-list { grid-template-columns: minmax(0, 1fr); }
+.exp-tape {
+  margin: clamp(48px, 6vw, 88px) -24px 0;
+  overflow: hidden;
+  background: var(--red);
+  color: var(--white);
+  box-shadow: 0 6px 0 var(--black), 0 8px 0 var(--white);
+  transform: rotate(-2deg);
+}
+.exp-tape p {
+  padding: 12px 0 11px calc(var(--gutter) + 24px);
+  font: 600 clamp(12px, 1.1vw, 16px)/1.2 var(--mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.exp-files {
+  display: grid;
+  gap: clamp(96px, 11vw, 176px);
+  margin-top: clamp(72px, 8vw, 128px);
+  padding-inline: var(--gutter);
+}
+.xp {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  align-items: center;
+}
+.xp-text { position: relative; z-index: 2; grid-column: 1 / span 5; grid-row: 1; display: grid; gap: 14px; justify-items: start; }
+.xp-preview { position: relative; z-index: 1; isolation: isolate; grid-column: 7 / -1; grid-row: 1; display: block; }
+.xp:nth-child(even) .xp-text { grid-column: 8 / -1; }
+.xp:nth-child(even) .xp-preview { grid-column: 1 / span 6; }
+
+/* A huge outlined number behind each role. */
+.xp-num {
+  position: absolute;
+  top: -0.42em;
+  left: -0.06em;
+  z-index: -1;
+  color: transparent;
+  font-family: var(--poster);
+  font-size: clamp(150px, 17vw, 280px);
+  line-height: 1;
+  -webkit-text-stroke: 2px rgb(229 9 32 / 0.55);
+  pointer-events: none;
+  transition: translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.xp-title {
+  font-size: clamp(48px, 5.4vw, 96px);
+  font-weight: 400;
+  line-height: 0.9;
+  overflow-wrap: anywhere;
+  transition: color 0.25s ease;
+}
+.xp-copy { max-width: 40ch; font-size: 16px; line-height: 1.6; }
+.xp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.xp-tags li {
+  padding: 0.35em 0.8em;
+  background: var(--white);
+  color: var(--black);
+  font-weight: 600;
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+.xp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  border-bottom: 2px solid var(--red);
+  text-decoration: none;
+}
+.xp-link:hover { color: var(--red); }
+
+/* Previews: real screenshots in white frames with a red offset, pinned at an angle. */
+.xp-shot { display: block; padding: 6px; background: var(--white); box-shadow: 14px 14px 0 var(--red); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease; }
+.xp-shot img { display: block; width: 100%; height: auto; }
+
+/* 01: one screenshot, with a solid red block behind it for weight. */
+.xp[data-preview="single"] .xp-shot-main { transform: rotate(3deg); }
+.xp[data-preview="single"] .xp-preview::before {
+  content: "";
+  position: absolute;
+  top: -12%;
+  right: -4%;
+  z-index: -1;
+  width: 36%;
+  aspect-ratio: 1;
+  background: var(--red);
+}
+/* 02: the main screenshot with a second one pinned over its corner. */
+.xp[data-preview="inset"] .xp-preview { padding-bottom: 14%; }
+.xp[data-preview="inset"] .xp-shot-main { width: 88%; transform: rotate(-3deg); }
+.xp[data-preview="inset"] .xp-shot-second {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 44%;
+  box-shadow: 8px 8px 0 var(--black), 10px 10px 0 var(--red);
+  transform: rotate(4deg);
+}
+/* 03: two screens side by side, the flow from one to the next. */
+.xp[data-preview="pair"] .xp-preview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 2vw, 28px); }
+.xp[data-preview="pair"] .xp-shot-main { transform: rotate(-2deg); }
+.xp[data-preview="pair"] .xp-shot-second { transform: rotate(2deg) translateY(18%); }
+
+@media (hover: hover) {
+  .xp:hover .xp-title { color: var(--red); }
+  .xp:hover .xp-num { translate: 10px 0; }
+  .xp:hover .xp-shot-main { transform: rotate(0deg) translateY(-6px); box-shadow: 20px 20px 0 var(--red); }
+}
+
+/* One column below 900px: the role, then its preview. */
+@media (max-width: 899px) {
+  .exp-tape p { white-space: normal; }
+  .exp-tape p span { display: none; }
+  .xp, .xp:nth-child(even) { grid-template-columns: minmax(0, 1fr); row-gap: 40px; }
+  .xp-text, .xp-preview, .xp:nth-child(even) .xp-text, .xp:nth-child(even) .xp-preview { grid-column: 1; grid-row: auto; }
+  .xp-num { font-size: 140px; }
+  .xp-shot { box-shadow: 8px 8px 0 var(--red); }
+  .xp[data-preview="single"] .xp-shot-main { transform: rotate(1.5deg); }
+  .xp[data-preview="inset"] .xp-shot-main { transform: rotate(-1.5deg); }
+  .xp[data-preview="inset"] .xp-shot-second { transform: rotate(2deg); box-shadow: 5px 5px 0 var(--black), 7px 7px 0 var(--red); }
+  .xp[data-preview="pair"] .xp-shot-main { transform: rotate(-1deg); }
+  .xp[data-preview="pair"] .xp-shot-second { transform: rotate(1deg) translateY(12%); }
+}
+
+/* Each role slides in from its own side as it scrolls into view. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .xp-text, .xp-preview { animation: xp-in linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
+    .xp-text { --from: -48px; }
+    .xp-preview { --from: 48px; }
+    .xp:nth-child(even) .xp-text { --from: 48px; }
+    .xp:nth-child(even) .xp-preview { --from: -48px; }
+    @keyframes xp-in { from { opacity: 0; translate: var(--from) 0; } }
+  }
 }
