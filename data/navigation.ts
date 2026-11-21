@@ -1,7 +1,5 @@
 import { hasContact } from "@/data/contact";
-import { photos, prints } from "@/data/photos";
-import { caseStudyHref, projectFileNumber, projects } from "@/data/projects";
-import type { ArchiveEntry, NavSection, SectionHeadingText } from "@/types";
+import type { NavSection, SectionHeadingText } from "@/types";
 
 export const navSections: NavSection[] = [
   { id: "work", label: "Work" },
@@ -25,17 +23,3 @@ export const sectionHeadings: Record<
 };
 
 // The footer's list of every project and picture on the page.
-export const archiveIndex: ArchiveEntry[] = [
-  ...projects.map((project, index) => ({
-    file: projectFileNumber(index),
-    label: project.title,
-    href: caseStudyHref(project),
-  })),
-  { file: prints.dark.file, label: prints.dark.label, href: "#home" },
-  { file: prints.light.file, label: prints.light.label, href: "#about" },
-  ...Object.values(photos).map((photo) => ({
-    file: photo.file,
-    label: photo.label,
-    href: `#${photo.id}`,
-  })),
-];

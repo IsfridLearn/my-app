@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Nav } from "@/components/layout/Nav";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 
 type PageShellProps = {
   children: ReactNode;
@@ -16,6 +17,7 @@ export function PageShell({ children, footer, mainClassName, activeSection, navB
       <a className="skip" href="#main">
         Skip to content
       </a>
+      <SmoothScroll />
       <Nav active={activeSection} base={navBase} />
       <main id="main" className={mainClassName}>
         {children}

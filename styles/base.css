@@ -185,6 +185,11 @@ b, strong { font-weight: 600; }
 @media (max-width: 1099px) {
   .drop-cap { font-size: 58px; padding: 3px 8px 0 0; }
 }
+/* Lenis drives the glide when it runs, so the browser's own smooth scroll steps aside. */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }

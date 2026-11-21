@@ -137,6 +137,6 @@
     .xp-preview { --from: 48px; }
     .xp:nth-child(even) .xp-text { --from: 48px; }
     .xp:nth-child(even) .xp-preview { --from: -48px; }
-    @keyframes xp-in { from { opacity: 0; translate: var(--from) 0; } }
+    @keyframes xp-in { from { opacity: 0.35; translate: var(--from) 0; } }
   }
 }

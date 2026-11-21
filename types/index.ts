@@ -180,8 +180,3 @@ export type SectionHeadingText = {
   script: string;
 };
 
-export type ArchiveEntry = {
-  file: string;
-  label: string;
-  href: string;
-};

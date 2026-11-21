@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Arrow } from "@/components/ui/Sprite";
-import { archiveIndex } from "@/data/navigation";
 import { profile } from "@/data/profile";
 
 function Copyright() {
@@ -11,29 +10,13 @@ function Copyright() {
   );
 }
 
-/** The homepage footer, with an index of every project and picture. */
+/** The homepage footer: only a way back to the top, centered. */
 export function ArchiveFooter() {
   return (
-    <footer className="foot">
-      <nav aria-label="Archive index" className="index">
-        <p className="file">The archive</p>
-        <ul>
-          {archiveIndex.map((entry) => (
-            <li key={entry.file}>
-              <a href={entry.href}>
-                <span>{entry.file}</span>
-                {entry.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className="foot-end">
-        <Copyright />
-        <a className="to-top file" href="#home">
-          Back to top <span aria-hidden="true">↑</span>
-        </a>
-      </div>
+    <footer className="foot foot-home">
+      <a className="to-top file" href="#home">
+        Back to top <span aria-hidden="true">↑</span>
+      </a>
     </footer>
   );
 }

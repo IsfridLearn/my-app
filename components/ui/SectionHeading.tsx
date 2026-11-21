@@ -23,7 +23,7 @@ type SectionHeadingProps = {
 };
 
 /** The poster headline used by each section: a huge red title with a red tag across it. */
-export function SectionHeading({ id, title, script, className, as: Heading = "h2" }: SectionHeadingProps) {
+  export function SectionHeading({ id, title, script, className, as: Heading = "h2" }: SectionHeadingProps) {
   return (
     <div className={className ? `spread-head ${className}` : "spread-head"}>
       <Heading id={id} className="spread-title poster">

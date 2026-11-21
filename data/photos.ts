@@ -40,7 +40,7 @@ export const portraitArt: Record<
 
 // Pictures in Beyond the Screen. Crops are set in scripts/make-plates.mjs.
 export const photos: Record<
-  "profile" | "set" | "gold" | "ginoo" | "patnubay" | "stage" | "eyes",
+  "profile" | "set" | "gold" | "ginoo" | "patnubay" | "stage",
   Photo
 > = {
   profile: {
@@ -96,15 +96,6 @@ export const photos: Record<
     alt: "Andrei Sanchez walking a pageant stage in a beaded velvet blazer and white gloves",
     width: 620,
     height: 900,
-  },
-  eyes: {
-    id: "cam-10",
-    file: "CAM·10",
-    label: "Headshot, eyes",
-    src: "/photos/hero-eyes.webp",
-    alt: "A close crop across Andrei Sanchez's eyes",
-    width: 1800,
-    height: 600,
   },
 };
 

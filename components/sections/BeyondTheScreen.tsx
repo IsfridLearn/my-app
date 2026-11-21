@@ -22,7 +22,7 @@ export function BeyondTheScreen() {
 
   return (
     <section id="beyond" className="spread beyond" aria-labelledby="beyond-title">
-      <SectionHeading id="beyond-title" {...sectionHeadings.beyond} />
+      <SectionHeading id="beyond-title" {...sectionHeadings.beyond} className="spread-center" />
 
       <ul className="bx-grid">
         {gallery.map((photo) => (

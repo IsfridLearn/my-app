@@ -44,8 +44,23 @@
   text-align: left;
 }
 
+/* Centered headline, with its tag centered under it. */
+.spread-center { text-align: center; }
+.spread-center .spread-script { left: 50%; transform: translateX(-50%) rotate(-2deg); }
+
 /* Small screens: the tag sits under the headline instead of across it. */
 @media (max-width: 700px) {
   .spread-head .spread-script { position: relative; bottom: auto; left: auto; display: inline-block; margin: 10px 0 0 4px; }
   .spread-right .spread-script { right: auto; }
+  .spread-center .spread-script { left: auto; margin-left: 0; transform: rotate(-2deg); }
+}
+
+/* Section titles below the first screen wipe in once, left to right (SmoothScroll adds the classes). */
+@media (prefers-reduced-motion: no-preference) {
+  .spread-title.wipe-wait { clip-path: inset(-20% 100% -30% -5%); }
+  .spread-title.wipe-in { animation: title-wipe 0.7s cubic-bezier(0.6, 0, 0.2, 1); }
+  @keyframes title-wipe {
+    from { clip-path: inset(-20% 100% -30% -5%); }
+    to { clip-path: inset(-20% -5% -30% -5%); }
+  }
 }
